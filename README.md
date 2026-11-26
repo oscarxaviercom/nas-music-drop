@@ -2,7 +2,7 @@
 
 Aplicación Android para descargar música desde enlaces y búsquedas, normalizar el audio con **EBU R128**, incrustar metadatos ID3v2.3 (carátula 600×600 y letras sincronizadas/planas) y enviarla directamente a tu **NAS por SMB** o guardarla en la carpeta `Music/` del teléfono.
 
-Desarrollado por **Fiyeyo**.
+Desarrollado por **oscarxaviercom**.
 
 ## Características principales
 
