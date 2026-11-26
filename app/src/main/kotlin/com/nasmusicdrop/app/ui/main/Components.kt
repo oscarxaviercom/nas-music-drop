@@ -19,7 +19,9 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.res.stringResource
 import coil.compose.AsyncImage
+import com.nasmusicdrop.app.R
 import com.nasmusicdrop.app.data.model.ConnectionTestResult
 import com.nasmusicdrop.app.data.model.SongCandidate
 import com.nasmusicdrop.app.ui.theme.successColor
@@ -55,12 +57,12 @@ fun NasStatusHeader(
                 Spacer(modifier = Modifier.width(8.dp))
                 Column {
                     Text(
-                        text = if (isLocal) "Destino de descarga" else "Destino: Servidor NAS",
+                        text = if (isLocal) stringResource(R.string.header_dest_local_label) else stringResource(R.string.header_dest_nas_label),
                         style = MaterialTheme.typography.labelSmall,
                         color = MaterialTheme.colorScheme.onSurfaceVariant
                     )
                     Text(
-                        text = if (isLocal) "📱 Carpeta Música del móvil" else tailscaleIp.ifBlank { "IP no configurada" },
+                        text = if (isLocal) stringResource(R.string.header_dest_local_value) else tailscaleIp.ifBlank { stringResource(R.string.header_ip_not_configured) },
                         style = MaterialTheme.typography.titleMedium,
                         fontWeight = FontWeight.SemiBold
                     )
@@ -73,7 +75,7 @@ fun NasStatusHeader(
                     contentPadding = PaddingValues(horizontal = 12.dp, vertical = 4.dp),
                     shape = RoundedCornerShape(12.dp)
                 ) {
-                    Text("Test", fontSize = 12.sp)
+                    Text(stringResource(R.string.common_test), fontSize = 12.sp)
                 }
             } else {
                 Surface(
@@ -81,7 +83,7 @@ fun NasStatusHeader(
                     shape = RoundedCornerShape(8.dp)
                 ) {
                     Text(
-                        text = "Listo",
+                        text = stringResource(R.string.common_ready),
                         color = successColor(),
                         fontSize = 12.sp,
                         fontWeight = FontWeight.Medium,
@@ -124,7 +126,7 @@ fun CandidateCard(
             // Carátula 600x600 cargada con Coil
             AsyncImage(
                 model = candidate.artworkUrl600,
-                contentDescription = "Carátula ${candidate.album}",
+                contentDescription = stringResource(R.string.cover_content_desc, candidate.album),
                 modifier = Modifier
                     .size(68.dp)
                     .clip(RoundedCornerShape(10.dp))
@@ -178,7 +180,7 @@ fun ConnectionTestDialog(
         title = {
             Row(verticalAlignment = Alignment.CenterVertically) {
                 Text(
-                    text = if (result.success) "🟢 Conexión Exitosa" else "🔴 Error de Conexión",
+                    text = if (result.success) stringResource(R.string.conn_test_success_title) else stringResource(R.string.conn_test_error_title),
                     fontWeight = FontWeight.Bold
                 )
             }
@@ -186,16 +188,15 @@ fun ConnectionTestDialog(
         text = {
             Column(modifier = Modifier.fillMaxWidth()) {
                 if (result.success) {
+                    val modeLabel = if (result.isTailscale) stringResource(R.string.common_remote) else stringResource(R.string.common_local)
                     Text(
-                        text = "IP Activa: ${result.activeIp} (${if (result.isTailscale) "Tailscale" else "Local"})\n" +
-                                "Latencia: ${result.latencyMs} ms\n" +
-                                "Share 'Multimedia' y carpeta 'Audio': ✓ Verificados con permisos de escritura.",
+                        text = stringResource(R.string.conn_test_summary, result.activeIp, modeLabel, result.latencyMs),
                         style = MaterialTheme.typography.bodyMedium
                     )
                 }
                 Spacer(modifier = Modifier.height(12.dp))
                 Text(
-                    text = "Detalle del registro:",
+                    text = stringResource(R.string.conn_test_log_label),
                     style = MaterialTheme.typography.labelSmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
@@ -217,7 +218,7 @@ fun ConnectionTestDialog(
         },
         confirmButton = {
             Button(onClick = onDismiss) {
-                Text("Cerrar")
+                Text(stringResource(R.string.common_close))
             }
         }
     )

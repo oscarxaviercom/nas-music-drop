@@ -72,7 +72,7 @@ object ShazamRecognizer {
             AudioFormat.ENCODING_PCM_16BIT
         )
         if (minBufBytes == AudioRecord.ERROR || minBufBytes == AudioRecord.ERROR_BAD_VALUE) {
-            return@withContext RecognitionResult.Error("El micrófono del dispositivo no soporta grabación a 16 kHz.")
+            return@withContext RecognitionResult.Error(com.nasmusicdrop.app.data.AppStrings.get(com.nasmusicdrop.app.R.string.shazam_unsupported_rate))
         }
 
         val bufferBytes = max(minBufBytes * 2, SAMPLE_RATE) // ~0.5s buffer
@@ -85,12 +85,17 @@ object ShazamRecognizer {
                 bufferBytes
             )
         } catch (e: Exception) {
-            return@withContext RecognitionResult.Error("No se pudo acceder al micrófono: ${e.localizedMessage ?: "permiso denegado"}")
+            return@withContext RecognitionResult.Error(
+                com.nasmusicdrop.app.data.AppStrings.get(
+                    com.nasmusicdrop.app.R.string.shazam_mic_access_err,
+                    e.localizedMessage ?: com.nasmusicdrop.app.data.AppStrings.get(com.nasmusicdrop.app.R.string.shazam_perm_denied)
+                )
+            )
         }
 
         if (audioRecord.state != AudioRecord.STATE_INITIALIZED) {
             audioRecord.release()
-            return@withContext RecognitionResult.Error("No se pudo inicializar el micrófono.")
+            return@withContext RecognitionResult.Error(com.nasmusicdrop.app.data.AppStrings.get(com.nasmusicdrop.app.R.string.shazam_mic_init_err))
         }
 
         val samples = ShortArray(totalSamples)
@@ -135,7 +140,7 @@ object ShazamRecognizer {
 
         val recorded = if (offset == totalSamples) samples else samples.copyOf(offset)
         if (recorded.size < SAMPLE_RATE * 2) {
-            return@withContext RecognitionResult.Error("Grabación demasiado corta para reconocer la canción.")
+            return@withContext RecognitionResult.Error(com.nasmusicdrop.app.data.AppStrings.get(com.nasmusicdrop.app.R.string.shazam_too_short))
         }
 
         return@withContext try {
@@ -143,7 +148,12 @@ object ShazamRecognizer {
             queryShazam(signatureUri, recorded.size)
         } catch (e: Exception) {
             Log.e(TAG, "Error en reconocimiento: ${e.message}", e)
-            RecognitionResult.Error("Error al consultar el servicio de reconocimiento: ${e.localizedMessage ?: "sin conexión"}")
+            RecognitionResult.Error(
+                com.nasmusicdrop.app.data.AppStrings.get(
+                    com.nasmusicdrop.app.R.string.shazam_query_err,
+                    e.localizedMessage ?: com.nasmusicdrop.app.data.AppStrings.get(com.nasmusicdrop.app.R.string.shazam_offline)
+                )
+            )
         }
     }
 
@@ -375,10 +385,10 @@ object ShazamRecognizer {
 
             val code = conn.responseCode
             if (code == 429) {
-                return RecognitionResult.Error("Demasiadas peticiones seguidas. Espera unos segundos e inténtalo de nuevo.")
+                return RecognitionResult.Error(com.nasmusicdrop.app.data.AppStrings.get(com.nasmusicdrop.app.R.string.shazam_rate_limit))
             }
             if (code !in 200..299) {
-                return RecognitionResult.Error("El servidor de reconocimiento respondió con código $code.")
+                return RecognitionResult.Error(com.nasmusicdrop.app.data.AppStrings.get(com.nasmusicdrop.app.R.string.shazam_http_err, code))
             }
 
             conn.inputStream.bufferedReader().use { it.readText() }

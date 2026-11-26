@@ -1,0 +1,381 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Music Drop</string>
+
+    <!-- Navigation -->
+    <string name="nav_download">Descargar</string>
+    <string name="nav_search">Buscar</string>
+    <string name="nav_history">Historial</string>
+    <string name="nav_settings">Ajustes</string>
+
+    <!-- Common -->
+    <string name="common_close">Cerrar</string>
+    <string name="common_cancel">Cancelar</string>
+    <string name="common_save">Guardar</string>
+    <string name="common_delete">Eliminar</string>
+    <string name="common_retry">Reintentar</string>
+    <string name="common_got_it">Entendido</string>
+    <string name="common_ready">Listo</string>
+    <string name="common_test">Test</string>
+    <string name="common_local">Local</string>
+    <string name="common_remote">Remota</string>
+
+    <!-- Header & Connection Test -->
+    <string name="header_dest_local_label">Destino de descarga</string>
+    <string name="header_dest_nas_label">Destino: Servidor NAS</string>
+    <string name="header_dest_local_value">📱 Carpeta Música del móvil</string>
+    <string name="header_ip_not_configured">IP no configurada</string>
+    <string name="cover_content_desc">Carátula %1$s</string>
+    <string name="conn_test_success_title">🟢 Conexión Exitosa</string>
+    <string name="conn_test_error_title">🔴 Error de Conexión</string>
+    <string name="conn_test_summary">IP Activa: %1$s (%2$s)\nLatencia: %3$d ms\nRecurso y carpeta destino: ✓ Verificados con permisos de escritura.</string>
+    <string name="conn_test_log_label">Detalle del registro:</string>
+
+    <!-- Foreground Notification -->
+    <string name="notif_channel_name">Transferencias al NAS</string>
+    <string name="notif_channel_desc">Progreso de descarga y subida al NAS</string>
+    <string name="notif_starting">Iniciando transferencias...</string>
+    <string name="notif_waiting_wifi_title">📡 Esperando conexión Wi‑Fi</string>
+    <string name="notif_completed_title">✅ Music Drop completado</string>
+    <string name="notif_summary_saved">%1$d guardadas</string>
+    <string name="notif_summary_failed">%1$d con error</string>
+    <string name="notif_summary_waiting_wifi">%1$d esperando Wi‑Fi</string>
+    <string name="notif_progress_content">%1$s · (%2$d/%3$d listas)</string>
+
+    <!-- Settings Screen -->
+    <string name="settings_title">Ajustes</string>
+    <string name="settings_subtitle">Personaliza el aspecto, almacenamiento, red y calidad de audio.</string>
+    <string name="settings_section_appearance">Apariencia</string>
+    <string name="settings_theme_light">☀️ Día</string>
+    <string name="settings_theme_dark">🌙 Noche</string>
+    <string name="settings_theme_system">📱 Auto</string>
+    <string name="settings_accent_color">Color principal:</string>
+    <string name="settings_section_dest_net">Destino y Red</string>
+    <string name="settings_dest_prompt">Elige dónde se guardarán las canciones descargadas:</string>
+    <string name="settings_dest_mobile">📱 En móvil</string>
+    <string name="settings_dest_nas">🖥️ Servidor NAS</string>
+    <string name="settings_dest_local_info">Las canciones se guardarán directamente en la carpeta Música de tu teléfono, listas para escuchar sin conexión.</string>
+    <string name="settings_nas_conn_title">Conexión SMB al NAS</string>
+    <string name="settings_remote_ip_label">IP Remota / Tailscale</string>
+    <string name="settings_remote_ip_placeholder">100.x.x.x o dominio</string>
+    <string name="settings_port_label">Puerto</string>
+    <string name="settings_local_ip_label">IP Local (Wi‑Fi de casa)</string>
+    <string name="settings_smb_user_label">Usuario SMB</string>
+    <string name="settings_password_label">Contraseña</string>
+    <string name="settings_show_password">Mostrar contraseña</string>
+    <string name="settings_share_name_label">Recurso compartido</string>
+    <string name="settings_base_path_label">Carpeta base</string>
+    <string name="settings_nas_saved_toast">✓ Configuración NAS guardada</string>
+    <string name="settings_save_nas_btn">Guardar configuración NAS</string>
+    <string name="settings_auto_ip_title">Conmutación automática de IP</string>
+    <string name="settings_auto_ip_subtitle">Usa Wi‑Fi local si está en casa o Remota/Tailscale si estás fuera.</string>
+    <string name="settings_testing_conn">Probando conexión…</string>
+    <string name="settings_test_conn_btn">Probar conexión NAS</string>
+    <string name="settings_wifi_only_title">Solo descargar con Wi‑Fi</string>
+    <string name="settings_wifi_only_subtitle">Evita gastar datos móviles al bajar canciones o playlists grandes.</string>
+    <string name="settings_section_org">Organización y Archivos</string>
+    <string name="settings_filename_format">Formato de nombre de archivo:</string>
+    <string name="settings_format_artist_title">Artista - Título</string>
+    <string name="settings_format_title_only">Solo título</string>
+    <string name="settings_folder_org">Organización de carpetas:</string>
+    <string name="settings_folder_none">Sin carpetas</string>
+    <string name="settings_folder_artist">Artista</string>
+    <string name="settings_folder_artist_album">Artista/Álbum</string>
+    <string name="settings_folder_example">Ejemplo: %1$s</string>
+    <string name="settings_folder_flat_warning">⚠️ Con «Sin carpetas» y «Solo título», canciones con el mismo nombre podrían sobrescribirse.</string>
+    <string name="settings_check_dups_title">Comprobar duplicados antes de bajar</string>
+    <string name="settings_check_dups_subtitle">Avisa u omite canciones que ya existen en tu biblioteca.</string>
+    <string name="settings_cover_jpg_title">Guardar carátula externa (cover.jpg)</string>
+    <string name="settings_cover_jpg_flat_sub">Omitido automáticamente en modo «Sin carpetas» (cada MP3 ya lleva su carátula).</string>
+    <string name="settings_cover_jpg_sub">Crea cover.jpg en la carpeta para reproductores compatibles.</string>
+    <string name="settings_auto_clear_title">Auto-limpiar completadas</string>
+    <string name="settings_auto_clear_sub">Quita de la cola las canciones al terminar (se guardan en Historial).</string>
+    <string name="settings_section_audio">Audio y Coincidencias</string>
+    <string name="settings_norm_title">Normalizar volumen (EBU R128)</string>
+    <string name="settings_norm_subtitle">Equilibra todas las pistas a %1$d LUFS sin saturación.</string>
+    <string name="settings_lufs_soft">-16 (Suave)</string>
+    <string name="settings_lufs_standard">-14 (Estándar)</string>
+    <string name="settings_lufs_loud">-11 (Potente)</string>
+    <string name="settings_lufs_desc_soft">-16 LUFS (Suave): conserva más rango dinámico y matices. Ideal para acústica, clásica, jazz o escucha en equipo Hi-Fi / auriculares.</string>
+    <string name="settings_lufs_desc_loud">-11 LUFS (Potente): volumen más alto y con más presencia (con limitador anti-clipping). Recomendado para coche, altavoces portátiles o entornos ruidosos.</string>
+    <string name="settings_lufs_desc_standard">-14 LUFS (Estándar): referencia de plataformas como Spotify y YouTube. Mejor equilibrio entre volumen uniforme y calidad dinámica.</string>
+    <string name="settings_mp3_quality">Calidad de codificación MP3:</string>
+    <string name="settings_playlist_tolerance">Margen de duración en playlists (Spotify / Apple / Deezer):</string>
+    <string name="settings_playlist_tolerance_sub">Descarta vídeos de YouTube que se desvíen más de este tiempo.</string>
+    <string name="settings_saved_msg">Ajustes guardados correctamente</string>
+    <string name="settings_save_btn">Guardar ajustes</string>
+    <string name="settings_cache_cleared">Caché vaciada (%1$s liberados)</string>
+    <string name="settings_clear_cache_btn">Limpiar caché temporal (%1$s)</string>
+    <string name="settings_clear_history_btn">Vaciar historial de descargas</string>
+    <string name="settings_clear_history_title">Vaciar historial</string>
+    <string name="settings_clear_history_msg">¿Deseas vaciar el historial de descargas completadas y fallidas? Los archivos ya guardados en tu música o NAS no se borrarán.</string>
+    <string name="settings_clear_btn">Vaciar</string>
+    <string name="settings_history_cleared_toast">Historial vaciado</string>
+    <string name="settings_user_guide_btn">Guía de uso y funciones</string>
+    <string name="settings_about_version">🎵 Music Drop v2.2.0</string>
+    <string name="settings_about_author">Desarrollado por oscarxaviercom</string>
+
+    <!-- User Guide Dialog -->
+    <string name="guide_title">Guía de uso de Music Drop</string>
+    <string name="guide_s1_title">1. Descargar desde enlaces y playlists</string>
+    <string name="guide_s1_body">• Pega cualquier enlace en «Descargar» o usa «Compartir → Music Drop» desde YouTube, Spotify, Apple Music, Deezer, Amazon Music o SoundCloud.\n• En playlists y álbumes, la app comprueba antes tu biblioteca y marca automáticamente solo las canciones que te faltan (botón «Solo faltantes»).\n• Si una URL de YouTube lleva marca de tiempo (?t=...), se aplica como inicio de recorte.\n• En la cola puedes usar «Pausar cola / Reanudar cola», ver el progreso global, editar Título/Artista/Álbum, recortar Inicio/Fin, cambiar la edición en «Versiones» o editar/buscar letras en «Letra».</string>
+    <string name="guide_s2_title">2. Buscar y reconocer por micrófono</string>
+    <string name="guide_s2_body">• En «Buscar» puedes buscar en YouTube, preescuchar tocando ▶ sobre la miniatura y recortar con un toque desde el segundo actual de reproducción.\n• Pulsa el botón del micrófono (🎙️) para escuchar ~5,5 segundos de música ambiente e identificar automáticamente la canción (100% gratis, sin cuentas) para descargarla o ver sus versiones.</string>
+    <string name="guide_s3_title">3. Historial y mini-reproductor</string>
+    <string name="guide_s3_body">• En «Historial» puedes buscar y reproducir tus canciones ya guardadas (tanto locales como desde el NAS).\n• Toca cualquier canción para ver sus «Detalles»: carátula, letra incrustada, verificación de normalización LUFS, tamaño y ruta completa (toca la ruta para copiarla).\n• El mini-reproductor inferior permite avanzar/retroceder (⏮ / ⏭) entre el historial con salto automático y tocar el título para volver a la lista.</string>
+    <string name="guide_s4_title">4. Calidad de audio y organización</string>
+    <string name="guide_s4_body">• Todo se normaliza sin saturación (limitador true-peak) al nivel LUFS elegido:\n  - -16 (Suave): mayor dinámica natural (clásica, acústica, Hi-Fi).\n  - -14 (Estándar): estándar de Spotify/YouTube; equilibrio ideal.\n  - -11 (Potente): más volumen y pegada (coche o altavoces Bluetooth).\n• Codificación MP3 192k o 320k, con etiquetas ID3v2.3, carátula 600×600 y letra incrustada.\n• Si recortas el final de una canción, se aplica un fade-out suave automático de 250 ms.\n• En «Ajustes» puedes elegir guardar en tu NAS (conmutación automática Local/Remota) o en la carpeta Music/ del móvil, sin carpetas, por Artista o Artista/Álbum.</string>
+    <string name="guide_s5_title">5. Conexión al NAS (Local, VPN o puerto SMB)</string>
+    <string name="guide_s5_body">• IP Local (puerto 445): úsala para subir rápido cuando estés en el Wi‑Fi de casa.\n• IP Remota / Tailscale + Puerto (445 por defecto): sirve para Tailscale, otra VPN (WireGuard/ZeroTier) o una IP/dominio externo (DDNS) con puerto redirigido en tu router (también admite formato host:puerto).\n• Por seguridad, si conectas desde fuera de casa se recomienda usar VPN (Tailscale/WireGuard) en lugar de exponer SMB directamente a internet.</string>
+
+    <!-- Search Screen -->
+    <string name="search_mic_perm_required">Necesitas conceder permiso de micrófono para identificar canciones.</string>
+    <string name="search_title">Explorar Música</string>
+    <string name="search_subtitle">Busca, preescucha y recorta antes de descargar.</string>
+    <string name="search_query_placeholder">Buscar música (canción, artista)...</string>
+    <string name="search_clear">Limpiar</string>
+    <string name="search_mic_cd">Identificar canción por micrófono</string>
+    <string name="search_searching_btn">Buscando música...</string>
+    <string name="search_btn">Buscar música</string>
+    <string name="search_loading_catalog">Consultando catálogo musical...</string>
+    <string name="search_no_results">No se encontraron canciones</string>
+    <string name="search_empty_title">Explora y reproduce canciones</string>
+    <string name="search_no_results_hint">Prueba con otras palabras o el nombre exacto del artista.</string>
+    <string name="search_empty_hint">Busca cualquier canción para escucharla aquí mismo y confirmar que es la versión deseada antes de descargarla.</string>
+    <string name="search_added_to_queue">✓ \"%1$s\" añadida a la cola</string>
+    <string name="search_finding_recognized">✓ Buscando \"%1$s\" para descargar...</string>
+    <string name="recog_listening">Escuchando música...</string>
+    <string name="recog_identifying">Identificando canción...</string>
+    <string name="recog_found">¡Canción identificada!</string>
+    <string name="recog_no_match">Sin coincidencias</string>
+    <string name="recog_error">No se pudo escuchar</string>
+    <string name="recog_move_closer">Acerca el teléfono a la fuente de sonido...</string>
+    <string name="recog_analyzing">Analizando huella acústica...</string>
+    <string name="recog_no_match_msg">No se pudo identificar ninguna canción. Prueba a acercar el móvil al altavoz o asegúrate de que no haya mucho ruido.</string>
+    <string name="common_download">Descargar</string>
+    <string name="common_pause">Pausar</string>
+    <string name="common_play">Reproducir</string>
+    <string name="search_play_preview">Reproducir preview</string>
+    <string name="trim_dialog_title">Descargar canción</string>
+    <string name="trim_dialog_section">Recorte de inicio y fin (opcional):</string>
+    <string name="trim_dialog_hint">Indica los minutos/segundos (ej: 00:15) para cortar silencios, intros o créditos finales. Deja 00:00 para descargar completo.</string>
+    <string name="trim_start_label">Inicio</string>
+    <string name="trim_end_label">Fin (opc)</string>
+    <string name="trim_use_current">⏱️ Usar tiempo actual como inicio (%1$s)</string>
+    <string name="trim_add_to_queue">Añadir a la cola</string>
+
+    <!-- History Screen -->
+    <string name="history_empty_title">No hay canciones en el historial</string>
+    <string name="history_empty_subtitle">Las canciones que descargues aparecerán registradas aquí.</string>
+    <string name="history_title">Historial de Transferencias</string>
+    <string name="history_subtitle_count">%1$d canciones descargadas · Toca para ver detalles</string>
+    <string name="history_clear_cd">Borrar historial</string>
+    <string name="history_search_placeholder">Buscar en historial (título, artista, álbum)...</string>
+    <string name="history_search_empty">No hay canciones que coincidan con \"%1$s\"</string>
+    <string name="history_clear_dialog_title">¿Borrar todo el historial?</string>
+    <string name="history_clear_dialog_msg">Se eliminará el registro de descargas de la app. Los archivos de música guardados en tu dispositivo o NAS se mantendrán intactos.</string>
+    <string name="history_clear_confirm">Borrar historial</string>
+    <string name="history_requeued">✓ \"%1$s\" reencolada</string>
+    <string name="history_requeue_not_found">No se encontró coincidencia en YouTube para \"%1$s\"</string>
+    <string name="history_deleted_msg">Eliminado del historial</string>
+    <string name="history_date_pattern">dd/MM/yyyy \'a las\' HH:mm</string>
+    <string name="history_details_delete">Eliminar de la lista</string>
+    <string name="history_details_title">Detalles de la Canción</string>
+    <string name="history_details_album">Álbum: %1$s</string>
+    <string name="common_loading">Cargando...</string>
+    <string name="history_requeue_btn">Reencolar</string>
+    <string name="history_view_lyrics_btn">Ver Letra Incrustada</string>
+    <string name="history_audio_section">Verificación de Audio y Normalización</string>
+    <string name="history_label_format">Formato de audio</string>
+    <string name="history_label_loudness">Estándar de volumen</string>
+    <string name="history_label_orig_lufs">Volumen original medido</string>
+    <string name="history_label_gain">Ganancia aplicada</string>
+    <string name="history_gain_value">%1$s%2$s dB (Pico -1.5 dB)</string>
+    <string name="history_label_cover">Carátula ID3v2.3</string>
+    <string name="history_label_lyrics">Letras incrustadas</string>
+    <string name="history_lyrics_embedded">✓ Incrustadas en ID3</string>
+    <string name="history_lyrics_unavailable">No disponibles</string>
+    <string name="history_location_section">Ubicación del archivo</string>
+    <string name="history_remote_path_hint">Ruta remota (toca para copiar)</string>
+    <string name="history_path_copied">Ruta copiada</string>
+    <string name="history_label_size">Tamaño de archivo</string>
+    <string name="history_label_date">Fecha de subida</string>
+    <string name="history_lyrics_dialog_title">Letra de la canción</string>
+
+    <!-- ViewModel & Batch Progress -->
+    <string name="vm_connecting_platform">Conectando con plataforma externa...</string>
+    <string name="vm_checking_duplicates">Comprobando duplicados...</string>
+    <string name="vm_checking_library">Comprobando biblioteca (%1$d pistas)...</string>
+    <string name="vm_link_load_error">No se pudo cargar el enlace</string>
+    <string name="vm_searching_yt">Buscando en YouTube: %1$s - %2$s...</string>
+    <string name="vm_locating_yt_batch">Localizando en YouTube (%1$d/%2$d): %3$s...</string>
+    <string name="vm_batch_added">%1$d añadidas a la cola</string>
+    <string name="vm_batch_in_library">%1$d ya en biblioteca</string>
+    <string name="vm_batch_no_match">%1$d sin coincidencia</string>
+    <string name="vm_locating_yt_single">Localizando en YouTube: %1$s - %2$s...</string>
+
+    <!-- Main Screen & Queue -->
+    <string name="main_add_card_title">Añadir a la Cola de Descarga</string>
+    <string name="main_add_card_subtitle">Pega un enlace o comparte desde Spotify, Apple Music, Deezer, SoundCloud, Amazon Music o YouTube.</string>
+    <string name="main_url_placeholder">Spotify, Apple Music, Deezer, SoundCloud, YouTube...</string>
+    <string name="main_clipboard_empty">El portapapeles está vacío</string>
+    <string name="main_paste_cd">Pegar</string>
+    <string name="main_analyzing_link">Analizando enlace...</string>
+    <string name="main_add_btn">Añadir a la cola</string>
+    <string name="main_fetching_playlist">Obteniendo lista de canciones de la playlist...</string>
+    <string name="main_close_summary_cd">Cerrar resumen</string>
+    <string name="main_queue_title">Cola de Transferencias</string>
+    <string name="main_queue_paused_suffix"> · ⏸ En pausa</string>
+    <string name="main_queue_counts">%1$d pendientes · %2$d completadas%3$s</string>
+    <string name="main_resume_queue">Reanudar cola</string>
+    <string name="main_pause_queue">Pausar cola</string>
+    <string name="main_retry_count">Reintentar (%1$d)</string>
+    <string name="main_clear_completed">Limpiar completadas</string>
+    <string name="main_queue_empty_title">Cola vacía</string>
+    <string name="main_queue_empty_subtitle">Puedes compartir canciones o álbumes seguidos desde Spotify, Apple Music, Deezer, SoundCloud, Amazon Music o YouTube y se procesarán automáticamente.</string>
+    <string name="main_removed_from_queue">Eliminada de la cola</string>
+    <string name="main_remove_from_queue_cd">Eliminar de la cola</string>
+    <string name="queue_trim_start">✂️ Inicio: %1$s</string>
+    <string name="queue_trim_end">✂️ Fin: %1$s</string>
+    <string name="queue_lyrics_yes">Letra ✓</string>
+    <string name="queue_lyrics_add">+ Letra</string>
+    <string name="queue_edit">Editar</string>
+    <string name="queue_versions">Versiones%1$s</string>
+    <string name="queue_dup_title">Esta canción ya existe en tu música</string>
+    <string name="queue_dup_skip">Omitir</string>
+    <string name="queue_dup_overwrite">Sobrescribir</string>
+    <string name="queue_skipped">Omitida (Ya estaba descargada)</string>
+    <string name="queue_download_anyway">Descargar de todos modos</string>
+    <string name="queue_saved_at">📁 Guardado en: %1$s</string>
+    <string name="queue_cancelled">Descarga cancelada</string>
+    <string name="queue_resume">Reanudar</string>
+    <string name="queue_transfer_warning">Aviso de transferencia</string>
+    <string name="queue_default_error">Fallo durante el procesamiento</string>
+    <string name="queue_pick_video">Elegir vídeo</string>
+
+    <!-- Queue Status Badges -->
+    <string name="status_queued">⏳ En espera</string>
+    <string name="status_waiting_wifi">📡 Esperando Wi‑Fi</string>
+    <string name="status_analyzing">🔍 Analizando...</string>
+    <string name="status_downloading">📥 Descargando %1$d%%</string>
+    <string name="status_normalizing">🎚️ Normalizando R128...</string>
+    <string name="status_uploading">💾 Guardando %1$d%%</string>
+    <string name="status_completed">✓ Descargado</string>
+    <string name="status_failed">⚠️ Error</string>
+    <string name="status_cancelled">🚫 Cancelado</string>
+    <string name="status_duplicate">⚠️ Ya descargada</string>
+    <string name="status_skipped">⏭️ Omitida</string>
+
+    <!-- Dialogs: Lyrics, Playlist, Candidates, Metadata, Picker -->
+    <string name="lyrics_dialog_title">Gestión de Letra</string>
+    <string name="lyrics_tab_current">Letra actual</string>
+    <string name="lyrics_tab_search">🔍 Buscar otra</string>
+    <string name="lyrics_none_assigned">No hay letra asignada.</string>
+    <string name="lyrics_search_lrclib">Buscar en LRCLIB</string>
+    <string name="lyrics_search_label">Buscar letra</string>
+    <string name="lyrics_none_found">No se encontraron letras con ese término.</string>
+    <string name="lyrics_synced_badge">✓ Sincronizada (.lrc)</string>
+    <string name="lyrics_use_btn">Usar</string>
+    <string name="lyrics_confirm_btn">Confirmar letra</string>
+    <string name="lyrics_view_btn">Ver</string>
+    <string name="lyrics_edit_text_btn">Editar texto</string>
+    <string name="lyrics_delete_btn">Eliminar letra</string>
+
+    <string name="playlist_songs_new">%1$d canciones (%2$d nuevas)</string>
+    <string name="playlist_songs_found">%1$d canciones encontradas</string>
+    <string name="playlist_select_none">Ninguna</string>
+    <string name="playlist_select_all">Todas</string>
+    <string name="playlist_missing_only">Solo faltantes</string>
+    <string name="playlist_in_library">✓ En tu biblioteca</string>
+    <string name="playlist_in_library_short">✓ En biblioteca</string>
+    <string name="playlist_add_count">Añadir (%1$d)</string>
+    <string name="collection_type_album">Álbum</string>
+    <string name="collection_type_playlist">Playlist</string>
+    <string name="collection_download_count">Descargar (%1$d)</string>
+
+    <string name="versions_dialog_title">Versiones y Carátulas</string>
+    <string name="versions_dialog_subtitle">Selecciona o busca en iTunes la versión exacta de estudio, single o directo:</string>
+    <string name="versions_search_placeholder">Buscar en iTunes (ej: Kasabian Fire)</string>
+    <string name="versions_empty">No se encontraron versiones en iTunes.\nEscribe el artista y canción arriba para buscar.</string>
+    <string name="versions_selected_cd">Seleccionada</string>
+
+    <string name="metadata_dialog_title">Editar información</string>
+    <string name="metadata_dialog_hint">Corrige los nombres para organizar las carpetas y buscar la carátula y letra adecuadas.</string>
+    <string name="metadata_title_label">Título de la canción</string>
+    <string name="metadata_artist_label">Artista</string>
+    <string name="metadata_album_label">Álbum (opcional)</string>
+    <string name="metadata_start_label">Inicio (MM:SS)</string>
+    <string name="metadata_end_label">Fin (opcional)</string>
+    <string name="metadata_apply_btn">Aplicar y Rebuscar</string>
+
+    <string name="picker_dialog_title">Elegir vídeo de audio</string>
+    <string name="picker_query_placeholder">Artista y canción...</string>
+    <string name="picker_no_videos">No se encontraron vídeos. Prueba modificando la búsqueda.</string>
+
+    <!-- Data / Services / Errors -->
+    <string name="data_song_default">Canción</string>
+    <string name="data_yt_song_default">Canción de YouTube</string>
+    <string name="data_untitled">Sin título</string>
+    <string name="data_loading_info">Cargando información...</string>
+    <string name="data_album_default">Álbum</string>
+    <string name="data_untitled_album">Álbum sin título</string>
+    <string name="data_track_n">Canción %1$d</string>
+
+    <string name="yt_no_audio_streams">No se encontraron streams de audio disponibles para este vídeo.</string>
+    <string name="yt_extract_failed">Fallo de extracción: %1$s</string>
+    <string name="yt_file_corrupt">El archivo descargado está incompleto o dañado.</string>
+
+    <string name="ext_amazon_playlist">Amazon Music no permite leer playlists completas sin iniciar sesión.\n\nSolo puedes compartir canciones sueltas desde la app de Amazon Music (Compartir → Music Drop). Para descargar listas completas, utiliza Spotify, Apple Music, Deezer o YouTube.</string>
+    <string name="ext_amazon_album">Amazon Music no permite leer álbumes completos sin iniciar sesión.\n\nComparte las canciones sueltas una a una desde Amazon Music o usa Spotify / Apple Music / Deezer.</string>
+    <string name="ext_amazon_web">Amazon Music no expone los datos de este enlace web sin iniciar sesión. Comparte la canción suelta directamente desde la app de Amazon Music (Compartir → Music Drop).</string>
+    <string name="ext_apple_track">No se encontraron los datos de esta canción en Apple Music.</string>
+    <string name="ext_apple_album">No se pudieron extraer las pistas de este álbum en Apple Music.</string>
+    <string name="ext_apple_playlist">No se pudieron extraer las canciones de esta playlist de Apple Music (puede ser privada o requerir sesión).</string>
+    <string name="ext_deezer_album">El álbum de Deezer no contiene pistas visibles.</string>
+    <string name="ext_deezer_playlist">La playlist de Deezer está vacía o es privada.</string>
+    <string name="ext_yt_duration_mismatch">Ningún vídeo en YouTube coincide con la duración original (%1$ds ±%2$ds).</string>
+    <string name="ext_spotify_personal">Playlist personalizada de Spotify (Daily Mix / Radar / Descubrimiento): es privada de tu cuenta. En Spotify pulsa \'⋮\' → \'Añadir a otra playlist\' → \'Nueva playlist\' y pega ese nuevo enlace.</string>
+    <string name="ext_spotify_private">Spotify no permite leer esta playlist sin iniciar sesión (puede ser privada o personalizada). Prueba a copiar sus canciones a una playlist pública nueva y compartir ese enlace.</string>
+    <string name="ext_spotify_404">Spotify devolvió 404 (contenido no encontrado o no disponible públicamente).</string>
+
+    <string name="shazam_unsupported_rate">El micrófono del dispositivo no soporta grabación a 16 kHz.</string>
+    <string name="shazam_perm_denied">permiso denegado</string>
+    <string name="shazam_mic_access_err">No se pudo acceder al micrófono: %1$s</string>
+    <string name="shazam_mic_init_err">No se pudo inicializar el micrófono.</string>
+    <string name="shazam_too_short">Grabación demasiado corta para reconocer la canción.</string>
+    <string name="shazam_offline">sin conexión</string>
+    <string name="shazam_query_err">Error al consultar el servicio de reconocimiento: %1$s</string>
+    <string name="shazam_rate_limit">Demasiadas peticiones seguidas. Espera unos segundos e inténtalo de nuevo.</string>
+    <string name="shazam_http_err">El servidor de reconocimiento respondió con código %1$d.</string>
+
+    <string name="local_saved_ok">¡Guardado con éxito en %1$s!</string>
+
+    <string name="queue_waiting_wifi">Esperando conexión Wi‑Fi...</string>
+    <string name="queue_waiting_wifi_auto">Esperando conexión Wi‑Fi (se reanudará automáticamente)...</string>
+    <string name="queue_analyzing_info">Analizando información de YouTube e iTunes...</string>
+    <string name="queue_already_exists">Ya existe en tu música</string>
+    <string name="queue_norm_error">Error en la normalización de audio.</string>
+    <string name="queue_tagging">Incrustando metadatos ID3v2.3 y carátula 600x600...</string>
+    <string name="queue_cover_yt">Carátula de YouTube</string>
+    <string name="queue_conn_interrupted">Conexión interrumpida durante la transferencia. Revisa tu red o Tailscale y pulsa «Reintentar».</string>
+    <string name="queue_timeout">Tiempo de espera agotado. Comprueba la conexión a Internet o con el NAS y pulsa «Reintentar».</string>
+
+    <string name="smb_test_start">Iniciando prueba de conexión con el NAS...</string>
+    <string name="smb_test_creating">no existía, intentando crear...</string>
+    <string name="smb_test_all_ok">\n¡TODO CORRECTO! Conexión y permisos verificados al 100%%.</string>
+    <string name="smb_connecting_via">Conectando al NAS vía %1$s (%2$s:%3$d)...</string>
+    <string name="smb_retrying_conn">Reintentando conexión con el NAS (%1$d/%2$d)...</string>
+    <string name="smb_uploading_via">Subiendo canción al NAS por %1$s...</string>
+    <string name="smb_saved_ok">¡Canción guardada con éxito en el NAS!</string>
+    <string name="smb_failover">Fallo en %1$s. Conmutando automáticamente a IP de respaldo...</string>
+    <string name="smb_no_ip">No hay ninguna dirección IP del NAS configurada en Ajustes (ni Local ni Tailscale). Por favor, indícalas en Ajustes para conectar.</string>
+    <string name="smb_err_interrupted">Se interrumpió la conexión con el NAS durante la transferencia.\n\n💡 Suele deberse a un microcorte de red (cambio entre Wi-Fi y datos móviles, o reconexión de Tailscale) o a que el servidor cerró la sesión SMB. Comprueba tu red y pulsa «Reintentar».</string>
+    <string name="smb_err_refused">El servidor NAS rechazó la conexión%1$s.\n\n💡 Comprueba que el NAS esté encendido y que el servicio de archivos compartidos (SMB) esté activo.</string>
+    <string name="smb_err_unreachable">💡 Comprueba que tu móvil esté conectado a la misma red Wi-Fi o que la app de Tailscale esté activa y conectada.</string>
+    <string name="smb_err_timeout">💡 Si estás fuera de casa, verifica que Tailscale esté conectado. Si estás en casa, comprueba que el Wi-Fi esté activo.</string>
+    <string name="smb_err_auth">Usuario o contraseña del NAS incorrectos.\n\n</string>
+    <string name="smb_err_share">No se encontró la carpeta compartida en el NAS.\n\n</string>
+    <string name="smb_err_dns">No se pudo resolver la dirección del NAS%1$s.\n\n</string>
+    <string name="smb_err_comm">Error de comunicación</string>
+    <string name="smb_err_detail">💡 Detalle: %1$s. Comprueba que el NAS y la red (Wi-Fi o Tailscale) estén activos y pulsa «Reintentar».</string>
+</resources>

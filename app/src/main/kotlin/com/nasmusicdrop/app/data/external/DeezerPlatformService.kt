@@ -152,7 +152,7 @@ object DeezerPlatformService : ExternalPlatformService {
         }
 
         if (tracks.isEmpty()) {
-            return ExternalResult.Error("El álbum de Deezer no contiene pistas visibles.")
+            return ExternalResult.Error(com.nasmusicdrop.app.data.AppStrings.get(com.nasmusicdrop.app.R.string.ext_deezer_album))
         }
 
         return ExternalResult.Collection(
@@ -202,7 +202,7 @@ object DeezerPlatformService : ExternalPlatformService {
         }
 
         if (tracks.isEmpty()) {
-            return ExternalResult.Error("La playlist de Deezer está vacía o es privada.")
+            return ExternalResult.Error(com.nasmusicdrop.app.data.AppStrings.get(com.nasmusicdrop.app.R.string.ext_deezer_playlist))
         }
 
         return ExternalResult.Collection(

@@ -3,6 +3,7 @@ package com.nasmusicdrop.app.ui.main
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
+import com.nasmusicdrop.app.R
 import com.nasmusicdrop.app.data.external.*
 import com.nasmusicdrop.app.data.model.*
 import com.nasmusicdrop.app.data.nas.SmbNasService
@@ -194,25 +195,26 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
 
     private fun handleExternalPlatformUrl(url: String) {
         lastExternalUrl = url
+        val app = getApplication<Application>()
         viewModelScope.launch {
             _isResolvingExternal.value = true
-            _externalBatchProgress.value = "Conectando con plataforma externa..."
+            _externalBatchProgress.value = app.getString(R.string.vm_connecting_platform)
 
             val result = ExternalPlatformManager.resolve(url)
 
             when (result) {
                 is ExternalResult.Track -> {
-                    _externalBatchProgress.value = "Comprobando duplicados..."
+                    _externalBatchProgress.value = app.getString(R.string.vm_checking_duplicates)
                     resolveAndEnqueueSingleExternalTrack(result.track)
                     _isResolvingExternal.value = false
                     _externalBatchProgress.value = null
                 }
                 is ExternalResult.Collection -> {
-                    _externalBatchProgress.value = "Comprobando biblioteca (${result.collection.tracks.size} pistas)..."
+                    _externalBatchProgress.value = app.getString(R.string.vm_checking_library, result.collection.tracks.size)
                     val config = repository.getConfig()
                     val processedTracks = ExternalPlatformManager.checkTracksAlreadyInLibrary(
                         config = config,
-                        context = getApplication(),
+                        context = app,
                         tracks = result.collection.tracks
                     )
                     _isResolvingExternal.value = false
@@ -222,17 +224,18 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
                 is ExternalResult.Error -> {
                     _isResolvingExternal.value = false
                     _externalBatchProgress.value = null
-                    _externalErrorMessage.value = Pair("No se pudo cargar el enlace", result.message)
+                    _externalErrorMessage.value = Pair(app.getString(R.string.vm_link_load_error), result.message)
                 }
             }
         }
     }
 
     private suspend fun resolveAndEnqueueSingleExternalTrack(track: ExternalTrack) {
+        val app = getApplication<Application>()
         val config = repository.getConfig()
 
         // Comprobación anticipada en la biblioteca
-        val isDuplicate = ExternalPlatformManager.checkTrackAlreadyInLibrary(config, getApplication(), track)
+        val isDuplicate = ExternalPlatformManager.checkTrackAlreadyInLibrary(config, app, track)
         if (isDuplicate) {
             queueManager.enqueue(
                 rawUrl = track.originalUrl.ifBlank { "https://music.drop" },
@@ -247,7 +250,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
         }
 
         // Buscar coincidencia en YouTube
-        _externalBatchProgress.value = "Buscando en YouTube: ${track.artist} - ${track.title}..."
+        _externalBatchProgress.value = app.getString(R.string.vm_searching_yt, track.artist, track.title)
         val match = ExternalPlatformManager.searchBestYouTubeMatch(track, config.durationToleranceSeconds.toLong())
 
         when (match) {
@@ -289,8 +292,9 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
             var successCount = 0
             var failedCount = 0
 
+            val app = getApplication<Application>()
             for ((index, track) in selectedTracks.withIndex()) {
-                _externalBatchProgress.value = "Localizando en YouTube (${index + 1}/$total): ${track.title}..."
+                _externalBatchProgress.value = app.getString(R.string.vm_locating_yt_batch, index + 1, total, track.title)
 
                 val match = ExternalPlatformManager.searchBestYouTubeMatch(track, toleranceSec)
                 when (match) {
@@ -330,9 +334,9 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
             _externalBatchProgress.value = null
             val skippedDuplicates = collection.tracks.count { it.isAlreadyInLibrary && it.id !in selectedTrackIds }
             val parts = mutableListOf<String>()
-            if (successCount > 0) parts.add("$successCount añadidas a la cola")
-            if (skippedDuplicates > 0) parts.add("$skippedDuplicates ya en biblioteca")
-            if (failedCount > 0) parts.add("$failedCount sin coincidencia")
+            if (successCount > 0) parts.add(app.getString(R.string.vm_batch_added, successCount))
+            if (skippedDuplicates > 0) parts.add(app.getString(R.string.vm_batch_in_library, skippedDuplicates))
+            if (failedCount > 0) parts.add(app.getString(R.string.vm_batch_no_match, failedCount))
             if (parts.isNotEmpty()) {
                 _playlistSummaryBanner.value = "${collection.title}: ${parts.joinToString(" · ")}"
             }
@@ -624,7 +628,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
         _recognitionState.value = RecognitionUiState.Idle
         viewModelScope.launch {
             _isResolvingExternal.value = true
-            _externalBatchProgress.value = "Localizando en YouTube: ${track.artist} - ${track.title}..."
+            _externalBatchProgress.value = getApplication<Application>().getString(R.string.vm_locating_yt_single, track.artist, track.title)
             resolveAndEnqueueSingleExternalTrack(track)
             _isResolvingExternal.value = false
             _externalBatchProgress.value = null

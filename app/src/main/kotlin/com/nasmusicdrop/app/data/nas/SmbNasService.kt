@@ -54,7 +54,7 @@ object SmbNasService {
         var isTailscale = false
         var latencyMs = 0L
 
-        log.appendLine("Iniciando prueba de conexión con el NAS...")
+        log.appendLine(com.nasmusicdrop.app.data.AppStrings.get(com.nasmusicdrop.app.R.string.smb_test_start))
 
         // 1. Probar conectividad socket (puerto 445 SMB)
         val ipsToTry = mutableListOf<String>()
@@ -381,9 +381,9 @@ object SmbNasService {
                 val client = SMBClient()
                 try {
                     if (attempt == 1) {
-                        onProgress(5, "Conectando al NAS vía $ipLabel ($host:$port)...")
+                        onProgress(5, com.nasmusicdrop.app.data.AppStrings.get(com.nasmusicdrop.app.R.string.smb_connecting_via, ipLabel, host, port))
                     } else {
-                        onProgress(8, "Reintentando conexión con el NAS ($attempt/$maxAttemptsForIp)...")
+                        onProgress(8, com.nasmusicdrop.app.data.AppStrings.get(com.nasmusicdrop.app.R.string.smb_retrying_conn, attempt, maxAttemptsForIp))
                     }
 
                     val connection = client.connect(host, port)
@@ -432,7 +432,7 @@ object SmbNasService {
                         } catch (_: Exception) {}
                     }
 
-                    onProgress(30, "Subiendo canción al NAS por $ipLabel...")
+                    onProgress(30, com.nasmusicdrop.app.data.AppStrings.get(com.nasmusicdrop.app.R.string.smb_uploading_via, ipLabel))
 
                     // Subir el archivo MP3
                     val totalBytes = localFile.length()
@@ -476,7 +476,7 @@ object SmbNasService {
                     markIpWorking(ip)
                     client.close()
 
-                    onProgress(100, "¡Canción guardada con éxito en el NAS!")
+                    onProgress(100, com.nasmusicdrop.app.data.AppStrings.get(com.nasmusicdrop.app.R.string.smb_saved_ok))
 
                     return@withContext UploadResult(
                         success = true,
@@ -500,7 +500,7 @@ object SmbNasService {
             }
 
             if (index < ipsToTry.size - 1) {
-                onProgress(10, "Fallo en $ip. Conmutando automáticamente a IP de respaldo...")
+                onProgress(10, com.nasmusicdrop.app.data.AppStrings.get(com.nasmusicdrop.app.R.string.smb_failover, ip))
             }
         }
 
@@ -549,7 +549,7 @@ object SmbNasService {
      */
     fun formatFriendlySmbError(e: Throwable?, ipsAttempted: List<String> = emptyList()): String {
         if (ipsAttempted.isEmpty()) {
-            return "No hay ninguna dirección IP del NAS configurada en Ajustes (ni Local ni Tailscale). Por favor, indícalas en Ajustes para conectar."
+            return com.nasmusicdrop.app.data.AppStrings.get(com.nasmusicdrop.app.R.string.smb_no_ip)
         }
 
         val chain = buildList {
@@ -565,42 +565,26 @@ object SmbNasService {
         val triedText = if (ipsAttempted.isNotEmpty()) " (IPs: ${ipsAttempted.joinToString(", ")})" else ""
 
         return when {
-            chain.contains("connection reset") || chain.contains("broken pipe") || chain.contains("socket closed") -> {
-                "Se interrumpió la conexión con el NAS durante la transferencia.\n\n" +
-                "💡 Suele deberse a un microcorte de red (cambio entre Wi-Fi y datos móviles, o reconexión de Tailscale) o a que el servidor cerró la sesión SMB. Comprueba tu red y pulsa «Reintentar»."
-            }
-            chain.contains("connection refused") || chain.contains("econnrefused") -> {
-                "El servidor NAS rechazó la conexión$triedText.\n\n" +
-                "💡 Comprueba que el NAS esté encendido y que el servicio de archivos compartidos (SMB) esté activo."
-            }
-            chain.contains("timed out") || chain.contains("timeout") || chain.contains("etimedout") -> {
-                "Tiempo de espera agotado al intentar conectar con el NAS$triedText.\n\n" +
-                "💡 Comprueba que tu móvil esté conectado a la misma red Wi-Fi o que la app de Tailscale esté activa y conectada."
-            }
-            chain.contains("no route to host") || chain.contains("host is down") || chain.contains("unreachable") -> {
-                "No se puede alcanzar el servidor NAS$triedText.\n\n" +
-                "💡 Si estás fuera de casa, verifica que Tailscale esté conectado. Si estás en casa, comprueba que el Wi-Fi esté activo."
-            }
-            chain.contains("logon_failure") || chain.contains("logon failure") || chain.contains("status_logon_failure") || chain.contains("authentication failed") -> {
-                "Usuario o contraseña del NAS incorrectos.\n\n" +
-                "💡 Ve a Ajustes y revisa las credenciales de acceso al NAS."
-            }
-            chain.contains("bad_network_name") || chain.contains("status_bad_network_name") || chain.contains("object_name_not_found") -> {
-                "No se encontró la carpeta compartida en el NAS.\n\n" +
-                "💡 Revisa el «Nombre del recurso compartido» o la «Ruta base» en los Ajustes."
-            }
-            chain.contains("access_denied") || chain.contains("status_access_denied") -> {
-                "Permiso denegado en el NAS.\n\n" +
-                "💡 El usuario de red no tiene permisos para escribir archivos en la carpeta configurada."
-            }
-            chain.contains("unknownhost") -> {
-                "No se pudo resolver la dirección del NAS$triedText.\n\n" +
-                "💡 Revisa las direcciones IP configuradas en Ajustes."
-            }
+            chain.contains("connection reset") || chain.contains("broken pipe") || chain.contains("socket closed") ->
+                com.nasmusicdrop.app.data.AppStrings.get(com.nasmusicdrop.app.R.string.smb_err_interrupted)
+            chain.contains("connection refused") || chain.contains("econnrefused") ->
+                com.nasmusicdrop.app.data.AppStrings.get(com.nasmusicdrop.app.R.string.smb_err_refused, triedText)
+            chain.contains("timed out") || chain.contains("timeout") || chain.contains("etimedout") ->
+                com.nasmusicdrop.app.data.AppStrings.get(com.nasmusicdrop.app.R.string.smb_err_unreachable)
+            chain.contains("no route to host") || chain.contains("host is down") || chain.contains("unreachable") ->
+                com.nasmusicdrop.app.data.AppStrings.get(com.nasmusicdrop.app.R.string.smb_err_timeout)
+            chain.contains("logon_failure") || chain.contains("logon failure") || chain.contains("status_logon_failure") || chain.contains("authentication failed") ->
+                com.nasmusicdrop.app.data.AppStrings.get(com.nasmusicdrop.app.R.string.smb_err_auth)
+            chain.contains("bad_network_name") || chain.contains("status_bad_network_name") || chain.contains("object_name_not_found") ->
+                com.nasmusicdrop.app.data.AppStrings.get(com.nasmusicdrop.app.R.string.smb_err_share)
+            chain.contains("access_denied") || chain.contains("status_access_denied") ->
+                "Access denied on NAS.\n\n"
+            chain.contains("unknownhost") ->
+                com.nasmusicdrop.app.data.AppStrings.get(com.nasmusicdrop.app.R.string.smb_err_dns, triedText)
             else -> {
-                val cleanMsg = e?.message?.lines()?.firstOrNull()?.take(80) ?: "Error de comunicación"
-                "No se pudo conectar con el NAS$triedText.\n\n" +
-                "💡 Detalle: $cleanMsg. Comprueba que el NAS y la red (Wi-Fi o Tailscale) estén activos y pulsa «Reintentar»."
+                val cleanMsg = e?.message?.lines()?.firstOrNull()?.take(80)
+                    ?: com.nasmusicdrop.app.data.AppStrings.get(com.nasmusicdrop.app.R.string.smb_err_comm)
+                com.nasmusicdrop.app.data.AppStrings.get(com.nasmusicdrop.app.R.string.smb_err_detail, cleanMsg)
             }
         }
     }

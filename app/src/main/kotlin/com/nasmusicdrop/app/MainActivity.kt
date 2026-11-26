@@ -31,6 +31,7 @@ class MainActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        com.nasmusicdrop.app.data.AppStrings.init(applicationContext)
         updateTaskDescription()
 
         // Solicitar permiso de notificaciones en Android 13+ para el servicio en segundo plano
@@ -76,26 +77,26 @@ class MainActivity : ComponentActivity() {
                                 NavigationBarItem(
                                     selected = selectedTabIndex == 0,
                                     onClick = { viewModel.selectTab(0) },
-                                    icon = { Icon(Icons.Default.CloudDownload, contentDescription = "Descargar") },
-                                    label = { Text("Descargar") }
+                                    icon = { Icon(Icons.Default.CloudDownload, contentDescription = androidx.compose.ui.res.stringResource(R.string.nav_download)) },
+                                    label = { Text(androidx.compose.ui.res.stringResource(R.string.nav_download)) }
                                 )
                                 NavigationBarItem(
                                     selected = selectedTabIndex == 1,
                                     onClick = { viewModel.selectTab(1) },
-                                    icon = { Icon(Icons.Default.Search, contentDescription = "Buscar") },
-                                    label = { Text("Buscar") }
+                                    icon = { Icon(Icons.Default.Search, contentDescription = androidx.compose.ui.res.stringResource(R.string.nav_search)) },
+                                    label = { Text(androidx.compose.ui.res.stringResource(R.string.nav_search)) }
                                 )
                                 NavigationBarItem(
                                     selected = selectedTabIndex == 2,
                                     onClick = { viewModel.selectTab(2) },
-                                    icon = { Icon(Icons.Default.History, contentDescription = "Historial") },
-                                    label = { Text("Historial") }
+                                    icon = { Icon(Icons.Default.History, contentDescription = androidx.compose.ui.res.stringResource(R.string.nav_history)) },
+                                    label = { Text(androidx.compose.ui.res.stringResource(R.string.nav_history)) }
                                 )
                                 NavigationBarItem(
                                     selected = selectedTabIndex == 3,
                                     onClick = { viewModel.selectTab(3) },
-                                    icon = { Icon(Icons.Default.Settings, contentDescription = "Ajustes") },
-                                    label = { Text("Ajustes") }
+                                    icon = { Icon(Icons.Default.Settings, contentDescription = androidx.compose.ui.res.stringResource(R.string.nav_settings)) },
+                                    label = { Text(androidx.compose.ui.res.stringResource(R.string.nav_settings)) }
                                 )
                             }
                         }

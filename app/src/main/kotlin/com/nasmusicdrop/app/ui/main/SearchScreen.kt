@@ -30,6 +30,7 @@ import androidx.compose.ui.hapticfeedback.HapticFeedbackType
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.platform.LocalHapticFeedback
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.style.TextOverflow
@@ -37,6 +38,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.core.content.ContextCompat
 import coil.compose.AsyncImage
+import com.nasmusicdrop.app.R
 import com.nasmusicdrop.app.data.audio.YouTubeExtractor
 import com.nasmusicdrop.app.data.model.SearchResultItem
 
@@ -61,7 +63,7 @@ fun SearchScreen(
         if (granted) {
             viewModel.startAudioRecognition()
         } else {
-            onShowMessage("Necesitas conceder permiso de micrófono para identificar canciones.")
+            onShowMessage(context.getString(R.string.search_mic_perm_required))
         }
     }
 
@@ -93,12 +95,12 @@ fun SearchScreen(
             Spacer(modifier = Modifier.height(16.dp))
 
             Text(
-                text = "Explorar Música",
+                text = stringResource(R.string.search_title),
                 style = MaterialTheme.typography.titleLarge,
                 fontWeight = FontWeight.Bold
             )
             Text(
-                text = "Busca, preescucha y recorta antes de descargar.",
+                text = stringResource(R.string.search_subtitle),
                 style = MaterialTheme.typography.bodySmall,
                 color = MaterialTheme.colorScheme.onSurfaceVariant
             )
@@ -114,7 +116,7 @@ fun SearchScreen(
                 OutlinedTextField(
                     value = inputQuery,
                     onValueChange = { inputQuery = it },
-                    placeholder = { Text("Buscar música (canción, artista)...") },
+                    placeholder = { Text(stringResource(R.string.search_query_placeholder)) },
                     modifier = Modifier.weight(1f),
                     shape = RoundedCornerShape(16.dp),
                     singleLine = true,
@@ -127,7 +129,7 @@ fun SearchScreen(
                                 inputQuery = ""
                                 viewModel.clearSearch()
                             }) {
-                                Icon(Icons.Default.Clear, contentDescription = "Limpiar")
+                                Icon(Icons.Default.Clear, contentDescription = stringResource(R.string.search_clear))
                             }
                         }
                     },
@@ -150,7 +152,7 @@ fun SearchScreen(
                 ) {
                     Icon(
                         imageVector = Icons.Default.Mic,
-                        contentDescription = "Identificar canción por micrófono",
+                        contentDescription = stringResource(R.string.search_mic_cd),
                         tint = MaterialTheme.colorScheme.primary
                     )
                 }
@@ -176,11 +178,11 @@ fun SearchScreen(
                         color = MaterialTheme.colorScheme.onPrimary
                     )
                     Spacer(modifier = Modifier.width(8.dp))
-                    Text("Buscando música...")
+                    Text(stringResource(R.string.search_searching_btn))
                 } else {
                     Icon(Icons.Default.Search, contentDescription = null, modifier = Modifier.size(18.dp))
                     Spacer(modifier = Modifier.width(8.dp))
-                    Text("Buscar música")
+                    Text(stringResource(R.string.search_btn))
                 }
             }
 
@@ -198,7 +200,7 @@ fun SearchScreen(
                         CircularProgressIndicator()
                         Spacer(modifier = Modifier.height(12.dp))
                         Text(
-                            text = "Consultando catálogo musical...",
+                            text = stringResource(R.string.search_loading_catalog),
                             style = MaterialTheme.typography.bodyMedium,
                             color = MaterialTheme.colorScheme.onSurfaceVariant
                         )
@@ -223,7 +225,7 @@ fun SearchScreen(
                         )
                         Spacer(modifier = Modifier.height(14.dp))
                         Text(
-                            text = if (searchQuery.isNotBlank()) "No se encontraron canciones" else "Explora y reproduce canciones",
+                            text = if (searchQuery.isNotBlank()) stringResource(R.string.search_no_results) else stringResource(R.string.search_empty_title),
                             style = MaterialTheme.typography.titleMedium,
                             fontWeight = FontWeight.SemiBold,
                             color = MaterialTheme.colorScheme.onSurfaceVariant
@@ -231,9 +233,9 @@ fun SearchScreen(
                         Spacer(modifier = Modifier.height(6.dp))
                         Text(
                             text = if (searchQuery.isNotBlank())
-                                "Prueba con otras palabras o el nombre exacto del artista."
+                                stringResource(R.string.search_no_results_hint)
                             else
-                                "Busca cualquier canción para escucharla aquí mismo y confirmar que es la versión deseada antes de descargarla.",
+                                stringResource(R.string.search_empty_hint),
                             style = MaterialTheme.typography.bodyMedium,
                             color = MaterialTheme.colorScheme.onSurfaceVariant,
                             textAlign = androidx.compose.ui.text.style.TextAlign.Center
@@ -291,7 +293,7 @@ fun SearchScreen(
                     initialThumbnailUrl = track.thumbnailUrl
                 )
                 selectedItemForDownload = null
-                onShowMessage("✓ \"${track.cleanTitle}\" añadida a la cola")
+                onShowMessage(context.getString(R.string.search_added_to_queue, track.cleanTitle))
             }
         )
     }
@@ -311,7 +313,7 @@ fun SearchScreen(
             onDownloadTrack = { track ->
                 haptic.performHapticFeedback(HapticFeedbackType.LongPress)
                 viewModel.enqueueRecognizedTrack(track)
-                onShowMessage("✓ Buscando \"${track.title}\" para descargar...")
+                onShowMessage(context.getString(R.string.search_finding_recognized, track.title))
             }
         )
     }
@@ -336,11 +338,11 @@ fun AudioRecognitionDialog(
                 Spacer(modifier = Modifier.width(8.dp))
                 Text(
                     text = when (state) {
-                        is MainViewModel.RecognitionUiState.Listening -> "Escuchando música..."
-                        is MainViewModel.RecognitionUiState.Identifying -> "Identificando canción..."
-                        is MainViewModel.RecognitionUiState.MatchFound -> "¡Canción identificada!"
-                        is MainViewModel.RecognitionUiState.NoMatch -> "Sin coincidencias"
-                        is MainViewModel.RecognitionUiState.Error -> "No se pudo escuchar"
+                        is MainViewModel.RecognitionUiState.Listening -> stringResource(R.string.recog_listening)
+                        is MainViewModel.RecognitionUiState.Identifying -> stringResource(R.string.recog_identifying)
+                        is MainViewModel.RecognitionUiState.MatchFound -> stringResource(R.string.recog_found)
+                        is MainViewModel.RecognitionUiState.NoMatch -> stringResource(R.string.recog_no_match)
+                        is MainViewModel.RecognitionUiState.Error -> stringResource(R.string.recog_error)
                         MainViewModel.RecognitionUiState.Idle -> ""
                     },
                     fontWeight = FontWeight.Bold,
@@ -393,7 +395,7 @@ fun AudioRecognitionDialog(
                         )
                         Spacer(modifier = Modifier.height(8.dp))
                         Text(
-                            text = "Acerca el teléfono a la fuente de sonido...",
+                            text = stringResource(R.string.recog_move_closer),
                             style = MaterialTheme.typography.bodySmall,
                             color = MaterialTheme.colorScheme.onSurfaceVariant
                         )
@@ -409,7 +411,7 @@ fun AudioRecognitionDialog(
                         CircularProgressIndicator()
                         Spacer(modifier = Modifier.height(12.dp))
                         Text(
-                            text = "Analizando huella acústica...",
+                            text = stringResource(R.string.recog_analyzing),
                             style = MaterialTheme.typography.bodyMedium,
                             color = MaterialTheme.colorScheme.onSurfaceVariant
                         )
@@ -460,7 +462,7 @@ fun AudioRecognitionDialog(
                 }
                 is MainViewModel.RecognitionUiState.NoMatch -> {
                     Text(
-                        text = "No se pudo identificar ninguna canción. Prueba a acercar el móvil al altavoz o asegúrate de que no haya mucho ruido.",
+                        text = stringResource(R.string.recog_no_match_msg),
                         style = MaterialTheme.typography.bodyMedium
                     )
                 }
@@ -480,7 +482,7 @@ fun AudioRecognitionDialog(
                     Button(onClick = { onDownloadTrack(state.track) }) {
                         Icon(Icons.Default.Download, contentDescription = null, modifier = Modifier.size(18.dp))
                         Spacer(modifier = Modifier.width(6.dp))
-                        Text("Descargar")
+                        Text(stringResource(R.string.common_download))
                     }
                 }
                 is MainViewModel.RecognitionUiState.NoMatch,
@@ -488,11 +490,11 @@ fun AudioRecognitionDialog(
                     Button(onClick = onRetry) {
                         Icon(Icons.Default.Refresh, contentDescription = null, modifier = Modifier.size(18.dp))
                         Spacer(modifier = Modifier.width(6.dp))
-                        Text("Reintentar")
+                        Text(stringResource(R.string.common_retry))
                     }
                 }
                 is MainViewModel.RecognitionUiState.Listening -> {
-                    TextButton(onClick = onCancel) { Text("Cancelar") }
+                    TextButton(onClick = onCancel) { Text(stringResource(R.string.common_cancel)) }
                 }
                 is MainViewModel.RecognitionUiState.Identifying,
                 MainViewModel.RecognitionUiState.Idle -> {}
@@ -502,12 +504,12 @@ fun AudioRecognitionDialog(
             when (state) {
                 is MainViewModel.RecognitionUiState.MatchFound -> {
                     OutlinedButton(onClick = { onSearchTrack(state.track) }) {
-                        Text("Buscar")
+                        Text(stringResource(R.string.nav_search))
                     }
                 }
                 is MainViewModel.RecognitionUiState.NoMatch,
                 is MainViewModel.RecognitionUiState.Error -> {
-                    TextButton(onClick = onDismiss) { Text("Cerrar") }
+                    TextButton(onClick = onDismiss) { Text(stringResource(R.string.common_close)) }
                 }
                 else -> {}
             }
@@ -546,7 +548,7 @@ fun SearchResultCard(
             ) {
                 AsyncImage(
                     model = item.thumbnailUrl,
-                    contentDescription = if (isPlaying) "Pausar" else "Reproducir preview",
+                    contentDescription = if (isPlaying) stringResource(R.string.common_pause) else stringResource(R.string.search_play_preview),
                     modifier = Modifier.fillMaxSize(),
                     contentScale = ContentScale.Crop
                 )
@@ -570,7 +572,7 @@ fun SearchResultCard(
                         } else {
                             Icon(
                                 imageVector = if (isPlaying) Icons.Default.Pause else Icons.Default.PlayArrow,
-                                contentDescription = if (isPlaying) "Pausar" else "Reproducir",
+                                contentDescription = if (isPlaying) stringResource(R.string.common_pause) else stringResource(R.string.common_play),
                                 tint = if (isPlaying) MaterialTheme.colorScheme.onPrimary else Color.White,
                                 modifier = Modifier.size(18.dp)
                             )
@@ -629,7 +631,7 @@ fun SearchResultCard(
             ) {
                 Icon(
                     Icons.Default.Download,
-                    contentDescription = "Descargar",
+                    contentDescription = stringResource(R.string.common_download),
                     tint = MaterialTheme.colorScheme.onPrimary,
                     modifier = Modifier.size(20.dp)
                 )
@@ -655,7 +657,7 @@ fun DownloadWithTimestampDialog(
             Row(verticalAlignment = Alignment.CenterVertically) {
                 Icon(Icons.Default.ContentCut, contentDescription = null, tint = MaterialTheme.colorScheme.primary)
                 Spacer(modifier = Modifier.width(8.dp))
-                Text("Descargar canción", fontWeight = FontWeight.Bold)
+                Text(stringResource(R.string.trim_dialog_title), fontWeight = FontWeight.Bold)
             }
         },
         text = {
@@ -678,12 +680,12 @@ fun DownloadWithTimestampDialog(
                 Spacer(modifier = Modifier.height(14.dp))
 
                 Text(
-                    text = "Recorte de inicio y fin (opcional):",
+                    text = stringResource(R.string.trim_dialog_section),
                     style = MaterialTheme.typography.bodySmall,
                     fontWeight = FontWeight.SemiBold
                 )
                 Text(
-                    text = "Indica los minutos/segundos (ej: 00:15) para cortar silencios, intros o créditos finales. Deja 00:00 para descargar completo.",
+                    text = stringResource(R.string.trim_dialog_hint),
                     style = MaterialTheme.typography.labelSmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
@@ -697,7 +699,7 @@ fun DownloadWithTimestampDialog(
                     OutlinedTextField(
                         value = startText,
                         onValueChange = { startText = it },
-                        label = { Text("Inicio") },
+                        label = { Text(stringResource(R.string.trim_start_label)) },
                         placeholder = { Text("00:00") },
                         singleLine = true,
                         modifier = Modifier.weight(1f),
@@ -707,7 +709,7 @@ fun DownloadWithTimestampDialog(
                     OutlinedTextField(
                         value = endText,
                         onValueChange = { endText = it },
-                        label = { Text("Fin (opc)") },
+                        label = { Text(stringResource(R.string.trim_end_label)) },
                         placeholder = { Text("MM:SS") },
                         singleLine = true,
                         modifier = Modifier.weight(1f),
@@ -725,7 +727,7 @@ fun DownloadWithTimestampDialog(
                         }
                     ) {
                         Text(
-                            text = "⏱️ Usar tiempo actual como inicio (${YouTubeExtractor.formatTimestamp(currentPreviewSec)})",
+                            text = stringResource(R.string.trim_use_current, YouTubeExtractor.formatTimestamp(currentPreviewSec)),
                             fontSize = 11.sp,
                             fontWeight = FontWeight.Medium,
                             color = MaterialTheme.colorScheme.onSecondaryContainer,
@@ -743,12 +745,12 @@ fun DownloadWithTimestampDialog(
                     onConfirm(startSec, endSec)
                 }
             ) {
-                Text("Añadir a la cola")
+                Text(stringResource(R.string.trim_add_to_queue))
             }
         },
         dismissButton = {
             TextButton(onClick = onDismiss) {
-                Text("Cancelar")
+                Text(stringResource(R.string.common_cancel))
             }
         }
     )

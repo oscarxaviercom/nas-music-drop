@@ -48,8 +48,8 @@ class DownloadForegroundService : Service() {
         createNotificationChannel()
 
         val initialNotification = buildNotification(
-            title = "NAS Music Drop",
-            content = "Iniciando transferencias...",
+            title = getString(R.string.app_name),
+            content = getString(R.string.notif_starting),
             progress = 0,
             isIndeterminate = true
         )
@@ -74,15 +74,15 @@ class DownloadForegroundService : Service() {
                         val waitingWifiCount = list.count { it.status == QueueStatus.WAITING_WIFI }
 
                         val summaryParts = mutableListOf<String>()
-                        if (completedCount > 0) summaryParts.add("$completedCount guardadas")
-                        if (failedCount > 0) summaryParts.add("$failedCount con error")
-                        if (waitingWifiCount > 0) summaryParts.add("$waitingWifiCount esperando Wi‑Fi")
+                        if (completedCount > 0) summaryParts.add(getString(R.string.notif_summary_saved, completedCount))
+                        if (failedCount > 0) summaryParts.add(getString(R.string.notif_summary_failed, failedCount))
+                        if (waitingWifiCount > 0) summaryParts.add(getString(R.string.notif_summary_waiting_wifi, waitingWifiCount))
 
                         if (summaryParts.isNotEmpty()) {
                             val title = if (waitingWifiCount > 0 && completedCount == 0 && failedCount == 0) {
-                                "📡 Esperando conexión Wi‑Fi"
+                                getString(R.string.notif_waiting_wifi_title)
                             } else {
-                                "✅ Music Drop completado"
+                                getString(R.string.notif_completed_title)
                             }
                             showSummaryNotification(title, summaryParts.joinToString(" · "))
                         }
@@ -96,7 +96,7 @@ class DownloadForegroundService : Service() {
                     val completed = list.count { it.status == QueueStatus.COMPLETED }
                     val notification = buildNotification(
                         title = "${currentItem.artist} - ${currentItem.title}",
-                        content = "${currentItem.progressStatusText} · ($completed/$total listas)",
+                        content = getString(R.string.notif_progress_content, currentItem.progressStatusText, completed, total),
                         progress = currentItem.progressPercent,
                         isIndeterminate = currentItem.status == QueueStatus.ANALYZING || currentItem.status == QueueStatus.QUEUED
                     )
@@ -122,10 +122,10 @@ class DownloadForegroundService : Service() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val channel = NotificationChannel(
                 CHANNEL_ID,
-                "Transferencias al NAS",
+                getString(R.string.notif_channel_name),
                 NotificationManager.IMPORTANCE_LOW
             ).apply {
-                description = "Progreso de descarga y subida al NAS"
+                description = getString(R.string.notif_channel_desc)
                 setShowBadge(false)
             }
             notificationManager.createNotificationChannel(channel)

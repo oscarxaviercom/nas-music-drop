@@ -24,11 +24,13 @@ import androidx.compose.ui.hapticfeedback.HapticFeedbackType
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalHapticFeedback
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
+import com.nasmusicdrop.app.R
 import com.nasmusicdrop.app.data.external.ExternalCollection
 import com.nasmusicdrop.app.data.model.PlaylistData
 import com.nasmusicdrop.app.data.model.PlaylistItem
@@ -111,7 +113,7 @@ fun MainScreen(
                                 contentPadding = PaddingValues(horizontal = 8.dp, vertical = 0.dp),
                                 modifier = Modifier.height(28.dp)
                             ) {
-                                Text("Cancelar", fontSize = 11.sp, color = MaterialTheme.colorScheme.error)
+                                Text(stringResource(R.string.common_cancel), fontSize = 11.sp, color = MaterialTheme.colorScheme.error)
                             }
                         }
                         Spacer(modifier = Modifier.height(4.dp))
@@ -154,13 +156,13 @@ fun MainScreen(
             ) {
                 Column(modifier = Modifier.padding(16.dp)) {
                     Text(
-                        text = "Añadir a la Cola de Descarga",
+                        text = stringResource(R.string.main_add_card_title),
                         style = MaterialTheme.typography.titleMedium,
                         fontWeight = FontWeight.Bold
                     )
                     Spacer(modifier = Modifier.height(4.dp))
                     Text(
-                        text = "Pega un enlace o comparte desde Spotify, Apple Music, Deezer, SoundCloud, Amazon Music o YouTube.",
+                        text = stringResource(R.string.main_add_card_subtitle),
                         style = MaterialTheme.typography.bodyMedium,
                         color = MaterialTheme.colorScheme.onSurfaceVariant
                     )
@@ -173,7 +175,7 @@ fun MainScreen(
                         OutlinedTextField(
                             value = inputUrlText,
                             onValueChange = { inputUrlText = it },
-                            placeholder = { Text("Spotify, Apple Music, Deezer, SoundCloud, YouTube...") },
+                            placeholder = { Text(stringResource(R.string.main_url_placeholder)) },
                             modifier = Modifier.weight(1f),
                             shape = RoundedCornerShape(12.dp),
                             singleLine = true
@@ -189,11 +191,11 @@ fun MainScreen(
                                 if (text.isNotBlank()) {
                                     inputUrlText = text
                                 } else {
-                                    onShowMessage("El portapapeles está vacío")
+                                    onShowMessage(context.getString(R.string.main_clipboard_empty))
                                 }
                             }
                         ) {
-                            Icon(Icons.Default.ContentPaste, contentDescription = "Pegar")
+                            Icon(Icons.Default.ContentPaste, contentDescription = stringResource(R.string.main_paste_cd))
                         }
                     }
 
@@ -217,11 +219,11 @@ fun MainScreen(
                                 color = MaterialTheme.colorScheme.onPrimary
                             )
                             Spacer(modifier = Modifier.width(8.dp))
-                            Text("Analizando enlace...")
+                            Text(stringResource(R.string.main_analyzing_link))
                         } else {
                             Icon(Icons.Default.Add, contentDescription = null)
                             Spacer(modifier = Modifier.width(8.dp))
-                            Text("Añadir a la cola")
+                            Text(stringResource(R.string.main_add_btn))
                         }
                     }
 
@@ -243,7 +245,7 @@ fun MainScreen(
                     } else if (isAnalyzingPlaylist) {
                         Spacer(modifier = Modifier.height(8.dp))
                         Text(
-                            text = "Obteniendo lista de canciones de la playlist...",
+                            text = stringResource(R.string.main_fetching_playlist),
                             style = MaterialTheme.typography.labelSmall,
                             color = MaterialTheme.colorScheme.primary
                         )
@@ -282,7 +284,7 @@ fun MainScreen(
                         ) {
                             Icon(
                                 Icons.Default.Close,
-                                contentDescription = "Cerrar resumen",
+                                contentDescription = stringResource(R.string.main_close_summary_cd),
                                 tint = MaterialTheme.colorScheme.onSecondaryContainer,
                                 modifier = Modifier.size(16.dp)
                             )
@@ -296,14 +298,14 @@ fun MainScreen(
         item {
             Column(modifier = Modifier.fillMaxWidth()) {
                 Text(
-                    text = "Cola de Transferencias",
+                    text = stringResource(R.string.main_queue_title),
                     style = MaterialTheme.typography.titleLarge,
                     fontWeight = FontWeight.Bold
                 )
                 if (queueList.isNotEmpty()) {
-                    val pausedSuffix = if (isQueuePaused) " · ⏸ En pausa" else ""
+                    val pausedSuffix = if (isQueuePaused) stringResource(R.string.main_queue_paused_suffix) else ""
                     Text(
-                        text = "$activeCount pendientes · $completedCount completadas$pausedSuffix",
+                        text = stringResource(R.string.main_queue_counts, activeCount, completedCount, pausedSuffix),
                         style = MaterialTheme.typography.labelSmall,
                         color = if (isQueuePaused) MaterialTheme.colorScheme.error else MaterialTheme.colorScheme.onSurfaceVariant
                     )
@@ -337,7 +339,7 @@ fun MainScreen(
                                     modifier = Modifier.size(16.dp)
                                 )
                                 Spacer(modifier = Modifier.width(4.dp))
-                                Text(if (isQueuePaused) "Reanudar cola" else "Pausar cola")
+                                Text(if (isQueuePaused) stringResource(R.string.main_resume_queue) else stringResource(R.string.main_pause_queue))
                             }
                         }
                         if (failedRetryableCount > 0) {
@@ -347,7 +349,7 @@ fun MainScreen(
                             ) {
                                 Icon(Icons.Default.Refresh, contentDescription = null, modifier = Modifier.size(16.dp))
                                 Spacer(modifier = Modifier.width(4.dp))
-                                Text("Reintentar ($failedRetryableCount)")
+                                Text(stringResource(R.string.main_retry_count, failedRetryableCount))
                             }
                         }
                         if (completedCount > 0) {
@@ -357,7 +359,7 @@ fun MainScreen(
                             ) {
                                 Icon(Icons.Default.CleaningServices, contentDescription = null, modifier = Modifier.size(16.dp))
                                 Spacer(modifier = Modifier.width(4.dp))
-                                Text("Limpiar completadas")
+                                Text(stringResource(R.string.main_clear_completed))
                             }
                         }
                     }
@@ -385,13 +387,13 @@ fun MainScreen(
                         )
                         Spacer(modifier = Modifier.height(10.dp))
                         Text(
-                            text = "Cola vacía",
+                            text = stringResource(R.string.main_queue_empty_title),
                             style = MaterialTheme.typography.titleMedium,
                             fontWeight = FontWeight.SemiBold
                         )
                         Spacer(modifier = Modifier.height(4.dp))
                         Text(
-                            text = "Puedes compartir canciones o álbumes seguidos desde Spotify, Apple Music, Deezer, SoundCloud, Amazon Music o YouTube y se procesarán automáticamente.",
+                            text = stringResource(R.string.main_queue_empty_subtitle),
                             style = MaterialTheme.typography.bodyMedium,
                             color = MaterialTheme.colorScheme.onSurfaceVariant,
                             textAlign = androidx.compose.ui.text.style.TextAlign.Center
@@ -412,7 +414,7 @@ fun MainScreen(
                         if (value == SwipeToDismissBoxValue.EndToStart && !isItemRunning) {
                             haptic.performHapticFeedback(HapticFeedbackType.LongPress)
                             viewModel.removeQueueItem(item.id)
-                            onShowMessage("Eliminada de la cola")
+                            onShowMessage(context.getString(R.string.main_removed_from_queue))
                             true
                         } else {
                             false
@@ -436,7 +438,7 @@ fun MainScreen(
                         ) {
                             Icon(
                                 Icons.Default.Delete,
-                                contentDescription = "Eliminar",
+                                contentDescription = stringResource(R.string.common_delete),
                                 tint = MaterialTheme.colorScheme.onErrorContainer
                             )
                         }
@@ -460,7 +462,7 @@ fun MainScreen(
                         onRemove = {
                             haptic.performHapticFeedback(HapticFeedbackType.LongPress)
                             viewModel.removeQueueItem(item.id)
-                            onShowMessage("Eliminada de la cola")
+                            onShowMessage(context.getString(R.string.main_removed_from_queue))
                         },
                         onUpdateLyrics = { newLyrics, newSynced -> viewModel.updateQueueItemLyrics(item.id, newLyrics, newSynced) },
                         onSearchLyrics = { query -> viewModel.searchAlternativeLyrics(query) },
@@ -511,14 +513,14 @@ fun MainScreen(
             text = { Text(errBody, style = MaterialTheme.typography.bodyMedium) },
             confirmButton = {
                 Button(onClick = { viewModel.dismissExternalError() }) {
-                    Text("Entendido")
+                    Text(stringResource(R.string.common_got_it))
                 }
             },
             dismissButton = {
                 TextButton(onClick = { viewModel.retryLastExternalUrl() }) {
                     Icon(Icons.Default.Refresh, contentDescription = null, modifier = Modifier.size(16.dp))
                     Spacer(modifier = Modifier.width(4.dp))
-                    Text("Reintentar")
+                    Text(stringResource(R.string.common_retry))
                 }
             }
         )
@@ -601,9 +603,9 @@ fun QueueItemCard(
                                 item.startTimeSeconds > 0 && item.endTimeSeconds > 0 ->
                                     "✂️ ${com.nasmusicdrop.app.data.audio.YouTubeExtractor.formatTimestamp(item.startTimeSeconds)} - ${com.nasmusicdrop.app.data.audio.YouTubeExtractor.formatTimestamp(item.endTimeSeconds)}"
                                 item.startTimeSeconds > 0 ->
-                                    "✂️ Inicio: ${com.nasmusicdrop.app.data.audio.YouTubeExtractor.formatTimestamp(item.startTimeSeconds)}"
+                                    stringResource(R.string.queue_trim_start, com.nasmusicdrop.app.data.audio.YouTubeExtractor.formatTimestamp(item.startTimeSeconds))
                                 else ->
-                                    "✂️ Fin: ${com.nasmusicdrop.app.data.audio.YouTubeExtractor.formatTimestamp(item.endTimeSeconds)}"
+                                    stringResource(R.string.queue_trim_end, com.nasmusicdrop.app.data.audio.YouTubeExtractor.formatTimestamp(item.endTimeSeconds))
                             }
                             Surface(
                                 color = MaterialTheme.colorScheme.tertiaryContainer,
@@ -629,7 +631,7 @@ fun QueueItemCard(
                     ) {
                         Icon(
                             Icons.Default.Close,
-                            contentDescription = "Eliminar de la cola",
+                            contentDescription = stringResource(R.string.main_remove_from_queue_cd),
                             modifier = Modifier.size(18.dp),
                             tint = MaterialTheme.colorScheme.onSurfaceVariant
                         )
@@ -670,7 +672,7 @@ fun QueueItemCard(
                             )
                             Spacer(modifier = Modifier.width(5.dp))
                             Text(
-                                text = if (hasLyrics) "Letra ✓" else "+ Letra",
+                                text = if (hasLyrics) stringResource(R.string.queue_lyrics_yes) else stringResource(R.string.queue_lyrics_add),
                                 fontSize = 12.sp,
                                 fontWeight = FontWeight.Medium,
                                 color = if (hasLyrics) MaterialTheme.colorScheme.onPrimaryContainer else MaterialTheme.colorScheme.onSurfaceVariant
@@ -693,7 +695,7 @@ fun QueueItemCard(
                         ) {
                             Icon(Icons.Default.Edit, contentDescription = null, modifier = Modifier.size(14.dp))
                             Spacer(modifier = Modifier.width(5.dp))
-                            Text("Editar", fontSize = 12.sp, fontWeight = FontWeight.Medium)
+                            Text(stringResource(R.string.queue_edit), fontSize = 12.sp, fontWeight = FontWeight.Medium)
                         }
                     }
 
@@ -719,7 +721,7 @@ fun QueueItemCard(
                             Spacer(modifier = Modifier.width(5.dp))
                             val countText = if (item.allCandidates.isNotEmpty()) " (${item.allCandidates.size})" else ""
                             Text(
-                                "Versiones$countText",
+                                stringResource(R.string.queue_versions, countText),
                                 fontSize = 12.sp,
                                 fontWeight = FontWeight.Medium,
                                 color = MaterialTheme.colorScheme.onSecondaryContainer
@@ -762,7 +764,7 @@ fun QueueItemCard(
                     ) {
                         Icon(Icons.Default.Stop, contentDescription = null, modifier = Modifier.size(14.dp))
                         Spacer(modifier = Modifier.width(4.dp))
-                        Text("Cancelar", fontSize = 11.sp)
+                        Text(stringResource(R.string.common_cancel), fontSize = 11.sp)
                     }
                 }
             }
@@ -785,7 +787,7 @@ fun QueueItemCard(
                             )
                             Spacer(modifier = Modifier.width(6.dp))
                             Text(
-                                text = "Esta canción ya existe en tu música",
+                                text = stringResource(R.string.queue_dup_title),
                                 style = MaterialTheme.typography.titleMedium,
                                 fontWeight = FontWeight.Bold,
                                 fontSize = 13.sp
@@ -810,7 +812,7 @@ fun QueueItemCard(
                                 contentPadding = PaddingValues(horizontal = 8.dp, vertical = 4.dp),
                                 shape = RoundedCornerShape(8.dp)
                             ) {
-                                Text("Omitir", fontSize = 12.sp)
+                                Text(stringResource(R.string.queue_dup_skip), fontSize = 12.sp)
                             }
                             Button(
                                 onClick = onOverwriteDuplicate,
@@ -818,7 +820,7 @@ fun QueueItemCard(
                                 contentPadding = PaddingValues(horizontal = 8.dp, vertical = 4.dp),
                                 shape = RoundedCornerShape(8.dp)
                             ) {
-                                Text("Sobrescribir", fontSize = 12.sp)
+                                Text(stringResource(R.string.queue_dup_overwrite), fontSize = 12.sp)
                             }
                         }
                     }
@@ -834,12 +836,12 @@ fun QueueItemCard(
                     horizontalArrangement = Arrangement.SpaceBetween
                 ) {
                     Text(
-                        text = "Omitida (Ya estaba descargada)",
+                        text = stringResource(R.string.queue_skipped),
                         style = MaterialTheme.typography.bodyMedium,
                         color = MaterialTheme.colorScheme.onSurfaceVariant
                     )
                     TextButton(onClick = onOverwriteDuplicate) {
-                        Text("Descargar de todos modos", fontSize = 11.sp)
+                        Text(stringResource(R.string.queue_download_anyway), fontSize = 11.sp)
                     }
                 }
             }
@@ -848,7 +850,7 @@ fun QueueItemCard(
             if (item.status == QueueStatus.COMPLETED && item.remotePath != null) {
                 Spacer(modifier = Modifier.height(8.dp))
                 Text(
-                    text = "📁 Guardado en: ${item.remotePath}",
+                    text = stringResource(R.string.queue_saved_at, item.remotePath),
                     style = MaterialTheme.typography.labelSmall,
                     color = successColor(),
                     maxLines = 1,
@@ -865,7 +867,7 @@ fun QueueItemCard(
                     horizontalArrangement = Arrangement.SpaceBetween
                 ) {
                     Text(
-                        text = "Descarga cancelada",
+                        text = stringResource(R.string.queue_cancelled),
                         style = MaterialTheme.typography.bodyMedium,
                         color = MaterialTheme.colorScheme.onSurfaceVariant
                     )
@@ -876,7 +878,7 @@ fun QueueItemCard(
                     ) {
                         Icon(Icons.Default.Refresh, contentDescription = null, modifier = Modifier.size(16.dp))
                         Spacer(modifier = Modifier.width(4.dp))
-                        Text("Reanudar", fontSize = 12.sp)
+                        Text(stringResource(R.string.queue_resume), fontSize = 12.sp)
                     }
                 }
             }
@@ -903,7 +905,7 @@ fun QueueItemCard(
                             )
                             Spacer(modifier = Modifier.width(6.dp))
                             Text(
-                                text = "Aviso de transferencia",
+                                text = stringResource(R.string.queue_transfer_warning),
                                 style = MaterialTheme.typography.labelMedium,
                                 fontWeight = FontWeight.Bold,
                                 color = MaterialTheme.colorScheme.onErrorContainer
@@ -911,7 +913,7 @@ fun QueueItemCard(
                         }
                         Spacer(modifier = Modifier.height(4.dp))
                         Text(
-                            text = item.errorMessage ?: "Fallo durante el procesamiento",
+                            text = item.errorMessage ?: stringResource(R.string.queue_default_error),
                             style = MaterialTheme.typography.bodySmall,
                             color = MaterialTheme.colorScheme.onErrorContainer,
                             lineHeight = 16.sp
@@ -928,7 +930,7 @@ fun QueueItemCard(
                                     contentPadding = PaddingValues(horizontal = 12.dp, vertical = 6.dp),
                                     shape = RoundedCornerShape(8.dp)
                                 ) {
-                                    Text("Elegir vídeo", fontSize = 12.sp)
+                                    Text(stringResource(R.string.queue_pick_video), fontSize = 12.sp)
                                 }
                             } else {
                                 OutlinedButton(
@@ -936,7 +938,7 @@ fun QueueItemCard(
                                     contentPadding = PaddingValues(horizontal = 10.dp, vertical = 6.dp),
                                     shape = RoundedCornerShape(8.dp)
                                 ) {
-                                    Text("Buscar", fontSize = 12.sp)
+                                    Text(stringResource(R.string.nav_search), fontSize = 12.sp)
                                 }
                                 Button(
                                     onClick = onRetry,
@@ -944,7 +946,7 @@ fun QueueItemCard(
                                     contentPadding = PaddingValues(horizontal = 12.dp, vertical = 6.dp),
                                     shape = RoundedCornerShape(8.dp)
                                 ) {
-                                    Text("Reintentar", fontSize = 12.sp)
+                                    Text(stringResource(R.string.common_retry), fontSize = 12.sp)
                                 }
                             }
                         }
@@ -984,7 +986,7 @@ fun QueueItemCard(
                     Icon(Icons.Default.Lyrics, contentDescription = null, tint = MaterialTheme.colorScheme.primary)
                     Spacer(modifier = Modifier.width(8.dp))
                     Text(
-                        text = "Gestión de Letra",
+                        text = stringResource(R.string.lyrics_dialog_title),
                         fontWeight = FontWeight.Bold,
                         maxLines = 1,
                         overflow = TextOverflow.Ellipsis
@@ -1005,7 +1007,7 @@ fun QueueItemCard(
                         FilterChip(
                             selected = selectedTab == 0,
                             onClick = { selectedTab = 0 },
-                            label = { Text("Letra actual") },
+                            label = { Text(stringResource(R.string.lyrics_tab_current)) },
                             modifier = Modifier.weight(1f)
                         )
                         FilterChip(
@@ -1020,7 +1022,7 @@ fun QueueItemCard(
                                     }
                                 }
                             },
-                            label = { Text("🔍 Buscar otra") },
+                            label = { Text(stringResource(R.string.lyrics_tab_search)) },
                             modifier = Modifier.weight(1f)
                         )
                     }
@@ -1065,7 +1067,7 @@ fun QueueItemCard(
                             ) {
                                 Column(horizontalAlignment = Alignment.CenterHorizontally) {
                                     Text(
-                                        text = "No hay letra asignada.",
+                                        text = stringResource(R.string.lyrics_none_assigned),
                                         style = MaterialTheme.typography.bodyMedium,
                                         color = MaterialTheme.colorScheme.onSurfaceVariant
                                     )
@@ -1082,7 +1084,7 @@ fun QueueItemCard(
                                     ) {
                                         Icon(Icons.Default.Search, contentDescription = null, modifier = Modifier.size(16.dp))
                                         Spacer(modifier = Modifier.width(6.dp))
-                                        Text("Buscar en LRCLIB")
+                                        Text(stringResource(R.string.lyrics_search_lrclib))
                                     }
                                 }
                             }
@@ -1097,7 +1099,7 @@ fun QueueItemCard(
                                 OutlinedTextField(
                                     value = lyricsQuery,
                                     onValueChange = { lyricsQuery = it },
-                                    label = { Text("Buscar letra") },
+                                    label = { Text(stringResource(R.string.lyrics_search_label)) },
                                     modifier = Modifier.weight(1f),
                                     singleLine = true,
                                     shape = RoundedCornerShape(10.dp)
@@ -1117,7 +1119,7 @@ fun QueueItemCard(
                                 ) {
                                     Icon(
                                         Icons.Default.Search,
-                                        contentDescription = "Buscar",
+                                        contentDescription = stringResource(R.string.nav_search),
                                         tint = MaterialTheme.colorScheme.onPrimary
                                     )
                                 }
@@ -1131,7 +1133,7 @@ fun QueueItemCard(
                                 }
                             } else if (candidateResults.isEmpty()) {
                                 Box(modifier = Modifier.fillMaxWidth().weight(1f), contentAlignment = Alignment.Center) {
-                                    Text("No se encontraron letras con ese término.", style = MaterialTheme.typography.labelMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                                    Text(stringResource(R.string.lyrics_none_found), style = MaterialTheme.typography.labelMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
                                 }
                             } else {
                                 androidx.compose.foundation.lazy.LazyColumn(
@@ -1164,7 +1166,7 @@ fun QueueItemCard(
                                                     )
                                                     if (candidate.isSynced) {
                                                         Text(
-                                                            text = "✓ Sincronizada (.lrc)",
+                                                            text = stringResource(R.string.lyrics_synced_badge),
                                                             style = MaterialTheme.typography.labelSmall,
                                                             color = successColor()
                                                         )
@@ -1180,7 +1182,7 @@ fun QueueItemCard(
                                                     contentPadding = PaddingValues(horizontal = 10.dp, vertical = 4.dp),
                                                     shape = RoundedCornerShape(8.dp)
                                                 ) {
-                                                    Text("Usar", fontSize = 12.sp)
+                                                    Text(stringResource(R.string.lyrics_use_btn), fontSize = 12.sp)
                                                 }
                                             }
                                         }
@@ -1198,14 +1200,14 @@ fun QueueItemCard(
                         showLyricsDialog = false
                     }
                 ) {
-                    Text("Confirmar letra")
+                    Text(stringResource(R.string.lyrics_confirm_btn))
                 }
             },
             dismissButton = {
                 Row {
                     if (selectedTab == 0 && editedLyrics.isNotBlank()) {
                         TextButton(onClick = { isEditingText = !isEditingText }) {
-                            Text(if (isEditingText) "Ver" else "Editar texto")
+                            Text(if (isEditingText) stringResource(R.string.lyrics_view_btn) else stringResource(R.string.lyrics_edit_text_btn))
                         }
                         Spacer(modifier = Modifier.width(4.dp))
                     }
@@ -1216,7 +1218,7 @@ fun QueueItemCard(
                         },
                         colors = ButtonDefaults.textButtonColors(contentColor = MaterialTheme.colorScheme.error)
                     ) {
-                        Text("Eliminar letra")
+                        Text(stringResource(R.string.lyrics_delete_btn))
                     }
                 }
             }
@@ -1257,17 +1259,17 @@ fun QueueItemCard(
 @Composable
 fun QueueStatusBadge(status: QueueStatus, percent: Int) {
     val (label, bg, fg) = when (status) {
-        QueueStatus.QUEUED -> Triple("⏳ En espera", MaterialTheme.colorScheme.surfaceVariant, MaterialTheme.colorScheme.onSurfaceVariant)
-        QueueStatus.WAITING_WIFI -> Triple("📡 Esperando Wi‑Fi", MaterialTheme.colorScheme.secondaryContainer, MaterialTheme.colorScheme.onSecondaryContainer)
-        QueueStatus.ANALYZING -> Triple("🔍 Analizando...", MaterialTheme.colorScheme.primaryContainer, MaterialTheme.colorScheme.onPrimaryContainer)
-        QueueStatus.DOWNLOADING -> Triple("📥 Descargando $percent%", MaterialTheme.colorScheme.primaryContainer, MaterialTheme.colorScheme.onPrimaryContainer)
-        QueueStatus.NORMALIZING -> Triple("🎚️ Normalizando R128...", MaterialTheme.colorScheme.tertiaryContainer, MaterialTheme.colorScheme.onTertiaryContainer)
-        QueueStatus.UPLOADING -> Triple("💾 Guardando $percent%", MaterialTheme.colorScheme.secondaryContainer, MaterialTheme.colorScheme.onSecondaryContainer)
-        QueueStatus.COMPLETED -> Triple("✓ Descargado", successColor().copy(alpha = 0.18f), successColor())
-        QueueStatus.FAILED -> Triple("⚠️ Error", MaterialTheme.colorScheme.errorContainer, MaterialTheme.colorScheme.onErrorContainer)
-        QueueStatus.CANCELLED -> Triple("🚫 Cancelado", MaterialTheme.colorScheme.surfaceVariant, MaterialTheme.colorScheme.onSurfaceVariant)
-        QueueStatus.DUPLICATE_FOUND -> Triple("⚠️ Ya descargada", MaterialTheme.colorScheme.tertiaryContainer, MaterialTheme.colorScheme.onTertiaryContainer)
-        QueueStatus.SKIPPED -> Triple("⏭️ Omitida", MaterialTheme.colorScheme.surfaceVariant, MaterialTheme.colorScheme.onSurfaceVariant)
+        QueueStatus.QUEUED -> Triple(stringResource(R.string.status_queued), MaterialTheme.colorScheme.surfaceVariant, MaterialTheme.colorScheme.onSurfaceVariant)
+        QueueStatus.WAITING_WIFI -> Triple(stringResource(R.string.status_waiting_wifi), MaterialTheme.colorScheme.secondaryContainer, MaterialTheme.colorScheme.onSecondaryContainer)
+        QueueStatus.ANALYZING -> Triple(stringResource(R.string.status_analyzing), MaterialTheme.colorScheme.primaryContainer, MaterialTheme.colorScheme.onPrimaryContainer)
+        QueueStatus.DOWNLOADING -> Triple(stringResource(R.string.status_downloading, percent), MaterialTheme.colorScheme.primaryContainer, MaterialTheme.colorScheme.onPrimaryContainer)
+        QueueStatus.NORMALIZING -> Triple(stringResource(R.string.status_normalizing), MaterialTheme.colorScheme.tertiaryContainer, MaterialTheme.colorScheme.onTertiaryContainer)
+        QueueStatus.UPLOADING -> Triple(stringResource(R.string.status_uploading, percent), MaterialTheme.colorScheme.secondaryContainer, MaterialTheme.colorScheme.onSecondaryContainer)
+        QueueStatus.COMPLETED -> Triple(stringResource(R.string.status_completed), successColor().copy(alpha = 0.18f), successColor())
+        QueueStatus.FAILED -> Triple(stringResource(R.string.status_failed), MaterialTheme.colorScheme.errorContainer, MaterialTheme.colorScheme.onErrorContainer)
+        QueueStatus.CANCELLED -> Triple(stringResource(R.string.status_cancelled), MaterialTheme.colorScheme.surfaceVariant, MaterialTheme.colorScheme.onSurfaceVariant)
+        QueueStatus.DUPLICATE_FOUND -> Triple(stringResource(R.string.status_duplicate), MaterialTheme.colorScheme.tertiaryContainer, MaterialTheme.colorScheme.onTertiaryContainer)
+        QueueStatus.SKIPPED -> Triple(stringResource(R.string.status_skipped), MaterialTheme.colorScheme.surfaceVariant, MaterialTheme.colorScheme.onSurfaceVariant)
     }
 
     Surface(
@@ -1314,9 +1316,9 @@ fun PlaylistSelectorDialog(
                 Spacer(modifier = Modifier.height(4.dp))
                 Text(
                     text = if (alreadyInLibraryCount > 0)
-                        "${playlistData.items.size} canciones (${playlistData.items.size - alreadyInLibraryCount} nuevas)"
+                        stringResource(R.string.playlist_songs_new, playlistData.items.size, playlistData.items.size - alreadyInLibraryCount)
                     else
-                        "${playlistData.items.size} canciones encontradas",
+                        stringResource(R.string.playlist_songs_found, playlistData.items.size),
                     style = MaterialTheme.typography.labelSmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
@@ -1358,7 +1360,7 @@ fun PlaylistSelectorDialog(
                         )
                         Spacer(modifier = Modifier.width(4.dp))
                         Text(
-                            text = if (allSelected) "Ninguna" else "Todas",
+                            text = if (allSelected) stringResource(R.string.playlist_select_none) else stringResource(R.string.playlist_select_all),
                             fontWeight = FontWeight.SemiBold,
                             style = MaterialTheme.typography.bodyMedium
                         )
@@ -1371,7 +1373,7 @@ fun PlaylistSelectorDialog(
                             },
                             contentPadding = PaddingValues(horizontal = 8.dp, vertical = 0.dp)
                         ) {
-                            Text("Solo faltantes", style = MaterialTheme.typography.labelMedium)
+                            Text(stringResource(R.string.playlist_missing_only), style = MaterialTheme.typography.labelMedium)
                         }
                     }
                 }
@@ -1429,7 +1431,7 @@ fun PlaylistSelectorDialog(
                                 )
                                 if (track.isAlreadyInLibrary) {
                                     Text(
-                                        text = "✓ En tu biblioteca",
+                                        text = stringResource(R.string.playlist_in_library),
                                         style = MaterialTheme.typography.labelSmall,
                                         color = successColor(),
                                         fontWeight = FontWeight.SemiBold
@@ -1446,12 +1448,12 @@ fun PlaylistSelectorDialog(
                 onClick = { onConfirm(selectedIds.toList()) },
                 enabled = selectedIds.isNotEmpty()
             ) {
-                Text("Añadir (${selectedIds.size})")
+                Text(stringResource(R.string.playlist_add_count, selectedIds.size))
             }
         },
         dismissButton = {
             TextButton(onClick = onDismiss) {
-                Text("Cancelar")
+                Text(stringResource(R.string.common_cancel))
             }
         }
     )
@@ -1486,7 +1488,7 @@ fun CandidateSelectorDialog(
             Row(verticalAlignment = Alignment.CenterVertically) {
                 Icon(Icons.Default.LibraryMusic, contentDescription = null, tint = MaterialTheme.colorScheme.primary)
                 Spacer(modifier = Modifier.width(8.dp))
-                Text("Versiones y Carátulas", fontWeight = FontWeight.Bold)
+                Text(stringResource(R.string.versions_dialog_title), fontWeight = FontWeight.Bold)
             }
         },
         text = {
@@ -1496,7 +1498,7 @@ fun CandidateSelectorDialog(
                     .heightIn(max = 480.dp)
             ) {
                 Text(
-                    text = "Selecciona o busca en iTunes la versión exacta de estudio, single o directo:",
+                    text = stringResource(R.string.versions_dialog_subtitle),
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
@@ -1510,7 +1512,7 @@ fun CandidateSelectorDialog(
                     OutlinedTextField(
                         value = searchQuery,
                         onValueChange = { searchQuery = it },
-                        placeholder = { Text("Buscar en iTunes (ej: Kasabian Fire)") },
+                        placeholder = { Text(stringResource(R.string.versions_search_placeholder)) },
                         singleLine = true,
                         modifier = Modifier.weight(1f),
                         shape = RoundedCornerShape(10.dp)
@@ -1534,7 +1536,7 @@ fun CandidateSelectorDialog(
                         if (isSearchingItunes) {
                             CircularProgressIndicator(modifier = Modifier.size(16.dp), color = MaterialTheme.colorScheme.onPrimary, strokeWidth = 2.dp)
                         } else {
-                            Icon(Icons.Default.Search, contentDescription = "Buscar", tint = MaterialTheme.colorScheme.onPrimary)
+                            Icon(Icons.Default.Search, contentDescription = stringResource(R.string.nav_search), tint = MaterialTheme.colorScheme.onPrimary)
                         }
                     }
                 }
@@ -1548,7 +1550,7 @@ fun CandidateSelectorDialog(
                 } else if (candidateList.isEmpty()) {
                     Box(modifier = Modifier.fillMaxWidth().weight(1f), contentAlignment = Alignment.Center) {
                         Text(
-                            text = "No se encontraron versiones en iTunes.\nEscribe el artista y canción arriba para buscar.",
+                            text = stringResource(R.string.versions_empty),
                             style = MaterialTheme.typography.bodySmall,
                             color = MaterialTheme.colorScheme.onSurfaceVariant,
                             textAlign = androidx.compose.ui.text.style.TextAlign.Center
@@ -1606,7 +1608,7 @@ fun CandidateSelectorDialog(
                                     }
                                     if (isSelected) {
                                         Spacer(modifier = Modifier.width(6.dp))
-                                        Icon(Icons.Default.CheckCircle, contentDescription = "Seleccionada", tint = MaterialTheme.colorScheme.primary)
+                                        Icon(Icons.Default.CheckCircle, contentDescription = stringResource(R.string.versions_selected_cd), tint = MaterialTheme.colorScheme.primary)
                                     }
                                 }
                             }
@@ -1617,7 +1619,7 @@ fun CandidateSelectorDialog(
         },
         confirmButton = {
             TextButton(onClick = onDismiss) {
-                Text("Cerrar")
+                Text(stringResource(R.string.common_close))
             }
         }
     )
@@ -1669,8 +1671,13 @@ fun ExternalCollectionSelectorDialog(
                         color = platformColor.copy(alpha = 0.15f),
                         shape = RoundedCornerShape(4.dp)
                     ) {
+                        val typeLabel = if (collection.type.equals("album", ignoreCase = true)) {
+                            stringResource(R.string.collection_type_album)
+                        } else {
+                            stringResource(R.string.collection_type_playlist)
+                        }
                         Text(
-                            text = "${collection.platform} · ${if (collection.type.equals("album", ignoreCase = true)) "Álbum" else "Playlist"}",
+                            text = "${collection.platform} · $typeLabel",
                             style = MaterialTheme.typography.labelSmall,
                             color = platformColor,
                             fontWeight = FontWeight.Bold,
@@ -1707,7 +1714,7 @@ fun ExternalCollectionSelectorDialog(
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     Text(
-                        text = "${collection.tracks.size} canciones (${collection.tracks.size - alreadyInLibraryCount} nuevas)",
+                        text = stringResource(R.string.playlist_songs_new, collection.tracks.size, collection.tracks.size - alreadyInLibraryCount),
                         style = MaterialTheme.typography.labelSmall,
                         color = MaterialTheme.colorScheme.onSurfaceVariant
                     )
@@ -1721,7 +1728,7 @@ fun ExternalCollectionSelectorDialog(
                                 },
                                 contentPadding = PaddingValues(horizontal = 6.dp, vertical = 0.dp)
                             ) {
-                                Text("Solo faltantes", style = MaterialTheme.typography.labelMedium)
+                                Text(stringResource(R.string.playlist_missing_only), style = MaterialTheme.typography.labelMedium)
                             }
                         }
                         TextButton(
@@ -1736,7 +1743,7 @@ fun ExternalCollectionSelectorDialog(
                             contentPadding = PaddingValues(horizontal = 6.dp, vertical = 0.dp)
                         ) {
                             Text(
-                                text = if (allSelected) "Ninguna" else "Todas",
+                                text = if (allSelected) stringResource(R.string.playlist_select_none) else stringResource(R.string.playlist_select_all),
                                 style = MaterialTheme.typography.labelMedium
                             )
                         }
@@ -1806,7 +1813,7 @@ fun ExternalCollectionSelectorDialog(
                                     shape = RoundedCornerShape(4.dp)
                                 ) {
                                     Text(
-                                        text = "✓ En biblioteca",
+                                        text = stringResource(R.string.playlist_in_library_short),
                                         style = MaterialTheme.typography.labelSmall,
                                         color = successColor(),
                                         fontWeight = FontWeight.Medium,
@@ -1824,12 +1831,12 @@ fun ExternalCollectionSelectorDialog(
                 onClick = { onConfirm(selectedIds.toList()) },
                 enabled = selectedIds.isNotEmpty()
             ) {
-                Text("Descargar (${selectedIds.size})")
+                Text(stringResource(R.string.collection_download_count, selectedIds.size))
             }
         },
         dismissButton = {
             TextButton(onClick = onDismiss) {
-                Text("Cancelar")
+                Text(stringResource(R.string.common_cancel))
             }
         }
     )
@@ -1861,7 +1868,7 @@ fun EditMetadataDialog(
             Row(verticalAlignment = Alignment.CenterVertically) {
                 Icon(Icons.Default.Edit, contentDescription = null, tint = MaterialTheme.colorScheme.primary)
                 Spacer(modifier = Modifier.width(8.dp))
-                Text("Editar información", fontWeight = FontWeight.Bold)
+                Text(stringResource(R.string.metadata_dialog_title), fontWeight = FontWeight.Bold)
             }
         },
         text = {
@@ -1870,7 +1877,7 @@ fun EditMetadataDialog(
                 verticalArrangement = Arrangement.spacedBy(10.dp)
             ) {
                 Text(
-                    text = "Corrige los nombres para organizar las carpetas y buscar la carátula y letra adecuadas.",
+                    text = stringResource(R.string.metadata_dialog_hint),
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
@@ -1878,7 +1885,7 @@ fun EditMetadataDialog(
                 OutlinedTextField(
                     value = title,
                     onValueChange = { title = it },
-                    label = { Text("Título de la canción") },
+                    label = { Text(stringResource(R.string.metadata_title_label)) },
                     singleLine = true,
                     modifier = Modifier.fillMaxWidth()
                 )
@@ -1886,7 +1893,7 @@ fun EditMetadataDialog(
                 OutlinedTextField(
                     value = artist,
                     onValueChange = { artist = it },
-                    label = { Text("Artista") },
+                    label = { Text(stringResource(R.string.metadata_artist_label)) },
                     singleLine = true,
                     modifier = Modifier.fillMaxWidth()
                 )
@@ -1894,7 +1901,7 @@ fun EditMetadataDialog(
                 OutlinedTextField(
                     value = album,
                     onValueChange = { album = it },
-                    label = { Text("Álbum (opcional)") },
+                    label = { Text(stringResource(R.string.metadata_album_label)) },
                     singleLine = true,
                     modifier = Modifier.fillMaxWidth()
                 )
@@ -1906,7 +1913,7 @@ fun EditMetadataDialog(
                     OutlinedTextField(
                         value = startTimeText,
                         onValueChange = { startTimeText = it },
-                        label = { Text("Inicio (MM:SS)") },
+                        label = { Text(stringResource(R.string.metadata_start_label)) },
                         singleLine = true,
                         modifier = Modifier.weight(1f)
                     )
@@ -1914,7 +1921,7 @@ fun EditMetadataDialog(
                     OutlinedTextField(
                         value = endTimeText,
                         onValueChange = { endTimeText = it },
-                        label = { Text("Fin (opcional)") },
+                        label = { Text(stringResource(R.string.metadata_end_label)) },
                         placeholder = { Text("MM:SS") },
                         singleLine = true,
                         modifier = Modifier.weight(1f)
@@ -1933,12 +1940,12 @@ fun EditMetadataDialog(
                 },
                 enabled = title.isNotBlank() && artist.isNotBlank()
             ) {
-                Text("Aplicar y Rebuscar")
+                Text(stringResource(R.string.metadata_apply_btn))
             }
         },
         dismissButton = {
             TextButton(onClick = onDismiss) {
-                Text("Cancelar")
+                Text(stringResource(R.string.common_cancel))
             }
         }
     )
@@ -1968,7 +1975,7 @@ fun YouTubeManualPickerDialog(
             Row(verticalAlignment = Alignment.CenterVertically) {
                 Icon(Icons.Default.VideoLibrary, contentDescription = null, tint = MaterialTheme.colorScheme.primary)
                 Spacer(modifier = Modifier.width(8.dp))
-                Text("Elegir vídeo de audio", fontWeight = FontWeight.Bold)
+                Text(stringResource(R.string.picker_dialog_title), fontWeight = FontWeight.Bold)
             }
         },
         text = {
@@ -1984,7 +1991,7 @@ fun YouTubeManualPickerDialog(
                     OutlinedTextField(
                         value = query,
                         onValueChange = { query = it },
-                        placeholder = { Text("Artista y canción...") },
+                        placeholder = { Text(stringResource(R.string.picker_query_placeholder)) },
                         singleLine = true,
                         modifier = Modifier.weight(1f),
                         shape = RoundedCornerShape(10.dp)
@@ -2004,7 +2011,7 @@ fun YouTubeManualPickerDialog(
                             .clip(RoundedCornerShape(10.dp))
                             .background(MaterialTheme.colorScheme.primary)
                     ) {
-                        Icon(Icons.Default.Search, contentDescription = "Buscar", tint = MaterialTheme.colorScheme.onPrimary)
+                        Icon(Icons.Default.Search, contentDescription = stringResource(R.string.nav_search), tint = MaterialTheme.colorScheme.onPrimary)
                     }
                 }
 
@@ -2017,7 +2024,7 @@ fun YouTubeManualPickerDialog(
                 } else if (results.isEmpty()) {
                     Box(modifier = Modifier.fillMaxWidth().weight(1f), contentAlignment = Alignment.Center) {
                         Text(
-                            text = "No se encontraron vídeos. Prueba modificando la búsqueda.",
+                            text = stringResource(R.string.picker_no_videos),
                             style = MaterialTheme.typography.bodySmall,
                             color = MaterialTheme.colorScheme.onSurfaceVariant
                         )
@@ -2084,7 +2091,7 @@ fun YouTubeManualPickerDialog(
         },
         confirmButton = {
             TextButton(onClick = onDismiss) {
-                Text("Cerrar")
+                Text(stringResource(R.string.common_close))
             }
         }
     )

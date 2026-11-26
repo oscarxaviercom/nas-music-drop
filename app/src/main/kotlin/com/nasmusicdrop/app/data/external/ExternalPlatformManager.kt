@@ -240,7 +240,7 @@ object ExternalPlatformManager {
         }
 
         return@withContext YouTubeMatchResult.Failure(
-            "Ningún vídeo en YouTube coincide con la duración original (${targetDuration}s ±${toleranceSeconds}s)."
+            com.nasmusicdrop.app.data.AppStrings.get(com.nasmusicdrop.app.R.string.ext_yt_duration_mismatch, targetDuration, toleranceSeconds)
         )
     }
 }

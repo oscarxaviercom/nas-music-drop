@@ -283,7 +283,7 @@ object LocalStorageService {
                 )
             }
 
-            onProgress(100, "¡Guardado con éxito en $displayPath!")
+            onProgress(100, com.nasmusicdrop.app.data.AppStrings.get(com.nasmusicdrop.app.R.string.local_saved_ok, displayPath))
             return@withContext LocalSaveResult(
                 success = true,
                 localDisplayPath = displayPath,

@@ -134,18 +134,18 @@ object AmazonMusicPlatformService : ExternalPlatformService {
             extractedUrl.contains("/user-playlists/", ignoreCase = true)
         ) {
             return@withContext ExternalResult.Error(
-                "Amazon Music no permite leer playlists completas sin iniciar sesión.\n\nSolo puedes compartir canciones sueltas desde la app de Amazon Music (Compartir → Music Drop). Para descargar listas completas, utiliza Spotify, Apple Music, Deezer o YouTube."
+                com.nasmusicdrop.app.data.AppStrings.get(com.nasmusicdrop.app.R.string.ext_amazon_playlist)
             )
         }
 
         if (extractedUrl.contains("/albums/", ignoreCase = true) && match == null) {
             return@withContext ExternalResult.Error(
-                "Amazon Music no permite leer álbumes completos sin iniciar sesión.\n\nComparte las canciones sueltas una a una desde Amazon Music o usa Spotify / Apple Music / Deezer."
+                com.nasmusicdrop.app.data.AppStrings.get(com.nasmusicdrop.app.R.string.ext_amazon_album)
             )
         }
 
         return@withContext ExternalResult.Error(
-            "Amazon Music no expone los datos de este enlace web sin iniciar sesión. Comparte la canción suelta directamente desde la app de Amazon Music (Compartir → Music Drop)."
+            com.nasmusicdrop.app.data.AppStrings.get(com.nasmusicdrop.app.R.string.ext_amazon_web)
         )
     }
 }

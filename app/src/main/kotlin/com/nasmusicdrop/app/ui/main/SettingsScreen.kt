@@ -23,6 +23,7 @@ import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
@@ -30,6 +31,7 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.nasmusicdrop.app.R
 import com.nasmusicdrop.app.data.model.NasConfig
 import com.nasmusicdrop.app.ui.theme.AppAccentOptions
 
@@ -134,13 +136,13 @@ fun SettingsScreen(
         item {
             Column {
                 Text(
-                    text = "Ajustes",
+                    text = stringResource(R.string.settings_title),
                     style = MaterialTheme.typography.headlineSmall,
                     fontWeight = FontWeight.Bold
                 )
                 Spacer(modifier = Modifier.height(2.dp))
                 Text(
-                    text = "Personaliza el aspecto, almacenamiento, red y calidad de audio.",
+                    text = stringResource(R.string.settings_subtitle),
                     style = MaterialTheme.typography.bodyMedium,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
@@ -150,7 +152,7 @@ fun SettingsScreen(
         // 1. APARIENCIA
         item {
             SettingsSectionCard(
-                title = "Apariencia",
+                title = stringResource(R.string.settings_section_appearance),
                 icon = when (themeMode) {
                     "LIGHT" -> Icons.Default.LightMode
                     "DARK" -> Icons.Default.DarkMode
@@ -162,9 +164,9 @@ fun SettingsScreen(
                     horizontalArrangement = Arrangement.spacedBy(8.dp)
                 ) {
                     val options = listOf(
-                        "LIGHT" to "☀️ Día",
-                        "DARK" to "🌙 Noche",
-                        "SYSTEM" to "📱 Auto"
+                        "LIGHT" to stringResource(R.string.settings_theme_light),
+                        "DARK" to stringResource(R.string.settings_theme_dark),
+                        "SYSTEM" to stringResource(R.string.settings_theme_system)
                     )
                     options.forEach { (modeValue, label) ->
                         FilterChip(
@@ -181,7 +183,7 @@ fun SettingsScreen(
 
                 Spacer(modifier = Modifier.height(12.dp))
                 Text(
-                    text = "Color principal:",
+                    text = stringResource(R.string.settings_accent_color),
                     style = MaterialTheme.typography.bodyMedium,
                     fontWeight = FontWeight.Medium
                 )
@@ -228,11 +230,11 @@ fun SettingsScreen(
         // 2. DESTINO Y RED
         item {
             SettingsSectionCard(
-                title = "Destino y Red",
+                title = stringResource(R.string.settings_section_dest_net),
                 icon = Icons.Default.Storage
             ) {
                 Text(
-                    text = "Elige dónde se guardarán las canciones descargadas:",
+                    text = stringResource(R.string.settings_dest_prompt),
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
@@ -245,13 +247,13 @@ fun SettingsScreen(
                     FilterChip(
                         selected = !isNasMode,
                         onClick = { destinationMode = "LOCAL"; autoSave() },
-                        label = { Text("📱 En móvil", maxLines = 1, overflow = TextOverflow.Ellipsis) },
+                        label = { Text(stringResource(R.string.settings_dest_mobile), maxLines = 1, overflow = TextOverflow.Ellipsis) },
                         modifier = Modifier.weight(1f)
                     )
                     FilterChip(
                         selected = isNasMode,
                         onClick = { destinationMode = "NAS"; autoSave() },
-                        label = { Text("🖥️ Servidor NAS", maxLines = 1, overflow = TextOverflow.Ellipsis) },
+                        label = { Text(stringResource(R.string.settings_dest_nas), maxLines = 1, overflow = TextOverflow.Ellipsis) },
                         modifier = Modifier.weight(1f)
                     )
                 }
@@ -265,7 +267,7 @@ fun SettingsScreen(
                             modifier = Modifier.fillMaxWidth()
                         ) {
                             Text(
-                                text = "Las canciones se guardarán directamente en la carpeta Música de tu teléfono, listas para escuchar sin conexión.",
+                                text = stringResource(R.string.settings_dest_local_info),
                                 style = MaterialTheme.typography.bodySmall,
                                 color = MaterialTheme.colorScheme.onPrimaryContainer,
                                 modifier = Modifier.padding(10.dp)
@@ -281,7 +283,7 @@ fun SettingsScreen(
                         Spacer(modifier = Modifier.height(12.dp))
 
                         Text(
-                            text = "Conexión SMB al NAS",
+                            text = stringResource(R.string.settings_nas_conn_title),
                             style = MaterialTheme.typography.labelLarge,
                             fontWeight = FontWeight.SemiBold,
                             color = MaterialTheme.colorScheme.primary
@@ -295,8 +297,8 @@ fun SettingsScreen(
                             OutlinedTextField(
                                 value = tailscaleIp,
                                 onValueChange = { tailscaleIp = it },
-                                label = { Text("IP Remota / Tailscale") },
-                                placeholder = { Text("100.x.x.x o dominio") },
+                                label = { Text(stringResource(R.string.settings_remote_ip_label)) },
+                                placeholder = { Text(stringResource(R.string.settings_remote_ip_placeholder)) },
                                 singleLine = true,
                                 modifier = Modifier.weight(1f).then(autoSaveOnBlur),
                                 shape = RoundedCornerShape(12.dp),
@@ -305,7 +307,7 @@ fun SettingsScreen(
                             OutlinedTextField(
                                 value = smbPortText,
                                 onValueChange = { v -> smbPortText = v.filter { it.isDigit() }.take(5) },
-                                label = { Text("Puerto") },
+                                label = { Text(stringResource(R.string.settings_port_label)) },
                                 placeholder = { Text("445") },
                                 singleLine = true,
                                 modifier = Modifier.width(96.dp).then(autoSaveOnBlur),
@@ -318,7 +320,7 @@ fun SettingsScreen(
                         OutlinedTextField(
                             value = localIp,
                             onValueChange = { localIp = it },
-                            label = { Text("IP Local (Wi‑Fi de casa)") },
+                            label = { Text(stringResource(R.string.settings_local_ip_label)) },
                             placeholder = { Text("192.168.1.x") },
                             singleLine = true,
                             modifier = Modifier.fillMaxWidth().then(autoSaveOnBlur),
@@ -330,7 +332,7 @@ fun SettingsScreen(
                         OutlinedTextField(
                             value = username,
                             onValueChange = { username = it },
-                            label = { Text("Usuario SMB") },
+                            label = { Text(stringResource(R.string.settings_smb_user_label)) },
                             singleLine = true,
                             modifier = Modifier.fillMaxWidth().then(autoSaveOnBlur),
                             shape = RoundedCornerShape(12.dp)
@@ -340,7 +342,7 @@ fun SettingsScreen(
                         OutlinedTextField(
                             value = password,
                             onValueChange = { password = it },
-                            label = { Text("Contraseña") },
+                            label = { Text(stringResource(R.string.settings_password_label)) },
                             singleLine = true,
                             modifier = Modifier.fillMaxWidth().then(autoSaveOnBlur),
                             shape = RoundedCornerShape(12.dp),
@@ -349,7 +351,7 @@ fun SettingsScreen(
                                 IconButton(onClick = { isPasswordVisible = !isPasswordVisible }) {
                                     Icon(
                                         if (isPasswordVisible) Icons.Default.VisibilityOff else Icons.Default.Visibility,
-                                        contentDescription = "Mostrar contraseña"
+                                        contentDescription = stringResource(R.string.settings_show_password)
                                     )
                                 }
                             }
@@ -359,7 +361,7 @@ fun SettingsScreen(
                         OutlinedTextField(
                             value = shareName,
                             onValueChange = { shareName = it },
-                            label = { Text("Recurso compartido") },
+                            label = { Text(stringResource(R.string.settings_share_name_label)) },
                             singleLine = true,
                             modifier = Modifier.fillMaxWidth().then(autoSaveOnBlur),
                             shape = RoundedCornerShape(12.dp)
@@ -369,7 +371,7 @@ fun SettingsScreen(
                         OutlinedTextField(
                             value = baseAudioPath,
                             onValueChange = { baseAudioPath = it },
-                            label = { Text("Carpeta base") },
+                            label = { Text(stringResource(R.string.settings_base_path_label)) },
                             singleLine = true,
                             modifier = Modifier.fillMaxWidth().then(autoSaveOnBlur),
                             shape = RoundedCornerShape(12.dp)
@@ -381,22 +383,22 @@ fun SettingsScreen(
                                 Button(
                                     onClick = {
                                         autoSave()
-                                        onShowMessage("✓ Configuración NAS guardada")
+                                        onShowMessage(context.getString(R.string.settings_nas_saved_toast))
                                     },
                                     modifier = Modifier.fillMaxWidth(),
                                     shape = RoundedCornerShape(12.dp)
                                 ) {
                                     Icon(Icons.Default.Save, contentDescription = null)
                                     Spacer(modifier = Modifier.width(8.dp))
-                                    Text("Guardar configuración NAS")
+                                    Text(stringResource(R.string.settings_save_nas_btn))
                                 }
                             }
                         }
 
                         Spacer(modifier = Modifier.height(10.dp))
                         SettingsSwitchRow(
-                            title = "Conmutación automática de IP",
-                            subtitle = "Usa Wi‑Fi local si está en casa o Tailscale si estás fuera.",
+                            title = stringResource(R.string.settings_auto_ip_title),
+                            subtitle = stringResource(R.string.settings_auto_ip_subtitle),
                             checked = autoSelectBestIp,
                             onCheckedChange = { autoSelectBestIp = it; autoSave() }
                         )
@@ -415,11 +417,11 @@ fun SettingsScreen(
                             if (isTesting) {
                                 CircularProgressIndicator(modifier = Modifier.size(16.dp), strokeWidth = 2.dp)
                                 Spacer(modifier = Modifier.width(8.dp))
-                                Text("Probando conexión...")
+                                Text(stringResource(R.string.settings_testing_conn))
                             } else {
                                 Icon(Icons.Default.NetworkCheck, contentDescription = null)
                                 Spacer(modifier = Modifier.width(8.dp))
-                                Text("Probar conexión NAS")
+                                Text(stringResource(R.string.settings_test_conn_btn))
                             }
                         }
                     }
@@ -430,8 +432,8 @@ fun SettingsScreen(
                 Spacer(modifier = Modifier.height(4.dp))
 
                 SettingsSwitchRow(
-                    title = "Solo descargar con Wi‑Fi",
-                    subtitle = "Evita gastar datos móviles al bajar canciones o playlists grandes.",
+                    title = stringResource(R.string.settings_wifi_only_title),
+                    subtitle = stringResource(R.string.settings_wifi_only_subtitle),
                     checked = wifiOnly,
                     onCheckedChange = { wifiOnly = it; autoSave() }
                 )
@@ -441,11 +443,11 @@ fun SettingsScreen(
         // 3. ORGANIZACIÓN Y ARCHIVOS
         item {
             SettingsSectionCard(
-                title = "Organización y Archivos",
+                title = stringResource(R.string.settings_section_org),
                 icon = Icons.Default.FolderCopy
             ) {
                 Text(
-                    text = "Formato de nombre de archivo:",
+                    text = stringResource(R.string.settings_filename_format),
                     style = MaterialTheme.typography.bodyMedium,
                     fontWeight = FontWeight.Medium
                 )
@@ -457,20 +459,20 @@ fun SettingsScreen(
                     FilterChip(
                         selected = fileNameFormat == "ARTIST_TITLE",
                         onClick = { fileNameFormat = "ARTIST_TITLE"; autoSave() },
-                        label = { Text("Artista - Título", maxLines = 1, overflow = TextOverflow.Ellipsis) },
+                        label = { Text(stringResource(R.string.settings_format_artist_title), maxLines = 1, overflow = TextOverflow.Ellipsis) },
                         modifier = Modifier.weight(1f)
                     )
                     FilterChip(
                         selected = fileNameFormat == "TITLE_ONLY",
                         onClick = { fileNameFormat = "TITLE_ONLY"; autoSave() },
-                        label = { Text("Solo título", maxLines = 1, overflow = TextOverflow.Ellipsis) },
+                        label = { Text(stringResource(R.string.settings_format_title_only), maxLines = 1, overflow = TextOverflow.Ellipsis) },
                         modifier = Modifier.weight(1f)
                     )
                 }
 
                 Spacer(modifier = Modifier.height(10.dp))
                 Text(
-                    text = "Organización de carpetas:",
+                    text = stringResource(R.string.settings_folder_org),
                     style = MaterialTheme.typography.bodyMedium,
                     fontWeight = FontWeight.Medium
                 )
@@ -482,19 +484,19 @@ fun SettingsScreen(
                     FilterChip(
                         selected = folderStructure == "NONE",
                         onClick = { folderStructure = "NONE"; autoSave() },
-                        label = { Text("Sin carpetas", fontSize = 12.sp, maxLines = 1, softWrap = false) },
+                        label = { Text(stringResource(R.string.settings_folder_none), fontSize = 12.sp, maxLines = 1, softWrap = false) },
                         modifier = Modifier.weight(1f)
                     )
                     FilterChip(
                         selected = folderStructure == "ARTIST",
                         onClick = { folderStructure = "ARTIST"; autoSave() },
-                        label = { Text("Artista", fontSize = 12.sp, maxLines = 1, softWrap = false) },
+                        label = { Text(stringResource(R.string.settings_folder_artist), fontSize = 12.sp, maxLines = 1, softWrap = false) },
                         modifier = Modifier.weight(1f)
                     )
                     FilterChip(
                         selected = folderStructure == "ARTIST_ALBUM",
                         onClick = { folderStructure = "ARTIST_ALBUM"; autoSave() },
-                        label = { Text("Artista/Álbum", fontSize = 12.sp, maxLines = 1, softWrap = false) },
+                        label = { Text(stringResource(R.string.settings_folder_artist_album), fontSize = 12.sp, maxLines = 1, softWrap = false) },
                         modifier = Modifier.weight(1f)
                     )
                 }
@@ -507,7 +509,7 @@ fun SettingsScreen(
                     else -> "$sampleRoot/Avicii/$sampleFile"
                 }
                 Text(
-                    text = "Ejemplo: $samplePath",
+                    text = stringResource(R.string.settings_folder_example, samplePath),
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                     modifier = Modifier.padding(top = 4.dp)
@@ -515,7 +517,7 @@ fun SettingsScreen(
 
                 if (folderStructure == "NONE" && fileNameFormat == "TITLE_ONLY") {
                     Text(
-                        text = "⚠️ Con «Sin carpetas» y «Solo título», canciones con el mismo nombre podrían sobrescribirse.",
+                        text = stringResource(R.string.settings_folder_flat_warning),
                         style = MaterialTheme.typography.bodySmall,
                         color = MaterialTheme.colorScheme.error,
                         modifier = Modifier.padding(top = 4.dp)
@@ -526,8 +528,8 @@ fun SettingsScreen(
                 HorizontalDivider(color = MaterialTheme.colorScheme.outlineVariant.copy(alpha = 0.5f))
 
                 SettingsSwitchRow(
-                    title = "Comprobar duplicados antes de bajar",
-                    subtitle = "Avisa u omite canciones que ya existen en tu biblioteca.",
+                    title = stringResource(R.string.settings_check_dups_title),
+                    subtitle = stringResource(R.string.settings_check_dups_subtitle),
                     checked = checkDuplicates,
                     onCheckedChange = { checkDuplicates = it; autoSave() }
                 )
@@ -536,11 +538,11 @@ fun SettingsScreen(
 
                 val isFlatFolder = folderStructure == "NONE"
                 SettingsSwitchRow(
-                    title = "Guardar carátula externa (cover.jpg)",
+                    title = stringResource(R.string.settings_cover_jpg_title),
                     subtitle = if (isFlatFolder)
-                        "Omitido automáticamente en modo «Sin carpetas» (cada MP3 ya lleva su carátula)."
+                        stringResource(R.string.settings_cover_jpg_flat_sub)
                     else
-                        "Crea cover.jpg en la carpeta para reproductores compatibles.",
+                        stringResource(R.string.settings_cover_jpg_sub),
                     checked = if (isFlatFolder) false else saveFolderCoverJpg,
                     enabled = !isFlatFolder,
                     onCheckedChange = { saveFolderCoverJpg = it; autoSave() }
@@ -549,8 +551,8 @@ fun SettingsScreen(
                 HorizontalDivider(color = MaterialTheme.colorScheme.outlineVariant.copy(alpha = 0.5f))
 
                 SettingsSwitchRow(
-                    title = "Auto-limpiar completadas",
-                    subtitle = "Quita de la cola las canciones al terminar (se guardan en Historial).",
+                    title = stringResource(R.string.settings_auto_clear_title),
+                    subtitle = stringResource(R.string.settings_auto_clear_sub),
                     checked = autoClearCompleted,
                     onCheckedChange = { autoClearCompleted = it; autoSave() }
                 )
@@ -560,12 +562,12 @@ fun SettingsScreen(
         // 4. AUDIO Y COINCIDENCIAS
         item {
             SettingsSectionCard(
-                title = "Audio y Coincidencias",
+                title = stringResource(R.string.settings_section_audio),
                 icon = Icons.Default.GraphicEq
             ) {
                 SettingsSwitchRow(
-                    title = "Normalizar volumen (EBU R128)",
-                    subtitle = "Equilibra todas las pistas a ${targetLufs.toInt()} LUFS sin saturación.",
+                    title = stringResource(R.string.settings_norm_title),
+                    subtitle = stringResource(R.string.settings_norm_subtitle, targetLufs.toInt()),
                     checked = normalizeVolume,
                     onCheckedChange = { normalizeVolume = it; autoSave() }
                 )
@@ -577,9 +579,9 @@ fun SettingsScreen(
                         horizontalArrangement = Arrangement.spacedBy(8.dp)
                     ) {
                         listOf(
-                            -16.0 to "-16 (Suave)",
-                            -14.0 to "-14 (Estándar)",
-                            -11.0 to "-11 (Potente)"
+                            -16.0 to stringResource(R.string.settings_lufs_soft),
+                            -14.0 to stringResource(R.string.settings_lufs_standard),
+                            -11.0 to stringResource(R.string.settings_lufs_loud)
                         ).forEach { (lufsVal, label) ->
                             FilterChip(
                                 selected = targetLufs == lufsVal,
@@ -591,9 +593,9 @@ fun SettingsScreen(
                     }
                     Spacer(modifier = Modifier.height(6.dp))
                     val lufsDescription = when (targetLufs) {
-                        -16.0 -> "-16 LUFS (Suave): conserva más rango dinámico y matices. Ideal para acústica, clásica, jazz o escucha en equipo Hi-Fi / auriculares."
-                        -11.0 -> "-11 LUFS (Potente): volumen más alto y con más presencia (con limitador anti-clipping). Recomendado para coche, altavoces portátiles o entornos ruidosos."
-                        else -> "-14 LUFS (Estándar): referencia de plataformas como Spotify y YouTube. Mejor equilibrio entre volumen uniforme y calidad dinámica."
+                        -16.0 -> stringResource(R.string.settings_lufs_desc_soft)
+                        -11.0 -> stringResource(R.string.settings_lufs_desc_loud)
+                        else -> stringResource(R.string.settings_lufs_desc_standard)
                     }
                     Text(
                         text = lufsDescription,
@@ -607,7 +609,7 @@ fun SettingsScreen(
                 Spacer(modifier = Modifier.height(10.dp))
 
                 Text(
-                    text = "Calidad de codificación MP3:",
+                    text = stringResource(R.string.settings_mp3_quality),
                     style = MaterialTheme.typography.bodyMedium,
                     fontWeight = FontWeight.Medium
                 )
@@ -635,13 +637,13 @@ fun SettingsScreen(
                 Spacer(modifier = Modifier.height(10.dp))
 
                 Text(
-                    text = "Margen de duración en playlists (Spotify / Apple / Deezer):",
+                    text = stringResource(R.string.settings_playlist_tolerance),
                     style = MaterialTheme.typography.bodyMedium,
                     fontWeight = FontWeight.Medium
                 )
                 Spacer(modifier = Modifier.height(2.dp))
                 Text(
-                    text = "Descarta vídeos de YouTube que se desvíen más de este tiempo.",
+                    text = stringResource(R.string.settings_playlist_tolerance_sub),
                     style = MaterialTheme.typography.labelSmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
@@ -669,7 +671,7 @@ fun SettingsScreen(
             Button(
                 onClick = {
                     autoSave()
-                    onShowMessage("Ajustes guardados correctamente")
+                    onShowMessage(context.getString(R.string.settings_saved_msg))
                 },
                 modifier = Modifier
                     .fillMaxWidth()
@@ -678,7 +680,7 @@ fun SettingsScreen(
             ) {
                 Icon(Icons.Default.Save, contentDescription = null)
                 Spacer(modifier = Modifier.width(8.dp))
-                Text("Guardar ajustes", fontWeight = FontWeight.Bold)
+                Text(stringResource(R.string.settings_save_btn), fontWeight = FontWeight.Bold)
             }
 
             Spacer(modifier = Modifier.height(12.dp))
@@ -689,7 +691,7 @@ fun SettingsScreen(
                     viewModel.clearAppCache { freed ->
                         cacheBytes = viewModel.getCacheSizeBytes()
                         val freedMb = String.format(java.util.Locale.US, "%.1f MB", freed / (1024.0 * 1024.0))
-                        onShowMessage("Caché vaciada ($freedMb liberados)")
+                        onShowMessage(context.getString(R.string.settings_cache_cleared, freedMb))
                     }
                 },
                 modifier = Modifier
@@ -699,7 +701,7 @@ fun SettingsScreen(
             ) {
                 Icon(Icons.Default.CleaningServices, contentDescription = null)
                 Spacer(modifier = Modifier.width(8.dp))
-                Text("Limpiar caché temporal ($cacheMbText)")
+                Text(stringResource(R.string.settings_clear_cache_btn, cacheMbText))
             }
 
             Spacer(modifier = Modifier.height(10.dp))
@@ -716,28 +718,28 @@ fun SettingsScreen(
             ) {
                 Icon(Icons.Default.DeleteOutline, contentDescription = null)
                 Spacer(modifier = Modifier.width(8.dp))
-                Text("Vaciar historial de descargas")
+                Text(stringResource(R.string.settings_clear_history_btn))
             }
 
             if (showClearHistoryDialog) {
                 AlertDialog(
                     onDismissRequest = { showClearHistoryDialog = false },
-                    title = { Text("Vaciar historial") },
-                    text = { Text("¿Deseas vaciar el historial de descargas completadas y fallidas? Los archivos ya guardados en tu música o NAS no se borrarán.") },
+                    title = { Text(stringResource(R.string.settings_clear_history_title)) },
+                    text = { Text(stringResource(R.string.settings_clear_history_msg)) },
                     confirmButton = {
                         TextButton(
                             onClick = {
                                 viewModel.clearHistory()
                                 showClearHistoryDialog = false
-                                Toast.makeText(context, "Historial vaciado", Toast.LENGTH_SHORT).show()
+                                Toast.makeText(context, context.getString(R.string.settings_history_cleared_toast), Toast.LENGTH_SHORT).show()
                             }
                         ) {
-                            Text("Vaciar", color = MaterialTheme.colorScheme.error)
+                            Text(stringResource(R.string.settings_clear_btn), color = MaterialTheme.colorScheme.error)
                         }
                     },
                     dismissButton = {
                         TextButton(onClick = { showClearHistoryDialog = false }) {
-                            Text("Cancelar")
+                            Text(stringResource(R.string.common_cancel))
                         }
                     }
                 )
@@ -754,7 +756,7 @@ fun SettingsScreen(
             ) {
                 Icon(Icons.Default.Info, contentDescription = null)
                 Spacer(modifier = Modifier.width(8.dp))
-                Text("Guía de uso y funciones")
+                Text(stringResource(R.string.settings_user_guide_btn))
             }
 
             if (showUserGuideDialog) {
@@ -773,14 +775,14 @@ fun SettingsScreen(
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
                     Text(
-                        text = "🎵 Music Drop v2.2.0",
+                        text = stringResource(R.string.settings_about_version),
                         style = MaterialTheme.typography.titleMedium,
                         fontWeight = FontWeight.Bold,
                         color = MaterialTheme.colorScheme.onSurface
                     )
                     Spacer(modifier = Modifier.height(4.dp))
                     Text(
-                        text = "Desarrollado por oscarxaviercom",
+                        text = stringResource(R.string.settings_about_author),
                         style = MaterialTheme.typography.bodyMedium,
                         fontWeight = FontWeight.SemiBold,
                         color = MaterialTheme.colorScheme.primary
@@ -868,7 +870,7 @@ private fun UserGuideDialog(onDismiss: () -> Unit) {
             Row(verticalAlignment = Alignment.CenterVertically) {
                 Icon(Icons.Default.MenuBook, contentDescription = null, tint = MaterialTheme.colorScheme.primary)
                 Spacer(modifier = Modifier.width(8.dp))
-                Text("Guía de uso de Music Drop", fontWeight = FontWeight.Bold, fontSize = 18.sp)
+                Text(stringResource(R.string.guide_title), fontWeight = FontWeight.Bold, fontSize = 18.sp)
             }
         },
         text = {
@@ -880,44 +882,30 @@ private fun UserGuideDialog(onDismiss: () -> Unit) {
                 verticalArrangement = Arrangement.spacedBy(12.dp)
             ) {
                 GuideSection(
-                    title = "1. Descargar desde enlaces y playlists",
-                    body = "• Pega cualquier enlace en «Descargar» o usa «Compartir → Music Drop» desde YouTube, Spotify, Apple Music, Deezer, Amazon Music o SoundCloud.\n" +
-                        "• En playlists y álbumes, la app comprueba antes tu biblioteca y marca automáticamente solo las canciones que te faltan (botón «Solo faltantes»).\n" +
-                        "• Si una URL de YouTube lleva marca de tiempo (?t=...), se aplica como inicio de recorte.\n" +
-                        "• En la cola puedes usar «Pausar cola / Reanudar cola», ver el progreso global, editar Título/Artista/Álbum, recortar Inicio/Fin, cambiar la edición en «Versiones» o editar/buscar letras en «Letra»."
+                    title = stringResource(R.string.guide_s1_title),
+                    body = stringResource(R.string.guide_s1_body)
                 )
                 GuideSection(
-                    title = "2. Buscar y reconocer por micrófono",
-                    body = "• En «Buscar» puedes buscar en YouTube, preescuchar tocando ▶ sobre la miniatura y recortar con un toque desde el segundo actual de reproducción.\n" +
-                        "• Pulsa el botón del micrófono (🎙️) para escuchar ~5,5 segundos de música ambiente e identificar automáticamente la canción (100% gratis, sin cuentas) para descargarla o ver sus versiones."
+                    title = stringResource(R.string.guide_s2_title),
+                    body = stringResource(R.string.guide_s2_body)
                 )
                 GuideSection(
-                    title = "3. Historial y mini-reproductor",
-                    body = "• En «Historial» puedes buscar y reproducir tus canciones ya guardadas (tanto locales como desde el NAS).\n" +
-                        "• Toca cualquier canción para ver sus «Detalles»: carátula, letra incrustada, verificación de normalización LUFS, tamaño y ruta completa (toca la ruta para copiarla).\n" +
-                        "• El mini-reproductor inferior permite avanzar/retroceder (⏮ / ⏭) entre el historial con salto automático y tocar el título para volver a la lista."
+                    title = stringResource(R.string.guide_s3_title),
+                    body = stringResource(R.string.guide_s3_body)
                 )
                 GuideSection(
-                    title = "4. Calidad de audio y organización",
-                    body = "• Todo se normaliza sin saturación (limitador true-peak) al nivel LUFS elegido:\n" +
-                        "  - -16 (Suave): mayor dinámica natural (clásica, acústica, Hi-Fi).\n" +
-                        "  - -14 (Estándar): estándar de Spotify/YouTube; equilibrio ideal.\n" +
-                        "  - -11 (Potente): más volumen y pegada (coche o altavoces Bluetooth).\n" +
-                        "• Codificación MP3 192k o 320k, con etiquetas ID3v2.3, carátula 600×600 y letra incrustada.\n" +
-                        "• Si recortas el final de una canción, se aplica un fade-out suave automático de 250 ms.\n" +
-                        "• En «Ajustes» puedes elegir guardar en tu NAS (conmutación automática Local/Remota) o en la carpeta Music/ del móvil, sin carpetas, por Artista o Artista/Álbum."
+                    title = stringResource(R.string.guide_s4_title),
+                    body = stringResource(R.string.guide_s4_body)
                 )
                 GuideSection(
-                    title = "5. Conexión al NAS (Local, VPN o puerto SMB)",
-                    body = "• IP Local (puerto 445): úsala para subir rápido cuando estés en el Wi‑Fi de casa.\n" +
-                        "• IP Remota / Tailscale + Puerto (445 por defecto): sirve para Tailscale, otra VPN (WireGuard/ZeroTier) o una IP/dominio externo (DDNS) con puerto redirigido en tu router (también admite formato host:puerto).\n" +
-                        "• Por seguridad, si conectas desde fuera de casa se recomienda usar VPN (Tailscale/WireGuard) en lugar de exponer SMB directamente a internet."
+                    title = stringResource(R.string.guide_s5_title),
+                    body = stringResource(R.string.guide_s5_body)
                 )
             }
         },
         confirmButton = {
             Button(onClick = onDismiss) {
-                Text("Entendido")
+                Text(stringResource(R.string.common_got_it))
             }
         }
     )

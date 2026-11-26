@@ -17,12 +17,15 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.hapticfeedback.HapticFeedbackType
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalHapticFeedback
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
+import com.nasmusicdrop.app.R
 import com.nasmusicdrop.app.data.model.UploadHistoryItem
 import com.nasmusicdrop.app.ui.theme.successColor
 import java.text.SimpleDateFormat
@@ -36,6 +39,7 @@ fun HistoryScreen(
     onShowMessage: (String) -> Unit = {}
 ) {
     val haptic = LocalHapticFeedback.current
+    val context = LocalContext.current
     val history by viewModel.uploadHistory.collectAsState()
     var selectedItemForDetails by remember { mutableStateOf<UploadHistoryItem?>(null) }
     var showClearConfirmDialog by remember { mutableStateOf(false) }
@@ -78,14 +82,14 @@ fun HistoryScreen(
                 )
                 Spacer(modifier = Modifier.height(16.dp))
                 Text(
-                    text = "No hay canciones en el historial",
+                    text = stringResource(R.string.history_empty_title),
                     style = MaterialTheme.typography.titleMedium,
                     fontWeight = FontWeight.SemiBold,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
                 Spacer(modifier = Modifier.height(6.dp))
                 Text(
-                    text = "Las canciones que descargues aparecerán registradas aquí.",
+                    text = stringResource(R.string.history_empty_subtitle),
                     style = MaterialTheme.typography.bodyMedium,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
@@ -106,12 +110,12 @@ fun HistoryScreen(
                 ) {
                     Column(modifier = Modifier.weight(1f)) {
                         Text(
-                            text = "Historial de Transferencias",
+                            text = stringResource(R.string.history_title),
                             style = MaterialTheme.typography.titleLarge,
                             fontWeight = FontWeight.Bold
                         )
                         Text(
-                            text = "${history.size} canciones descargadas · Toca para ver detalles",
+                            text = stringResource(R.string.history_subtitle_count, history.size),
                             style = MaterialTheme.typography.labelSmall,
                             color = MaterialTheme.colorScheme.onSurfaceVariant
                         )
@@ -125,7 +129,7 @@ fun HistoryScreen(
                     ) {
                         Icon(
                             Icons.Default.DeleteSweep,
-                            contentDescription = "Borrar historial",
+                            contentDescription = stringResource(R.string.history_clear_cd),
                             tint = MaterialTheme.colorScheme.error
                         )
                     }
@@ -136,12 +140,12 @@ fun HistoryScreen(
                 OutlinedTextField(
                     value = historySearchQuery,
                     onValueChange = { historySearchQuery = it },
-                    placeholder = { Text("Buscar en historial (título, artista, álbum)...") },
+                    placeholder = { Text(stringResource(R.string.history_search_placeholder)) },
                     leadingIcon = { Icon(Icons.Default.Search, contentDescription = null) },
                     trailingIcon = {
                         if (historySearchQuery.isNotBlank()) {
                             IconButton(onClick = { historySearchQuery = "" }) {
-                                Icon(Icons.Default.Clear, contentDescription = "Limpiar")
+                                Icon(Icons.Default.Clear, contentDescription = stringResource(R.string.search_clear))
                             }
                         }
                     },
@@ -160,7 +164,7 @@ fun HistoryScreen(
                         contentAlignment = Alignment.Center
                     ) {
                         Text(
-                            text = "No hay canciones que coincidan con \"$historySearchQuery\"",
+                            text = stringResource(R.string.history_search_empty, historySearchQuery),
                             style = MaterialTheme.typography.bodyMedium,
                             color = MaterialTheme.colorScheme.onSurfaceVariant
                         )
@@ -197,10 +201,10 @@ fun HistoryScreen(
                 Icon(Icons.Default.DeleteSweep, contentDescription = null, tint = MaterialTheme.colorScheme.error)
             },
             title = {
-                Text("¿Borrar todo el historial?")
+                Text(stringResource(R.string.history_clear_dialog_title))
             },
             text = {
-                Text("Se eliminará el registro de descargas de la app. Los archivos de música guardados en tu dispositivo o NAS se mantendrán intactos.")
+                Text(stringResource(R.string.history_clear_dialog_msg))
             },
             confirmButton = {
                 Button(
@@ -210,12 +214,12 @@ fun HistoryScreen(
                     },
                     colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.error)
                 ) {
-                    Text("Borrar historial")
+                    Text(stringResource(R.string.history_clear_confirm))
                 }
             },
             dismissButton = {
                 OutlinedButton(onClick = { showClearConfirmDialog = false }) {
-                    Text("Cancelar")
+                    Text(stringResource(R.string.common_cancel))
                 }
             }
         )
@@ -233,8 +237,8 @@ fun HistoryScreen(
                 haptic.performHapticFeedback(HapticFeedbackType.LongPress)
                 viewModel.requeueFromHistory(item) { ok ->
                     onShowMessage(
-                        if (ok) "✓ \"${item.title}\" reencolada"
-                        else "No se encontró coincidencia en YouTube para \"${item.title}\""
+                        if (ok) context.getString(R.string.history_requeued, item.title)
+                        else context.getString(R.string.history_requeue_not_found, item.title)
                     )
                 }
                 selectedItemForDetails = null
@@ -244,7 +248,7 @@ fun HistoryScreen(
                 haptic.performHapticFeedback(HapticFeedbackType.LongPress)
                 viewModel.deleteHistoryItem(item.id)
                 selectedItemForDetails = null
-                onShowMessage("Eliminado del historial")
+                onShowMessage(context.getString(R.string.history_deleted_msg))
             }
         )
     }
@@ -335,7 +339,7 @@ fun HistoryItemCard(
                 } else {
                     Icon(
                         imageVector = if (isThisPlaying) Icons.Default.Pause else Icons.Default.PlayArrow,
-                        contentDescription = if (isThisPlaying) "Pausar" else "Reproducir",
+                        contentDescription = if (isThisPlaying) stringResource(R.string.common_pause) else stringResource(R.string.common_play),
                         tint = if (isThisActive) MaterialTheme.colorScheme.onPrimary else MaterialTheme.colorScheme.onSurfaceVariant,
                         modifier = Modifier.size(20.dp)
                     )
@@ -355,7 +359,8 @@ fun SongDetailsDialog(
     onDismiss: () -> Unit,
     onDelete: () -> Unit
 ) {
-    val dateFormat = SimpleDateFormat("dd/MM/yyyy 'a las' HH:mm", Locale.getDefault())
+    val datePattern = stringResource(R.string.history_date_pattern)
+    val dateFormat = SimpleDateFormat(datePattern, Locale.getDefault())
     val dateString = dateFormat.format(Date(item.timestamp))
     val sizeMb = String.format(Locale.US, "%.2f MB", item.fileSizeBytes / (1024.0 * 1024.0))
 
@@ -365,7 +370,7 @@ fun SongDetailsDialog(
         onDismissRequest = onDismiss,
         confirmButton = {
             Button(onClick = onDismiss) {
-                Text("Cerrar")
+                Text(stringResource(R.string.common_close))
             }
         },
         dismissButton = {
@@ -375,7 +380,7 @@ fun SongDetailsDialog(
             ) {
                 Icon(Icons.Default.Delete, contentDescription = null, modifier = Modifier.size(16.dp))
                 Spacer(modifier = Modifier.width(4.dp))
-                Text("Eliminar de la lista")
+                Text(stringResource(R.string.history_details_delete))
             }
         },
         title = {
@@ -387,7 +392,7 @@ fun SongDetailsDialog(
                     modifier = Modifier.size(22.dp)
                 )
                 Spacer(modifier = Modifier.width(8.dp))
-                Text("Detalles de la Canción", fontSize = 18.sp, fontWeight = FontWeight.Bold)
+                Text(stringResource(R.string.history_details_title), fontSize = 18.sp, fontWeight = FontWeight.Bold)
             }
         },
         text = {
@@ -431,7 +436,7 @@ fun SongDetailsDialog(
                         )
                         if (item.album.isNotBlank() && item.album != item.title) {
                             Text(
-                                text = "Álbum: ${item.album}",
+                                text = stringResource(R.string.history_details_album, item.album),
                                 style = MaterialTheme.typography.bodySmall,
                                 color = MaterialTheme.colorScheme.onSurfaceVariant,
                                 maxLines = 1,
@@ -462,7 +467,7 @@ fun SongDetailsDialog(
                         if (isThisLoading) {
                             CircularProgressIndicator(modifier = Modifier.size(16.dp), strokeWidth = 2.dp)
                             Spacer(modifier = Modifier.width(6.dp))
-                            Text("Cargando...", fontSize = 13.sp, maxLines = 1, softWrap = false)
+                            Text(stringResource(R.string.common_loading), fontSize = 13.sp, maxLines = 1, softWrap = false)
                         } else {
                             Icon(
                                 imageVector = if (isThisPlaying) Icons.Default.Pause else Icons.Default.PlayArrow,
@@ -471,7 +476,7 @@ fun SongDetailsDialog(
                             )
                             Spacer(modifier = Modifier.width(4.dp))
                             Text(
-                                text = if (isThisPlaying) "Pausar" else "Reproducir",
+                                text = if (isThisPlaying) stringResource(R.string.common_pause) else stringResource(R.string.common_play),
                                 fontSize = 13.sp,
                                 maxLines = 1,
                                 softWrap = false
@@ -487,7 +492,7 @@ fun SongDetailsDialog(
                     ) {
                         Icon(Icons.Default.Replay, contentDescription = null, modifier = Modifier.size(18.dp))
                         Spacer(modifier = Modifier.width(4.dp))
-                        Text("Reencolar", fontSize = 13.sp, maxLines = 1, softWrap = false)
+                        Text(stringResource(R.string.history_requeue_btn), fontSize = 13.sp, maxLines = 1, softWrap = false)
                     }
                 }
 
@@ -500,7 +505,7 @@ fun SongDetailsDialog(
                     ) {
                         Icon(Icons.Default.Lyrics, contentDescription = null, modifier = Modifier.size(18.dp))
                         Spacer(modifier = Modifier.width(8.dp))
-                        Text("Ver Letra Incrustada")
+                        Text(stringResource(R.string.history_view_lyrics_btn))
                     }
                 }
 
@@ -522,7 +527,7 @@ fun SongDetailsDialog(
                             )
                             Spacer(modifier = Modifier.width(6.dp))
                             Text(
-                                text = "Verificación de Audio y Normalización",
+                                text = stringResource(R.string.history_audio_section),
                                 style = MaterialTheme.typography.titleSmall,
                                 fontWeight = FontWeight.Bold
                             )
@@ -531,28 +536,32 @@ fun SongDetailsDialog(
                         Spacer(modifier = Modifier.height(8.dp))
 
                         DetailRow(
-                            label = "Formato de audio",
+                            label = stringResource(R.string.history_label_format),
                             value = "MP3 ${item.bitrateKbps} kbps CBR (LAME)"
                         )
                         DetailRow(
-                            label = "Estándar de volumen",
+                            label = stringResource(R.string.history_label_loudness),
                             value = "EBU R128 (${item.targetLufs} LUFS)"
                         )
                         DetailRow(
-                            label = "Volumen original medido",
+                            label = stringResource(R.string.history_label_orig_lufs),
                             value = "${String.format(Locale.US, "%.1f", item.originalLufs)} LUFS"
                         )
                         DetailRow(
-                            label = "Ganancia aplicada",
-                            value = "${if (item.appliedGainDb >= 0) "+" else ""}${String.format(Locale.US, "%.1f", item.appliedGainDb)} dB (Pico -1.5 dB)"
+                            label = stringResource(R.string.history_label_gain),
+                            value = stringResource(
+                                R.string.history_gain_value,
+                                if (item.appliedGainDb >= 0) "+" else "",
+                                String.format(Locale.US, "%.1f", item.appliedGainDb)
+                            )
                         )
                         DetailRow(
-                            label = "Carátula ID3v2.3",
+                            label = stringResource(R.string.history_label_cover),
                             value = "${item.coverResolution} APIC"
                         )
                         DetailRow(
-                            label = "Letras incrustadas",
-                            value = if (item.hasLyrics) "✓ Incrustadas en ID3" else "No disponibles"
+                            label = stringResource(R.string.history_label_lyrics),
+                            value = if (item.hasLyrics) stringResource(R.string.history_lyrics_embedded) else stringResource(R.string.history_lyrics_unavailable)
                         )
                     }
                 }
@@ -573,7 +582,7 @@ fun SongDetailsDialog(
                             )
                             Spacer(modifier = Modifier.width(6.dp))
                             Text(
-                                text = "Ubicación del archivo",
+                                text = stringResource(R.string.history_location_section),
                                 style = MaterialTheme.typography.titleSmall,
                                 fontWeight = FontWeight.Bold
                             )
@@ -584,7 +593,7 @@ fun SongDetailsDialog(
                         val detailClipboard = androidx.compose.ui.platform.LocalClipboardManager.current
                         val detailContext = androidx.compose.ui.platform.LocalContext.current
                         Text(
-                            text = "Ruta remota (toca para copiar)",
+                            text = stringResource(R.string.history_remote_path_hint),
                             style = MaterialTheme.typography.bodySmall,
                             color = MaterialTheme.colorScheme.onSurfaceVariant
                         )
@@ -600,16 +609,16 @@ fun SongDetailsDialog(
                                 .fillMaxWidth()
                                 .clickable {
                                     detailClipboard.setText(androidx.compose.ui.text.AnnotatedString(item.remotePath))
-                                    android.widget.Toast.makeText(detailContext, "Ruta copiada", android.widget.Toast.LENGTH_SHORT).show()
+                                    android.widget.Toast.makeText(detailContext, detailContext.getString(R.string.history_path_copied), android.widget.Toast.LENGTH_SHORT).show()
                                 }
                         )
                         Spacer(modifier = Modifier.height(6.dp))
                         DetailRow(
-                            label = "Tamaño de archivo",
+                            label = stringResource(R.string.history_label_size),
                             value = sizeMb
                         )
                         DetailRow(
-                            label = "Fecha de subida",
+                            label = stringResource(R.string.history_label_date),
                             value = dateString
                         )
                     }
@@ -623,14 +632,14 @@ fun SongDetailsDialog(
             onDismissRequest = { showFullLyricsDialog = false },
             confirmButton = {
                 Button(onClick = { showFullLyricsDialog = false }) {
-                    Text("Cerrar")
+                    Text(stringResource(R.string.common_close))
                 }
             },
             title = {
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     Icon(Icons.Default.Lyrics, contentDescription = null, tint = MaterialTheme.colorScheme.primary)
                     Spacer(modifier = Modifier.width(8.dp))
-                    Text("Letra de la canción", fontWeight = FontWeight.Bold)
+                    Text(stringResource(R.string.history_lyrics_dialog_title), fontWeight = FontWeight.Bold)
                 }
             },
             text = {

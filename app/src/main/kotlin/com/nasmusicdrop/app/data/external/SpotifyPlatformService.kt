@@ -85,11 +85,11 @@ object SpotifyPlatformService : ExternalPlatformService {
                 val status = pageProps?.optInt("status", 200) ?: 200
                 if (status == 404) {
                     val msg = if (type == "playlist" && id.startsWith("37i9dQ")) {
-                        "Playlist personalizada de Spotify (Daily Mix / Radar / Descubrimiento): es privada de tu cuenta. En Spotify pulsa '⋮' → 'Añadir a otra playlist' → 'Nueva playlist' y pega ese nuevo enlace."
+                        com.nasmusicdrop.app.data.AppStrings.get(com.nasmusicdrop.app.R.string.ext_spotify_personal)
                     } else if (type == "playlist") {
-                        "Spotify no permite leer esta playlist sin iniciar sesión (puede ser privada o personalizada). Prueba a copiar sus canciones a una playlist pública nueva y compartir ese enlace."
+                        com.nasmusicdrop.app.data.AppStrings.get(com.nasmusicdrop.app.R.string.ext_spotify_private)
                     } else {
-                        "Spotify devolvió 404 (contenido no encontrado o no disponible públicamente)."
+                        com.nasmusicdrop.app.data.AppStrings.get(com.nasmusicdrop.app.R.string.ext_spotify_404)
                     }
                     return@withContext ExternalResult.Error(msg)
                 }

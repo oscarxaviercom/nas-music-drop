@@ -319,7 +319,7 @@ object YouTubeExtractor {
                 if (audioStreams.isNullOrEmpty()) {
                     return@withContext AudioDownloadResult(
                         success = false,
-                        error = "No se encontraron streams de audio disponibles para este vídeo."
+                        error = com.nasmusicdrop.app.data.AppStrings.get(com.nasmusicdrop.app.R.string.yt_no_audio_streams)
                     )
                 }
 
@@ -337,7 +337,7 @@ object YouTubeExtractor {
             try { destFile.delete() } catch (_: Exception) {}
             return@withContext AudioDownloadResult(
                 success = false,
-                error = "Fallo de extracción: ${e.localizedMessage ?: e.javaClass.simpleName}"
+                error = com.nasmusicdrop.app.data.AppStrings.get(com.nasmusicdrop.app.R.string.yt_extract_failed, e.localizedMessage ?: e.javaClass.simpleName)
             )
         }
     }
@@ -513,7 +513,7 @@ object YouTubeExtractor {
             try { destFile.delete() } catch (_: Exception) {}
             AudioDownloadResult(
                 success = false,
-                error = "El archivo descargado está incompleto o dañado."
+                error = com.nasmusicdrop.app.data.AppStrings.get(com.nasmusicdrop.app.R.string.yt_file_corrupt)
             )
         }
     }

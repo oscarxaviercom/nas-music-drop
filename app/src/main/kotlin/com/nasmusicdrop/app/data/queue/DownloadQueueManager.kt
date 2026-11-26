@@ -63,6 +63,7 @@ class DownloadQueueManager private constructor(private val appContext: Context) 
     private var networkCallback: android.net.ConnectivityManager.NetworkCallback? = null
 
     init {
+        com.nasmusicdrop.app.data.AppStrings.init(appContext)
         cleanOrphanCacheFiles()
         restoreQueueFromDisk()
         observeQueueForPersistence()
@@ -205,7 +206,7 @@ class DownloadQueueManager private constructor(private val appContext: Context) 
 
                 val statusText = when (effectiveStatus) {
                     QueueStatus.QUEUED -> "Reanudando en cola..."
-                    QueueStatus.WAITING_WIFI -> "Esperando conexión Wi‑Fi..."
+                    QueueStatus.WAITING_WIFI -> appContext.getString(com.nasmusicdrop.app.R.string.queue_waiting_wifi)
                     else -> obj.optString("progressStatusText", "")
                 }
 
@@ -494,7 +495,7 @@ class DownloadQueueManager private constructor(private val appContext: Context) 
                     finalAlbum = exactMatch?.album ?: finalTitle
                     thumbUrl = exactMatch?.artworkUrl600?.ifBlank { scInfo.thumbnailUrl } ?: scInfo.thumbnailUrl
                 } else {
-                    updateItemStatus(itemId, QueueStatus.ANALYZING, 5, "Analizando información de YouTube e iTunes...")
+                    updateItemStatus(itemId, QueueStatus.ANALYZING, 5, appContext.getString(com.nasmusicdrop.app.R.string.queue_analyzing_info))
                     val videoInfo = YouTubeExtractor.fetchVideoInfo(item.videoId)
                     itunesMatches = ItunesService.searchCandidates(videoInfo.cleanTitle, videoInfo.cleanArtist)
                     bestCandidate = if (itunesMatches.isNotEmpty()) itunesMatches[0] else null
@@ -561,7 +562,7 @@ class DownloadQueueManager private constructor(private val appContext: Context) 
                                         status = QueueStatus.DUPLICATE_FOUND,
                                         duplicatePath = existingPath,
                                         progressPercent = 0,
-                                        progressStatusText = "Ya existe en tu música"
+                                        progressStatusText = appContext.getString(com.nasmusicdrop.app.R.string.queue_already_exists)
                                     )
                                 } else it
                             }
@@ -576,7 +577,7 @@ class DownloadQueueManager private constructor(private val appContext: Context) 
                         itemId,
                         QueueStatus.WAITING_WIFI,
                         0,
-                        "Esperando conexión Wi‑Fi (se reanudará automáticamente)..."
+                        appContext.getString(com.nasmusicdrop.app.R.string.queue_waiting_wifi_auto)
                     )
                     return@withContext
                 }
@@ -665,14 +666,14 @@ class DownloadQueueManager private constructor(private val appContext: Context) 
                         }
 
                         if (!normRes.success || normRes.outputFile == null) {
-                            markItemFailed(itemId, normRes.error ?: "Error en la normalización de audio.")
+                            markItemFailed(itemId, normRes.error ?: appContext.getString(com.nasmusicdrop.app.R.string.queue_norm_error))
                             return@launch
                         }
 
                         normOut = normRes.outputFile
 
                         // 4. Incrustar etiquetas ID3v2.3 y carátula estándar JPEG 600x600
-                        updateItemStatus(itemId, QueueStatus.UPLOADING, 90, "Incrustando metadatos ID3v2.3 y carátula 600x600...")
+                        updateItemStatus(itemId, QueueStatus.UPLOADING, 90, appContext.getString(com.nasmusicdrop.app.R.string.queue_tagging))
                         val currentQueueItem = _queueList.value.firstOrNull { it.id == itemId }
 
                         val finalTitleToUse = currentQueueItem?.title?.ifBlank { finalTitle } ?: finalTitle
@@ -770,7 +771,7 @@ class DownloadQueueManager private constructor(private val appContext: Context) 
                                     targetLufs = normRes.targetLufs,
                                     appliedGainDb = normRes.measuredGainDb,
                                     hasLyrics = !lyricsToUse.isNullOrBlank(),
-                                    coverResolution = if (coverBytes != null) "600x600 px (JPEG)" else "Carátula de YouTube",
+                                    coverResolution = if (coverBytes != null) "600x600 px (JPEG)" else appContext.getString(com.nasmusicdrop.app.R.string.queue_cover_yt),
                                     lyrics = lyricsToUse
                                 )
                             )
@@ -986,9 +987,9 @@ class DownloadQueueManager private constructor(private val appContext: Context) 
 
         return when {
             chain.contains("connection reset") || chain.contains("socketexception") || chain.contains("broken pipe") ->
-                "Conexión interrumpida durante la transferencia. Revisa tu red o Tailscale y pulsa «Reintentar»."
+                appContext.getString(com.nasmusicdrop.app.R.string.queue_conn_interrupted)
             chain.contains("timeout") || chain.contains("timed out") ->
-                "Tiempo de espera agotado. Comprueba la conexión a Internet o con el NAS y pulsa «Reintentar»."
+                appContext.getString(com.nasmusicdrop.app.R.string.queue_timeout)
             chain.contains("no space left") || chain.contains("disk full") ->
                 "Espacio insuficiente en el almacenamiento del dispositivo o del NAS."
             else ->

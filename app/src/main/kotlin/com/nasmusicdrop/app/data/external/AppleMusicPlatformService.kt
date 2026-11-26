@@ -109,7 +109,7 @@ object AppleMusicPlatformService : ExternalPlatformService {
                 )
             }
         }
-        return ExternalResult.Error("No se encontraron los datos de esta canción en Apple Music.")
+        return ExternalResult.Error(com.nasmusicdrop.app.data.AppStrings.get(com.nasmusicdrop.app.R.string.ext_apple_track))
     }
 
     private fun lookupAlbum(albumId: String, region: String, originalUrl: String): ExternalResult {
@@ -154,7 +154,7 @@ object AppleMusicPlatformService : ExternalPlatformService {
         }
 
         if (tracks.isEmpty()) {
-            return ExternalResult.Error("No se pudieron extraer las pistas de este álbum en Apple Music.")
+            return ExternalResult.Error(com.nasmusicdrop.app.data.AppStrings.get(com.nasmusicdrop.app.R.string.ext_apple_album))
         }
 
         return ExternalResult.Collection(
@@ -191,7 +191,7 @@ object AppleMusicPlatformService : ExternalPlatformService {
 
         val uniqueTracks = tracks.distinctBy { "${it.title.lowercase()}_${it.artist.lowercase()}" }
         if (uniqueTracks.isEmpty()) {
-            return ExternalResult.Error("No se pudieron extraer las canciones de esta playlist de Apple Music (puede ser privada o requerir sesión).")
+            return ExternalResult.Error(com.nasmusicdrop.app.data.AppStrings.get(com.nasmusicdrop.app.R.string.ext_apple_playlist))
         }
 
         return ExternalResult.Collection(
