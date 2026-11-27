@@ -16,7 +16,9 @@ import androidx.compose.animation.scaleIn
 import androidx.compose.animation.togetherWith
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
 import androidx.compose.material3.*
@@ -79,6 +81,7 @@ class MainActivity : ComponentActivity() {
             }
             NASMusicDropTheme(darkTheme = isDarkTheme, accentColor = nasConfig.accentColor) {
                 val selectedTabIndex by viewModel.selectedTabIndex.collectAsState()
+                val updateState by viewModel.updateState.collectAsState()
                 val saveableStateHolder = rememberSaveableStateHolder()
                 val snackbarHostState = remember { SnackbarHostState() }
                 val coroutineScope = rememberCoroutineScope()
@@ -86,6 +89,20 @@ class MainActivity : ComponentActivity() {
                     coroutineScope.launch {
                         snackbarHostState.currentSnackbarData?.dismiss()
                         snackbarHostState.showSnackbar(msg)
+                    }
+                }
+
+                LaunchedEffect(updateState) {
+                    when (val st = updateState) {
+                        is MainViewModel.UpdateUiState.UpToDate -> {
+                            showMessage(getString(R.string.update_up_to_date, st.currentVersion))
+                            viewModel.dismissUpdateState()
+                        }
+                        is MainViewModel.UpdateUiState.Error -> {
+                            showMessage(st.message)
+                            viewModel.dismissUpdateState()
+                        }
+                        else -> {}
                     }
                 }
 
@@ -147,6 +164,52 @@ class MainActivity : ComponentActivity() {
                             }
                         }
                     }
+                }
+
+                when (val st = updateState) {
+                    is MainViewModel.UpdateUiState.Available -> {
+                        AlertDialog(
+                            onDismissRequest = { viewModel.dismissUpdateState() },
+                            icon = { Icon(Icons.Default.SystemUpdate, contentDescription = null, tint = MaterialTheme.colorScheme.primary) },
+                            title = { Text(androidx.compose.ui.res.stringResource(R.string.update_available_title, st.info.versionName), fontWeight = FontWeight.Bold) },
+                            text = {
+                                if (st.info.releaseNotes.isNotBlank()) {
+                                    Column(
+                                        modifier = Modifier
+                                            .heightIn(max = 260.dp)
+                                            .verticalScroll(rememberScrollState())
+                                    ) {
+                                        Text(st.info.releaseNotes, style = MaterialTheme.typography.bodySmall)
+                                    }
+                                }
+                            },
+                            confirmButton = {
+                                Button(onClick = { viewModel.downloadAndInstallUpdate(st.info) }) {
+                                    Text(androidx.compose.ui.res.stringResource(R.string.update_install_btn))
+                                }
+                            },
+                            dismissButton = {
+                                TextButton(onClick = { viewModel.dismissUpdateState() }) {
+                                    Text(androidx.compose.ui.res.stringResource(R.string.update_later_btn))
+                                }
+                            }
+                        )
+                    }
+                    is MainViewModel.UpdateUiState.Downloading -> {
+                        AlertDialog(
+                            onDismissRequest = {},
+                            icon = { Icon(Icons.Default.Download, contentDescription = null, tint = MaterialTheme.colorScheme.primary) },
+                            title = { Text(androidx.compose.ui.res.stringResource(R.string.update_downloading_title, st.info.versionName, st.progress), fontWeight = FontWeight.Bold) },
+                            text = {
+                                LinearProgressIndicator(
+                                    progress = { st.progress / 100f },
+                                    modifier = Modifier.fillMaxWidth()
+                                )
+                            },
+                            confirmButton = {}
+                        )
+                    }
+                    else -> {}
                 }
             }
         }

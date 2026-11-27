@@ -123,7 +123,8 @@ data class NasConfig(
     val wifiOnly: Boolean = false,
     val durationToleranceSeconds: Int = 15,
     val fileNameFormat: String = "ARTIST_TITLE", // "ARTIST_TITLE" o "TITLE_ONLY"
-    val autoClearCompleted: Boolean = false
+    val autoClearCompleted: Boolean = false,
+    val autoCheckUpdates: Boolean = true
 )
 
 data class ConnectionTestResult(

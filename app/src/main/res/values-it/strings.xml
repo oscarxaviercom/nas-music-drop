@@ -112,7 +112,7 @@
     <string name="settings_clear_btn">Svuota</string>
     <string name="settings_history_cleared_toast">Cronologia svuotata</string>
     <string name="settings_user_guide_btn">Guida all\'uso e funzioni</string>
-    <string name="settings_about_version">🎵 Music Drop v2.3.2</string>
+    <string name="settings_about_version">🎵 Music Drop v2.4.0</string>
     <string name="settings_about_author">Sviluppato da oscarxaviercom</string>
 
     <!-- User Guide Dialog -->
@@ -378,4 +378,19 @@
     <string name="smb_err_dns">Impossibile risolvere l\'indirizzo del NAS%1$s.\n\n</string>
     <string name="smb_err_comm">Errore di comunicazione</string>
     <string name="smb_err_detail">💡 Dettaglio: %1$s. Assicurati che NAS e rete (Wi‑Fi o VPN) siano attivi e tocca «Riprova».</string>
+
+    <!-- Auto-Updates -->
+    <string name="settings_auto_update_title">Controlla aggiornamenti automaticamente</string>
+    <string name="settings_auto_update_sub">Verifica su GitHub Releases all\'avvio se ci sono nuove versioni.</string>
+    <string name="settings_check_updates_btn">Controlla aggiornamenti ora</string>
+    <string name="settings_checking_updates">Ricerca aggiornamenti…</string>
+    <string name="update_available_title">Aggiornamento disponibile: v%1$s</string>
+    <string name="update_downloading_title">Download di v%1$s (%2$d%%)…</string>
+    <string name="update_install_btn">Scarica e installa</string>
+    <string name="update_later_btn">Più tardi</string>
+    <string name="update_up_to_date">Hai già l\'ultima versione (v%1$s).</string>
+    <string name="update_perm_needed">Consenti «Installa app sconosciute» per Music Drop e riprova.</string>
+    <string name="update_check_http_error">GitHub ha restituito codice %1$d.</string>
+    <string name="update_check_failed">Impossibile controllare gli aggiornamenti: %1$s</string>
+    <string name="update_download_failed">Download aggiornamento non riuscito: %1$s</string>
 </resources>

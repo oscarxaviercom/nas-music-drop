@@ -67,6 +67,8 @@ fun SettingsScreen(
     var durationToleranceSeconds by remember(currentConfig) { mutableIntStateOf(currentConfig.durationToleranceSeconds) }
     var fileNameFormat by remember(currentConfig) { mutableStateOf(currentConfig.fileNameFormat) }
     var autoClearCompleted by remember(currentConfig) { mutableStateOf(currentConfig.autoClearCompleted) }
+    var autoCheckUpdates by remember(currentConfig) { mutableStateOf(currentConfig.autoCheckUpdates) }
+    val updateState by viewModel.updateState.collectAsState()
 
     var isPasswordVisible by remember { mutableStateOf(false) }
     var showClearHistoryDialog by remember { mutableStateOf(false) }
@@ -97,7 +99,8 @@ fun SettingsScreen(
         wifiOnly = wifiOnly,
         durationToleranceSeconds = durationToleranceSeconds,
         fileNameFormat = fileNameFormat,
-        autoClearCompleted = autoClearCompleted
+        autoClearCompleted = autoClearCompleted,
+        autoCheckUpdates = autoCheckUpdates
     )
 
     fun autoSave() {
@@ -771,6 +774,37 @@ fun SettingsScreen(
                         }
                     }
                 )
+            }
+
+            Spacer(modifier = Modifier.height(10.dp))
+
+            SettingsSwitchRow(
+                title = stringResource(R.string.settings_auto_update_title),
+                subtitle = stringResource(R.string.settings_auto_update_sub),
+                checked = autoCheckUpdates,
+                onCheckedChange = { autoCheckUpdates = it; autoSave() }
+            )
+
+            Spacer(modifier = Modifier.height(8.dp))
+
+            val isCheckingUpdates = updateState is MainViewModel.UpdateUiState.Checking
+            OutlinedButton(
+                onClick = { viewModel.checkForUpdates(manual = true) },
+                enabled = !isCheckingUpdates,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(48.dp),
+                shape = RoundedCornerShape(14.dp)
+            ) {
+                if (isCheckingUpdates) {
+                    CircularProgressIndicator(modifier = Modifier.size(16.dp), strokeWidth = 2.dp)
+                    Spacer(modifier = Modifier.width(8.dp))
+                    Text(stringResource(R.string.settings_checking_updates))
+                } else {
+                    Icon(Icons.Default.SystemUpdate, contentDescription = null)
+                    Spacer(modifier = Modifier.width(8.dp))
+                    Text(stringResource(R.string.settings_check_updates_btn))
+                }
             }
 
             Spacer(modifier = Modifier.height(10.dp))

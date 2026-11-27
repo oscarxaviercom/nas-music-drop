@@ -13,8 +13,8 @@ android {
     applicationId = "com.nasmusicdrop.app"
     minSdk = 26
     targetSdk = 35
-    versionCode = 43
-    versionName = "2.3.2"
+    versionCode = 44
+    versionName = "2.4.0"
   }
 
   signingConfigs {

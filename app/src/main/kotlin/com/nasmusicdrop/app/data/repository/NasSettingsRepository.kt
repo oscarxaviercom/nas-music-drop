@@ -67,6 +67,7 @@ class NasSettingsRepository private constructor(context: Context) {
             putInt("duration_tolerance_sec", config.durationToleranceSeconds)
             putString("file_name_format", config.fileNameFormat)
             putBoolean("auto_clear_completed", config.autoClearCompleted)
+            putBoolean("auto_check_updates", config.autoCheckUpdates)
             apply()
         }
         _configFlow.value = config
@@ -167,7 +168,8 @@ class NasSettingsRepository private constructor(context: Context) {
             wifiOnly = prefs.getBoolean("wifi_only", false),
             durationToleranceSeconds = prefs.getInt("duration_tolerance_sec", 15),
             fileNameFormat = prefs.getString("file_name_format", "ARTIST_TITLE") ?: "ARTIST_TITLE",
-            autoClearCompleted = prefs.getBoolean("auto_clear_completed", false)
+            autoClearCompleted = prefs.getBoolean("auto_clear_completed", false),
+            autoCheckUpdates = prefs.getBoolean("auto_check_updates", true)
         )
     }
 

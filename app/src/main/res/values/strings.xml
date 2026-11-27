@@ -112,7 +112,7 @@
     <string name="settings_clear_btn">Clear</string>
     <string name="settings_history_cleared_toast">History cleared</string>
     <string name="settings_user_guide_btn">User guide &amp; features</string>
-    <string name="settings_about_version">🎵 Music Drop v2.3.2</string>
+    <string name="settings_about_version">🎵 Music Drop v2.4.0</string>
     <string name="settings_about_author">Developed by oscarxaviercom</string>
 
     <!-- User Guide Dialog -->
@@ -378,4 +378,19 @@
     <string name="smb_err_dns">Could not resolve NAS address%1$s.\n\n</string>
     <string name="smb_err_comm">Communication error</string>
     <string name="smb_err_detail">💡 Detail: %1$s. Make sure your NAS and network (Wi‑Fi or VPN) are active and tap «Retry».</string>
+
+    <!-- Auto-Updates -->
+    <string name="settings_auto_update_title">Check for updates automatically</string>
+    <string name="settings_auto_update_sub">Checks GitHub Releases on startup for newer versions.</string>
+    <string name="settings_check_updates_btn">Check for updates now</string>
+    <string name="settings_checking_updates">Checking for updates…</string>
+    <string name="update_available_title">Update available: v%1$s</string>
+    <string name="update_downloading_title">Downloading v%1$s (%2$d%%)…</string>
+    <string name="update_install_btn">Download &amp; Install</string>
+    <string name="update_later_btn">Later</string>
+    <string name="update_up_to_date">You are already on the latest version (v%1$s).</string>
+    <string name="update_perm_needed">Allow «Install unknown apps» for Music Drop, then tap Install again.</string>
+    <string name="update_check_http_error">GitHub returned status %1$d.</string>
+    <string name="update_check_failed">Could not check for updates: %1$s</string>
+    <string name="update_download_failed">Failed to download update: %1$s</string>
 </resources>

@@ -30,6 +30,83 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
         _selectedTabIndex.value = index
     }
 
+    sealed class UpdateUiState {
+        data object Idle : UpdateUiState()
+        data object Checking : UpdateUiState()
+        data class Available(val info: com.nasmusicdrop.app.data.update.ReleaseUpdateInfo) : UpdateUiState()
+        data class Downloading(val info: com.nasmusicdrop.app.data.update.ReleaseUpdateInfo, val progress: Int) : UpdateUiState()
+        data class UpToDate(val currentVersion: String) : UpdateUiState()
+        data class Error(val message: String) : UpdateUiState()
+    }
+
+    private val _updateState = MutableStateFlow<UpdateUiState>(UpdateUiState.Idle)
+    val updateState: StateFlow<UpdateUiState> = _updateState.asStateFlow()
+
+    init {
+        if (nasConfig.value.autoCheckUpdates) {
+            checkForUpdates(manual = false)
+        }
+    }
+
+    fun getCurrentVersionName(): String {
+        val app = getApplication<Application>()
+        return try {
+            @Suppress("DEPRECATION")
+            app.packageManager.getPackageInfo(app.packageName, 0).versionName ?: "2.3.2"
+        } catch (_: Exception) {
+            "2.3.2"
+        }
+    }
+
+    fun checkForUpdates(manual: Boolean) {
+        if (_updateState.value is UpdateUiState.Checking || _updateState.value is UpdateUiState.Downloading) return
+        viewModelScope.launch {
+            if (manual) _updateState.value = UpdateUiState.Checking
+            val current = getCurrentVersionName()
+            when (val res = com.nasmusicdrop.app.data.update.AppUpdateManager.checkForUpdate(current)) {
+                is com.nasmusicdrop.app.data.update.UpdateCheckResult.Available -> {
+                    _updateState.value = UpdateUiState.Available(res.info)
+                }
+                is com.nasmusicdrop.app.data.update.UpdateCheckResult.UpToDate -> {
+                    if (manual) _updateState.value = UpdateUiState.UpToDate(current)
+                }
+                is com.nasmusicdrop.app.data.update.UpdateCheckResult.Error -> {
+                    if (manual) _updateState.value = UpdateUiState.Error(res.message)
+                }
+            }
+        }
+    }
+
+    fun downloadAndInstallUpdate(info: com.nasmusicdrop.app.data.update.ReleaseUpdateInfo) {
+        val app = getApplication<Application>()
+        viewModelScope.launch {
+            _updateState.value = UpdateUiState.Downloading(info, 0)
+            val downloadRes = com.nasmusicdrop.app.data.update.AppUpdateManager.downloadAndInstallApk(
+                context = app,
+                apkUrl = info.apkDownloadUrl,
+                onProgress = { pct ->
+                    _updateState.value = UpdateUiState.Downloading(info, pct)
+                }
+            )
+            downloadRes.onSuccess { apkFile ->
+                val launched = com.nasmusicdrop.app.data.update.AppUpdateManager.launchApkInstaller(app, apkFile)
+                if (launched) {
+                    _updateState.value = UpdateUiState.Idle
+                } else {
+                    _updateState.value = UpdateUiState.Error(app.getString(R.string.update_perm_needed))
+                }
+            }.onFailure { err ->
+                _updateState.value = UpdateUiState.Error(
+                    app.getString(R.string.update_download_failed, err.localizedMessage ?: "error")
+                )
+            }
+        }
+    }
+
+    fun dismissUpdateState() {
+        _updateState.value = UpdateUiState.Idle
+    }
+
     // Estado para listas de reproducción de YouTube
     private val _isAnalyzingPlaylist = MutableStateFlow(false)
     val isAnalyzingPlaylist: StateFlow<Boolean> = _isAnalyzingPlaylist.asStateFlow()
