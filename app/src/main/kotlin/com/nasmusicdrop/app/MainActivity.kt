@@ -184,8 +184,11 @@ class MainActivity : ComponentActivity() {
                                 }
                             },
                             confirmButton = {
+                                val sizeSuffix = if (st.info.apkSizeBytes > 0L) {
+                                    " (${String.format(java.util.Locale.US, "%.1f MB", st.info.apkSizeBytes / (1024.0 * 1024.0))})"
+                                } else ""
                                 Button(onClick = { viewModel.downloadAndInstallUpdate(st.info) }) {
-                                    Text(androidx.compose.ui.res.stringResource(R.string.update_install_btn))
+                                    Text("${androidx.compose.ui.res.stringResource(R.string.update_install_btn)}$sizeSuffix")
                                 }
                             },
                             dismissButton = {

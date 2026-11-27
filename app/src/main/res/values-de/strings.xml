@@ -112,7 +112,7 @@
     <string name="settings_clear_btn">Leeren</string>
     <string name="settings_history_cleared_toast">Verlauf geleert</string>
     <string name="settings_user_guide_btn">Bedienungsanleitung &amp; Funktionen</string>
-    <string name="settings_about_version">🎵 Music Drop v2.4.0</string>
+    <string name="settings_about_version">🎵 Music Drop v2.4.1</string>
     <string name="settings_about_author">Entwickelt von oscarxaviercom</string>
 
     <!-- User Guide Dialog -->

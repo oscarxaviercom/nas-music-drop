@@ -112,7 +112,7 @@
     <string name="settings_clear_btn">Очистить</string>
     <string name="settings_history_cleared_toast">История очищена</string>
     <string name="settings_user_guide_btn">Руководство и функции</string>
-    <string name="settings_about_version">🎵 Music Drop v2.4.0</string>
+    <string name="settings_about_version">🎵 Music Drop v2.4.1</string>
     <string name="settings_about_author">Разработчик: oscarxaviercom</string>
 
     <!-- User Guide Dialog -->

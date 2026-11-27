@@ -830,7 +830,18 @@ fun SettingsScreen(
             Surface(
                 color = MaterialTheme.colorScheme.surfaceContainerHigh,
                 shape = RoundedCornerShape(16.dp),
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .clip(RoundedCornerShape(16.dp))
+                    .clickable {
+                        try {
+                            val intent = android.content.Intent(
+                                android.content.Intent.ACTION_VIEW,
+                                android.net.Uri.parse("https://github.com/oscarxaviercom/nas-music-drop")
+                            )
+                            context.startActivity(intent)
+                        } catch (_: Exception) {}
+                    }
             ) {
                 Column(
                     modifier = Modifier.padding(16.dp),

@@ -112,7 +112,7 @@
     <string name="settings_clear_btn">Vider</string>
     <string name="settings_history_cleared_toast">Historique vidé</string>
     <string name="settings_user_guide_btn">Guide d\'utilisation et fonctions</string>
-    <string name="settings_about_version">🎵 Music Drop v2.4.0</string>
+    <string name="settings_about_version">🎵 Music Drop v2.4.1</string>
     <string name="settings_about_author">Développé par oscarxaviercom</string>
 
     <!-- User Guide Dialog -->

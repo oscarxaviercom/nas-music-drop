@@ -35,6 +35,19 @@ object AppUpdateManager {
     private const val LATEST_RELEASE_API =
         "https://api.github.com/repos/oscarxaviercom/nas-music-drop/releases/latest"
 
+    fun cleanOldUpdateApks(context: Context) {
+        try {
+            val updatesDir = File(context.cacheDir, "updates")
+            if (updatesDir.exists() && updatesDir.isDirectory) {
+                updatesDir.listFiles()?.forEach { file ->
+                    if (file.isFile && file.name.endsWith(".apk", ignoreCase = true)) {
+                        file.delete()
+                    }
+                }
+            }
+        } catch (_: Exception) {}
+    }
+
     suspend fun checkForUpdate(currentVersion: String): UpdateCheckResult = withContext(Dispatchers.IO) {
         var conn: HttpURLConnection? = null
         try {

@@ -43,6 +43,9 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
     val updateState: StateFlow<UpdateUiState> = _updateState.asStateFlow()
 
     init {
+        viewModelScope.launch(kotlinx.coroutines.Dispatchers.IO) {
+            com.nasmusicdrop.app.data.update.AppUpdateManager.cleanOldUpdateApks(getApplication())
+        }
         if (nasConfig.value.autoCheckUpdates) {
             checkForUpdates(manual = false)
         }
