@@ -35,3 +35,8 @@ Desarrollado por **oscarxaviercom**.
 ## Aviso legal
 
 Esta herramienta está pensada exclusivamente para uso personal y gestión de bibliotecas propias. El usuario es responsable del contenido que procese y de respetar los derechos de autor y las condiciones de uso de cada servicio.
+
+<img width="1080" height="2400" alt="photo_2026-11-27_01-08-08" src="https://github.com/user-attachments/assets/67f388bf-614f-4f5f-911b-e3ec55d09c1a" />
+<img width="1080" height="2400" alt="photo_2026-11-27_01-06-52" src="https://github.com/user-attachments/assets/1f5b817b-ce36-4b50-b13b-0185c07e4807" />
+<img width="1080" height="2400" alt="photo_2026-11-27_01-06-41" src="https://github.com/user-attachments/assets/16fd3421-1f39-43ff-aed3-8a49b5b5389b" />
+<img width="1080" height="2400" alt="photo_2026-11-27_01-06-32" src="https://github.com/user-attachments/assets/535faeed-aec4-463b-9ce8-ce44f1fcd826" />
