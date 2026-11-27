@@ -112,7 +112,7 @@
     <string name="settings_clear_btn">Limpar</string>
     <string name="settings_history_cleared_toast">Histórico limpo</string>
     <string name="settings_user_guide_btn">Guia de utilização e funções</string>
-    <string name="settings_about_version">🎵 Music Drop v2.3.1</string>
+    <string name="settings_about_version">🎵 Music Drop v2.3.2</string>
     <string name="settings_about_author">Desenvolvido por oscarxaviercom</string>
 
     <!-- User Guide Dialog -->

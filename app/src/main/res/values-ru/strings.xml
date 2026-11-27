@@ -1,0 +1,381 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Music Drop</string>
+
+    <!-- Navigation -->
+    <string name="nav_download">Загрузка</string>
+    <string name="nav_search">Поиск</string>
+    <string name="nav_history">История</string>
+    <string name="nav_settings">Настройки</string>
+
+    <!-- Common -->
+    <string name="common_close">Закрыть</string>
+    <string name="common_cancel">Отмена</string>
+    <string name="common_save">Сохранить</string>
+    <string name="common_delete">Удалить</string>
+    <string name="common_retry">Повторить</string>
+    <string name="common_got_it">Понятно</string>
+    <string name="common_ready">Готово</string>
+    <string name="common_test">Тест</string>
+    <string name="common_local">Локальный</string>
+    <string name="common_remote">Удалённый</string>
+
+    <!-- Header & Connection Test -->
+    <string name="header_dest_local_label">Папка назначения</string>
+    <string name="header_dest_nas_label">Назначение: Сервер NAS</string>
+    <string name="header_dest_local_value">📱 Папка «Музыка» на телефоне</string>
+    <string name="header_ip_not_configured">IP не настроен</string>
+    <string name="cover_content_desc">Обложка %1$s</string>
+    <string name="conn_test_success_title">🟢 Подключение успешно</string>
+    <string name="conn_test_error_title">🔴 Ошибка подключения</string>
+    <string name="conn_test_summary">Активный IP: %1$s (%2$s)\nЗадержка: %3$d мс\nОбщая папка и каталог: ✓ Проверены с правами записи.</string>
+    <string name="conn_test_log_label">Детали журнала:</string>
+
+    <!-- Foreground Notification -->
+    <string name="notif_channel_name">Передача на NAS</string>
+    <string name="notif_channel_desc">Прогресс загрузки и отправки на NAS</string>
+    <string name="notif_starting">Запуск передач…</string>
+    <string name="notif_waiting_wifi_title">📡 Ожидание подключения Wi‑Fi</string>
+    <string name="notif_completed_title">✅ Music Drop завершён</string>
+    <string name="notif_summary_saved">%1$d сохранено</string>
+    <string name="notif_summary_failed">%1$d с ошибкой</string>
+    <string name="notif_summary_waiting_wifi">%1$d ждут Wi‑Fi</string>
+    <string name="notif_progress_content">%1$s · (%2$d/%3$d готово)</string>
+
+    <!-- Settings Screen -->
+    <string name="settings_title">Настройки</string>
+    <string name="settings_subtitle">Настройте внешний вид, хранилище, сеть и качество звука.</string>
+    <string name="settings_section_appearance">Внешний вид</string>
+    <string name="settings_theme_light">☀️ День</string>
+    <string name="settings_theme_dark">🌙 Ночь</string>
+    <string name="settings_theme_system">📱 Авто</string>
+    <string name="settings_accent_color">Основной цвет:</string>
+    <string name="settings_section_dest_net">Назначение и Сеть</string>
+    <string name="settings_dest_prompt">Выберите, куда сохранять скачанные треки:</string>
+    <string name="settings_dest_mobile">📱 На телефон</string>
+    <string name="settings_dest_nas">🖥️ Сервер NAS</string>
+    <string name="settings_dest_local_info">Треки будут сохраняться прямо в папку «Музыка» на телефоне для прослушивания офлайн.</string>
+    <string name="settings_nas_conn_title">Подключение SMB к NAS</string>
+    <string name="settings_remote_ip_label">Удалённый IP / Tailscale</string>
+    <string name="settings_remote_ip_placeholder">100.x.x.x или домен</string>
+    <string name="settings_port_label">Порт</string>
+    <string name="settings_local_ip_label">Локальный IP (домашний Wi‑Fi)</string>
+    <string name="settings_smb_user_label">Пользователь SMB</string>
+    <string name="settings_password_label">Пароль</string>
+    <string name="settings_show_password">Показать пароль</string>
+    <string name="settings_share_name_label">Общая папка (Share)</string>
+    <string name="settings_base_path_label">Базовая папка</string>
+    <string name="settings_nas_saved_toast">✓ Настройки NAS сохранены</string>
+    <string name="settings_save_nas_btn">Сохранить настройки NAS</string>
+    <string name="settings_auto_ip_title">Автопереключение IP</string>
+    <string name="settings_auto_ip_subtitle">Использует локальный Wi‑Fi дома или удалённый IP/Tailscale вне дома.</string>
+    <string name="settings_testing_conn">Проверка подключения…</string>
+    <string name="settings_test_conn_btn">Проверить подключение NAS</string>
+    <string name="settings_wifi_only_title">Скачивать только по Wi‑Fi</string>
+    <string name="settings_wifi_only_subtitle">Экономит мобильный трафик при загрузке треков и больших плейлистов.</string>
+    <string name="settings_section_org">Организация и Файлы</string>
+    <string name="settings_filename_format">Формат имени файла:</string>
+    <string name="settings_format_artist_title">Исполнитель - Название</string>
+    <string name="settings_format_title_only">Только название</string>
+    <string name="settings_folder_org">Структура папок:</string>
+    <string name="settings_folder_none">Без папок</string>
+    <string name="settings_folder_artist">Исполнитель</string>
+    <string name="settings_folder_artist_album">Исполнитель/Альбом</string>
+    <string name="settings_folder_example">Пример: %1$s</string>
+    <string name="settings_folder_flat_warning">⚠️ В режиме «Без папок» и «Только название» треки с одинаковым названием могут перезаписать друг друга.</string>
+    <string name="settings_check_dups_title">Проверять дубликаты перед загрузкой</string>
+    <string name="settings_check_dups_subtitle">Предупреждает или пропускает треки, уже имеющиеся в библиотеке.</string>
+    <string name="settings_cover_jpg_title">Сохранять внешнюю обложку (cover.jpg)</string>
+    <string name="settings_cover_jpg_flat_sub">Автоматически отключается в режиме «Без папок» (обложка уже вшита в каждый MP3).</string>
+    <string name="settings_cover_jpg_sub">Создаёт cover.jpg в папке для совместимых плееров.</string>
+    <string name="settings_auto_clear_title">Автоочистка завершённых</string>
+    <string name="settings_auto_clear_sub">Убирает треки из очереди после завершения (остаются в Истории).</string>
+    <string name="settings_section_audio">Аудио и Совпадения</string>
+    <string name="settings_norm_title">Нормализация громкости (EBU R128)</string>
+    <string name="settings_norm_subtitle">Выравнивает все треки до %1$d LUFS без клиппинга.</string>
+    <string name="settings_lufs_soft">-16 (Мягко)</string>
+    <string name="settings_lufs_standard">-14 (Стандарт)</string>
+    <string name="settings_lufs_loud">-11 (Громко)</string>
+    <string name="settings_lufs_desc_soft">-16 LUFS (Мягко): сохраняет больше динамического диапазона и деталей. Идеально для акустики, классики, джаза и Hi‑Fi / наушников.</string>
+    <string name="settings_lufs_desc_loud">-11 LUFS (Громко): выше громкость и плотность (с лимитером от перегруза). Подходит для машины, Bluetooth-колонок и шумных мест.</string>
+    <string name="settings_lufs_desc_standard">-14 LUFS (Стандарт): стандарт Spotify и YouTube. Лучший баланс между ровной громкостью и динамикой.</string>
+    <string name="settings_mp3_quality">Качество кодирования MP3:</string>
+    <string name="settings_playlist_tolerance">Допуск длительности в плейлистах (Spotify / Apple / Deezer):</string>
+    <string name="settings_playlist_tolerance_sub">Пропускает видео YouTube, отличающиеся сильнее этого времени.</string>
+    <string name="settings_saved_msg">Настройки успешно сохранены</string>
+    <string name="settings_save_btn">Сохранить настройки</string>
+    <string name="settings_cache_cleared">Кэш очищен (освобождено %1$s)</string>
+    <string name="settings_clear_cache_btn">Очистить временный кэш (%1$s)</string>
+    <string name="settings_clear_history_btn">Очистить историю загрузок</string>
+    <string name="settings_clear_history_title">Очистить историю</string>
+    <string name="settings_clear_history_msg">Очистить журнал завершённых и неудачных загрузок? Файлы, уже сохранённые на телефоне или NAS, удалены не будут.</string>
+    <string name="settings_clear_btn">Очистить</string>
+    <string name="settings_history_cleared_toast">История очищена</string>
+    <string name="settings_user_guide_btn">Руководство и функции</string>
+    <string name="settings_about_version">🎵 Music Drop v2.3.2</string>
+    <string name="settings_about_author">Разработчик: oscarxaviercom</string>
+
+    <!-- User Guide Dialog -->
+    <string name="guide_title">Руководство Music Drop</string>
+    <string name="guide_s1_title">1. Загрузка по ссылкам и плейлистам</string>
+    <string name="guide_s1_body">• Вставьте ссылку в «Загрузка» или используйте «Поделиться → Music Drop» из YouTube, Spotify, Apple Music, Deezer, Amazon Music или SoundCloud.\n• Для плейлистов и альбомов приложение сначала проверяет вашу библиотеку и автоматически отмечает только недостающие треки («Только недостающие»).\n• Если ссылка YouTube содержит таймкод (?t=…), он используется как начало обрезки.\n• В очереди можно ставить на паузу/возобновлять, видеть общий прогресс, менять Название/Исполнителя/Альбом, обрезать Начало/Конец, выбирать издание в «Версии» и управлять текстом в «Текст».</string>
+    <string name="guide_s2_title">2. Поиск и распознавание через микрофон</string>
+    <string name="guide_s2_body">• В разделе «Поиск» можно искать на YouTube, прослушивать трек нажатием ▶ на миниатюре и обрезать с текущей секунды одним касанием.\n• Нажмите кнопку микрофона (🎙️), чтобы записать ~5,5 с музыки вокруг и автоматически определить трек (100% бесплатно, без аккаунта).</string>
+    <string name="guide_s3_title">3. История и мини-плеер</string>
+    <string name="guide_s3_body">• В «История» можно искать и воспроизводить сохранённые треки (локально или с NAS).\n• Нажмите на трек для просмотра «Деталей»: обложка, встроенный текст, проверка LUFS, размер и полный путь (нажмите на путь для копирования).\n• Мини-плеер внизу позволяет переключать треки (⏮ / ⏭) с автопереходом.</string>
+    <string name="guide_s4_title">4. Качество звука и организация</string>
+    <string name="guide_s4_body">• Всё нормализуется без клиппинга (true-peak лимитер) до выбранного уровня LUFS:\n  - -16 (Мягко): естественная динамика (классика, акустика, Hi‑Fi).\n  - -14 (Стандарт): стандарт Spotify/YouTube; оптимальный баланс.\n  - -11 (Громко): выше громкость и драйв (авто или Bluetooth-колонки).\n• Кодирование MP3 192k или 320k, теги ID3v2.3, обложка 600×600 и встроенные тексты.\n• При обрезке конца трека автоматически применяется плавное затухание 250 мс.\n• В «Настройках» можно выбрать NAS (автопереключение Локальный/Удалённый) или папку Music/ телефона.</string>
+    <string name="guide_s5_title">5. Подключение к NAS (Локально, VPN или порт SMB)</string>
+    <string name="guide_s5_body">• Локальный IP (порт 445): для быстрой загрузки в домашнем Wi‑Fi.\n• Удалённый IP / Tailscale + Порт (445 по умолчанию): работает с Tailscale, другим VPN (WireGuard/ZeroTier) или внешним IP/DDNS с пробросом порта на роутере (поддерживается формат host:port).\n• Для безопасности вне дома рекомендуется использовать VPN (Tailscale/WireGuard) вместо открытия SMB напрямую в интернет.</string>
+
+    <!-- Search Screen -->
+    <string name="search_mic_perm_required">Для распознавания песен требуется доступ к микрофону.</string>
+    <string name="search_title">Обзор музыки</string>
+    <string name="search_subtitle">Ищите, прослушивайте и обрезайте перед загрузкой.</string>
+    <string name="search_query_placeholder">Поиск музыки (трек, исполнитель)…</string>
+    <string name="search_clear">Очистить</string>
+    <string name="search_mic_cd">Распознать трек через микрофон</string>
+    <string name="search_searching_btn">Поиск музыки…</string>
+    <string name="search_btn">Найти музыку</string>
+    <string name="search_loading_catalog">Поиск в музыкальном каталоге…</string>
+    <string name="search_no_results">Треки не найдены</string>
+    <string name="search_empty_title">Ищите и прослушивайте треки</string>
+    <string name="search_no_results_hint">Попробуйте другие слова или точное имя исполнителя.</string>
+    <string name="search_empty_hint">Найдите любой трек, чтобы прослушать его прямо здесь и убедиться в нужной версии перед загрузкой.</string>
+    <string name="search_added_to_queue">✓ «%1$s» добавлен в очередь</string>
+    <string name="search_finding_recognized">✓ Поиск «%1$s» для загрузки…</string>
+    <string name="recog_listening">Слушаю музыку…</string>
+    <string name="recog_identifying">Определение трека…</string>
+    <string name="recog_found">Трек определён!</string>
+    <string name="recog_no_match">Совпадений не найдено</string>
+    <string name="recog_error">Не удалось записать</string>
+    <string name="recog_move_closer">Поднесите телефон ближе к источнику звука…</string>
+    <string name="recog_analyzing">Анализ акустического отпечатка…</string>
+    <string name="recog_no_match_msg">Не удалось распознать трек. Поднесите телефон ближе к динамику или уменьшите фоновый шум.</string>
+    <string name="common_download">Скачать</string>
+    <string name="common_pause">Пауза</string>
+    <string name="common_play">Воспроизвести</string>
+    <string name="search_play_preview">Предпросмотр</string>
+    <string name="trim_dialog_title">Скачать трек</string>
+    <string name="trim_dialog_section">Обрезка начала и конца (необязательно):</string>
+    <string name="trim_dialog_hint">Укажите минуты/секунды (напр. 00:15), чтобы убрать тишину, интро или аутро. Оставьте 00:00 для полной загрузки.</string>
+    <string name="trim_start_label">Начало</string>
+    <string name="trim_end_label">Конец (опц)</string>
+    <string name="trim_use_current">⏱️ Взять текущее время (%1$s)</string>
+    <string name="trim_add_to_queue">В очередь</string>
+
+    <!-- History Screen -->
+    <string name="history_empty_title">В истории пока нет треков</string>
+    <string name="history_empty_subtitle">Скачанные треки появятся здесь.</string>
+    <string name="history_title">История передач</string>
+    <string name="history_subtitle_count">Скачано треков: %1$d · Нажмите для деталей</string>
+    <string name="history_clear_cd">Очистить историю</string>
+    <string name="history_search_placeholder">Поиск в истории (название, исполнитель, альбом)…</string>
+    <string name="history_search_empty">Нет треков по запросу «%1$s»</string>
+    <string name="history_clear_dialog_title">Очистить всю историю?</string>
+    <string name="history_clear_dialog_msg">Журнал загрузок приложения будет удалён. Музыкальные файлы на устройстве или NAS останутся нетронутыми.</string>
+    <string name="history_clear_confirm">Очистить историю</string>
+    <string name="history_requeued">✓ «%1$s» снова в очереди</string>
+    <string name="history_requeue_not_found">Не найдено на YouTube для «%1$s»</string>
+    <string name="history_deleted_msg">Удалено из истории</string>
+    <string name="history_date_pattern">dd.MM.yyyy HH:mm</string>
+    <string name="history_details_delete">Удалить из списка</string>
+    <string name="history_details_title">Детали трека</string>
+    <string name="history_details_album">Альбом: %1$s</string>
+    <string name="common_loading">Загрузка…</string>
+    <string name="history_requeue_btn">Повторить</string>
+    <string name="history_view_lyrics_btn">Показать встроенный текст</string>
+    <string name="history_audio_section">Проверка аудио и нормализации</string>
+    <string name="history_label_format">Формат аудио</string>
+    <string name="history_label_loudness">Стандарт громкости</string>
+    <string name="history_label_orig_lufs">Исходная громкость</string>
+    <string name="history_label_gain">Применённое усиление</string>
+    <string name="history_gain_value">%1$s%2$s дБ (Пик -1.5 дБ)</string>
+    <string name="history_label_cover">Обложка ID3v2.3</string>
+    <string name="history_label_lyrics">Встроенный текст</string>
+    <string name="history_lyrics_embedded">✓ Вшит в ID3</string>
+    <string name="history_lyrics_unavailable">Недоступно</string>
+    <string name="history_location_section">Расположение файла</string>
+    <string name="history_remote_path_hint">Удалённый путь (нажмите для копирования)</string>
+    <string name="history_path_copied">Путь скопирован</string>
+    <string name="history_label_size">Размер файла</string>
+    <string name="history_label_date">Дата загрузки</string>
+    <string name="history_lyrics_dialog_title">Текст песни</string>
+
+    <!-- ViewModel & Batch Progress -->
+    <string name="vm_connecting_platform">Подключение к внешней платформе…</string>
+    <string name="vm_checking_duplicates">Проверка дубликатов…</string>
+    <string name="vm_checking_library">Проверка библиотеки (%1$d треков)…</string>
+    <string name="vm_link_load_error">Не удалось загрузить ссылку</string>
+    <string name="vm_searching_yt">Поиск на YouTube: %1$s - %2$s…</string>
+    <string name="vm_locating_yt_batch">Поиск на YouTube (%1$d/%2$d): %3$s…</string>
+    <string name="vm_batch_added">%1$d добавлено в очередь</string>
+    <string name="vm_batch_in_library">%1$d уже в библиотеке</string>
+    <string name="vm_batch_no_match">%1$d без совпадений</string>
+    <string name="vm_locating_yt_single">Поиск на YouTube: %1$s - %2$s…</string>
+
+    <!-- Main Screen & Queue -->
+    <string name="main_add_card_title">Добавить в очередь загрузки</string>
+    <string name="main_add_card_subtitle">Вставьте ссылку или поделитесь из Spotify, Apple Music, Deezer, SoundCloud, Amazon Music или YouTube.</string>
+    <string name="main_url_placeholder">Spotify, Apple Music, Deezer, SoundCloud, YouTube…</string>
+    <string name="main_clipboard_empty">Буфер обмена пуст</string>
+    <string name="main_paste_cd">Вставить</string>
+    <string name="main_analyzing_link">Анализ ссылки…</string>
+    <string name="main_add_btn">Добавить в очередь</string>
+    <string name="main_fetching_playlist">Получение списка треков…</string>
+    <string name="main_close_summary_cd">Закрыть сводку</string>
+    <string name="main_queue_title">Очередь передач</string>
+    <string name="main_queue_paused_suffix"> · ⏸ Пауза</string>
+    <string name="main_queue_counts">%1$d в ожидании · %2$d завершено%3$s</string>
+    <string name="main_resume_queue">Возобновить</string>
+    <string name="main_pause_queue">Пауза</string>
+    <string name="main_retry_count">Повторить (%1$d)</string>
+    <string name="main_clear_completed">Очистить готовые</string>
+    <string name="main_queue_empty_title">Очередь пуста</string>
+    <string name="main_queue_empty_subtitle">Вы можете делиться треками или альбомами прямо из Spotify, Apple Music, Deezer, SoundCloud, Amazon Music или YouTube — они обработаются автоматически.</string>
+    <string name="main_removed_from_queue">Удалено из очереди</string>
+    <string name="main_remove_from_queue_cd">Удалить из очереди</string>
+    <string name="queue_trim_start">✂️ Начало: %1$s</string>
+    <string name="queue_trim_end">✂️ Конец: %1$s</string>
+    <string name="queue_lyrics_yes">Текст ✓</string>
+    <string name="queue_lyrics_add">+ Текст</string>
+    <string name="queue_edit">Изменить</string>
+    <string name="queue_versions">Версии%1$s</string>
+    <string name="queue_dup_title">Этот трек уже есть в вашей библиотеке</string>
+    <string name="queue_dup_skip">Пропустить</string>
+    <string name="queue_dup_overwrite">Перезаписать</string>
+    <string name="queue_skipped">Пропущено (Уже скачано)</string>
+    <string name="queue_download_anyway">Скачать всё равно</string>
+    <string name="queue_saved_at">📁 Сохранено в: %1$s</string>
+    <string name="queue_cancelled">Загрузка отменена</string>
+    <string name="queue_resume">Возобновить</string>
+    <string name="queue_transfer_warning">Уведомление</string>
+    <string name="queue_default_error">Ошибка обработки</string>
+    <string name="queue_pick_video">Выбрать видео</string>
+
+    <!-- Queue Status Badges -->
+    <string name="status_queued">⏳ В очереди</string>
+    <string name="status_waiting_wifi">📡 Ждёт Wi‑Fi</string>
+    <string name="status_analyzing">🔍 Анализ…</string>
+    <string name="status_downloading">📥 Загрузка %1$d%%</string>
+    <string name="status_normalizing">🎚️ Нормализация R128…</string>
+    <string name="status_uploading">💾 Сохранение %1$d%%</string>
+    <string name="status_completed">✓ Скачано</string>
+    <string name="status_failed">⚠️ Ошибка</string>
+    <string name="status_cancelled">🚫 Отменено</string>
+    <string name="status_duplicate">⚠️ Уже скачано</string>
+    <string name="status_skipped">⏭️ Пропущено</string>
+
+    <!-- Dialogs: Lyrics, Playlist, Candidates, Metadata, Picker -->
+    <string name="lyrics_dialog_title">Управление текстом</string>
+    <string name="lyrics_tab_current">Текущий текст</string>
+    <string name="lyrics_tab_search">🔍 Найти другой</string>
+    <string name="lyrics_none_assigned">Текст не задан.</string>
+    <string name="lyrics_search_lrclib">Искать на LRCLIB</string>
+    <string name="lyrics_search_label">Поиск текста</string>
+    <string name="lyrics_none_found">Тексты по этому запросу не найдены.</string>
+    <string name="lyrics_synced_badge">✓ Синхронизированный (.lrc)</string>
+    <string name="lyrics_use_btn">Выбрать</string>
+    <string name="lyrics_confirm_btn">Подтвердить текст</string>
+    <string name="lyrics_view_btn">Просмотр</string>
+    <string name="lyrics_edit_text_btn">Редактировать</string>
+    <string name="lyrics_delete_btn">Удалить текст</string>
+
+    <string name="playlist_songs_new">Треков: %1$d (новых: %2$d)</string>
+    <string name="playlist_songs_found">Найдено треков: %1$d</string>
+    <string name="playlist_select_none">Ничего</string>
+    <string name="playlist_select_all">Все</string>
+    <string name="playlist_missing_only">Только недостающие</string>
+    <string name="playlist_in_library">✓ В вашей библиотеке</string>
+    <string name="playlist_in_library_short">✓ В библиотеке</string>
+    <string name="playlist_add_count">Добавить (%1$d)</string>
+    <string name="collection_type_album">Альбом</string>
+    <string name="collection_type_playlist">Плейлист</string>
+    <string name="collection_download_count">Скачать (%1$d)</string>
+
+    <string name="versions_dialog_title">Версии и Обложки</string>
+    <string name="versions_dialog_subtitle">Выберите или найдите на iTunes точную студийную, сингл или live-версию:</string>
+    <string name="versions_search_placeholder">Поиск в iTunes (напр. Kasabian Fire)</string>
+    <string name="versions_empty">Версии в iTunes не найдены.\nВведите исполнителя и трек выше.</string>
+    <string name="versions_selected_cd">Выбрано</string>
+
+    <string name="metadata_dialog_title">Редактировать данные</string>
+    <string name="metadata_dialog_hint">Исправьте названия для правильной сортировки папок, обложки и текста песни.</string>
+    <string name="metadata_title_label">Название трека</string>
+    <string name="metadata_artist_label">Исполнитель</string>
+    <string name="metadata_album_label">Альбом (необязательно)</string>
+    <string name="metadata_start_label">Начало (ММ:СС)</string>
+    <string name="metadata_end_label">Конец (опц.)</string>
+    <string name="metadata_apply_btn">Применить и искать</string>
+
+    <string name="picker_dialog_title">Выбрать аудио-видео</string>
+    <string name="picker_query_placeholder">Исполнитель и трек…</string>
+    <string name="picker_no_videos">Видео не найдены. Уточните запрос.</string>
+
+    <!-- Data / Services / Errors -->
+    <string name="data_song_default">Трек</string>
+    <string name="data_yt_song_default">Трек с YouTube</string>
+    <string name="data_untitled">Без названия</string>
+    <string name="data_loading_info">Загрузка данных…</string>
+    <string name="data_album_default">Альбом</string>
+    <string name="data_untitled_album">Альбом без названия</string>
+    <string name="data_track_n">Трек %1$d</string>
+
+    <string name="yt_no_audio_streams">Для этого видео не найдено аудиопотоков.</string>
+    <string name="yt_extract_failed">Ошибка извлечения: %1$s</string>
+    <string name="yt_file_corrupt">Скачанный файл повреждён или неполон.</string>
+
+    <string name="ext_amazon_playlist">Amazon Music не позволяет читать полные плейлисты без входа.\n\nВы можете делиться отдельными треками из приложения Amazon Music (Поделиться → Music Drop). Для полных плейлистов используйте Spotify, Apple Music, Deezer или YouTube.</string>
+    <string name="ext_amazon_album">Amazon Music не позволяет читать полные альбомы без входа.\n\nДелитесь треками по одному из Amazon Music или используйте Spotify / Apple Music / Deezer.</string>
+    <string name="ext_amazon_web">Amazon Music не раскрывает данные этой веб-ссылки без входа. Поделитесь треком напрямую из приложения Amazon Music (Поделиться → Music Drop).</string>
+    <string name="ext_apple_track">Не удалось найти данные этого трека в Apple Music.</string>
+    <string name="ext_apple_album">Не удалось извлечь треки из этого альбома Apple Music.</string>
+    <string name="ext_apple_playlist">Не удалось извлечь треки из этого плейлиста Apple Music (возможно, он приватный или требует входа).</string>
+    <string name="ext_deezer_album">В этом альбоме Deezer нет видимых треков.</string>
+    <string name="ext_deezer_playlist">Этот плейлист Deezer пуст или приватен.</string>
+    <string name="ext_yt_duration_mismatch">Ни одно видео на YouTube не совпадает по длительности (%1$ds ±%2$ds).</string>
+    <string name="ext_spotify_personal">Персональный плейлист Spotify (Daily Mix / Radar / Discover): он приватен. В Spotify нажмите «⋮» → «Добавить в другой плейлист» → «Новый плейлист» и поделитесь новой ссылкой.</string>
+    <string name="ext_spotify_private">Spotify не позволяет читать этот плейлист без входа (он может быть приватным или персональным). Скопируйте треки в новый публичный плейлист и поделитесь ссылкой.</string>
+    <string name="ext_spotify_404">Spotify вернул 404 (контент не найден или недоступен публично).</string>
+
+    <string name="shazam_unsupported_rate">Микрофон устройства не поддерживает запись 16 кГц.</string>
+    <string name="shazam_perm_denied">доступ запрещён</string>
+    <string name="shazam_mic_access_err">Нет доступа к микрофону: %1$s</string>
+    <string name="shazam_mic_init_err">Не удалось инициализировать микрофон.</string>
+    <string name="shazam_too_short">Запись слишком короткая для распознавания.</string>
+    <string name="shazam_offline">нет сети</string>
+    <string name="shazam_query_err">Ошибка обращения к сервису распознавания: %1$s</string>
+    <string name="shazam_rate_limit">Слишком много запросов подряд. Подождите несколько секунд и повторите.</string>
+    <string name="shazam_http_err">Сервер распознавания вернул код %1$d.</string>
+
+    <string name="local_saved_ok">Успешно сохранено в %1$s!</string>
+
+    <string name="queue_waiting_wifi">Ожидание подключения Wi‑Fi…</string>
+    <string name="queue_waiting_wifi_auto">Ожидание Wi‑Fi (возобновится автоматически)…</string>
+    <string name="queue_analyzing_info">Анализ данных YouTube и iTunes…</string>
+    <string name="queue_already_exists">Уже есть в вашей библиотеке</string>
+    <string name="queue_norm_error">Ошибка нормализации звука.</string>
+    <string name="queue_tagging">Запись тегов ID3v2.3 и обложки 600×600…</string>
+    <string name="queue_cover_yt">Обложка YouTube</string>
+    <string name="queue_conn_interrupted">Соединение прервано во время передачи. Проверьте сеть или Tailscale и нажмите «Повторить».</string>
+    <string name="queue_timeout">Время ожидания истекло. Проверьте интернет или подключение к NAS и нажмите «Повторить».</string>
+
+    <string name="smb_test_start">Запуск теста подключения к NAS…</string>
+    <string name="smb_test_creating">не существовала, попытка создания…</string>
+    <string name="smb_test_all_ok">\nВСЁ ОТЛИЧНО! Подключение и права проверены на 100%%.</string>
+    <string name="smb_connecting_via">Подключение к NAS через %1$s (%2$s:%3$d)…</string>
+    <string name="smb_retrying_conn">Повторная попытка подключения к NAS (%1$d/%2$d)…</string>
+    <string name="smb_uploading_via">Загрузка трека на NAS через %1$s…</string>
+    <string name="smb_saved_ok">Трек успешно сохранён на NAS!</string>
+    <string name="smb_failover">Сбой на %1$s. Автопереключение на резервный IP…</string>
+    <string name="smb_no_ip">В Настройках не указан IP-адрес NAS (ни локальный, ни удалённый/Tailscale). Укажите его в Настройках.</string>
+    <string name="smb_err_interrupted">Соединение с NAS прервано во время передачи.\n\n💡 Обычно это вызвано кратковременным обрывом сети (переключение Wi‑Fi / мобильной сети или переподключение VPN) или закрытием SMB-сессии сервером. Проверьте сеть и нажмите «Повторить».</string>
+    <string name="smb_err_refused">Сервер NAS отклонил подключение%1$s.\n\n💡 Убедитесь, что NAS включён и служба общего доступа (SMB) активна.</string>
+    <string name="smb_err_unreachable">💡 Убедитесь, что телефон подключён к той же сети Wi‑Fi или активен VPN (Tailscale).</string>
+    <string name="smb_err_timeout">💡 Вне дома проверьте, что VPN/удалённый порт активен. Дома проверьте подключение Wi‑Fi.</string>
+    <string name="smb_err_auth">Неверный логин или пароль NAS.\n\n</string>
+    <string name="smb_err_share">Общая папка на NAS не найдена.\n\n</string>
+    <string name="smb_err_dns">Не удалось определить адрес NAS%1$s.\n\n</string>
+    <string name="smb_err_comm">Ошибка связи</string>
+    <string name="smb_err_detail">💡 Детали: %1$s. Убедитесь, что NAS и сеть (Wi‑Fi или VPN) активны, и нажмите «Повторить».</string>
+</resources>

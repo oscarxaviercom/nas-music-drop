@@ -223,6 +223,34 @@ fun SettingsScreen(
                             }
                         }
                     }
+                    if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.S) {
+                        val isDynamicSelected = accentColor == "DYNAMIC"
+                        Box(
+                            modifier = Modifier
+                                .size(36.dp)
+                                .clip(CircleShape)
+                                .background(MaterialTheme.colorScheme.primaryContainer)
+                                .then(
+                                    if (isDynamicSelected) {
+                                        Modifier.border(2.5.dp, MaterialTheme.colorScheme.onSurface, CircleShape)
+                                    } else {
+                                        Modifier
+                                    }
+                                )
+                                .clickable {
+                                    accentColor = "DYNAMIC"
+                                    viewModel.saveConfig(currentConfig.copy(accentColor = "DYNAMIC"))
+                                },
+                            contentAlignment = Alignment.Center
+                        ) {
+                            Icon(
+                                imageVector = if (isDynamicSelected) Icons.Default.Check else Icons.Default.Palette,
+                                contentDescription = "Material You",
+                                tint = MaterialTheme.colorScheme.onPrimaryContainer,
+                                modifier = Modifier.size(18.dp)
+                            )
+                        }
+                    }
                 }
             }
         }

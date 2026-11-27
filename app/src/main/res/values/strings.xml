@@ -112,7 +112,7 @@
     <string name="settings_clear_btn">Clear</string>
     <string name="settings_history_cleared_toast">History cleared</string>
     <string name="settings_user_guide_btn">User guide &amp; features</string>
-    <string name="settings_about_version">🎵 Music Drop v2.3.1</string>
+    <string name="settings_about_version">🎵 Music Drop v2.3.2</string>
     <string name="settings_about_author">Developed by oscarxaviercom</string>
 
     <!-- User Guide Dialog -->
